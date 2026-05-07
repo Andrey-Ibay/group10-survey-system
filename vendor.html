@@ -76,7 +76,7 @@
             <div class="form-card">
                 <div class="input-box">
                     <label>Registered Owner</label>
-                    <input type="text" name="username" placeholder="Legal name of the permit holder..">
+                    <input type="text" name="user_name" placeholder="Legal name of the permit holder..">
                 </div>
                 <div class="input-box">
                     <label>Age</label>
@@ -92,12 +92,12 @@
                 </div>
                 <div class="input-box">
                     <label>Business Address</label>
-                    <input type="text" name="businessAddress" placeholder="Sta. Mesa">
+                    <input type="text" name="business_address" placeholder="Sta. Mesa">
                 </div>
                  <div class="input-box">
                     <label>Contact Number</label>
                     <div class="tel-input">
-                    <input type="tel" name="telnum" placeholder="e.g 09xx-xxx-xxxx" required>
+                    <input type="tel" name="contact_num" placeholder="e.g 09xx-xxx-xxxx" required>
                 </div>
             </div>
         </div>
@@ -108,12 +108,12 @@
                 <div class="form-card">
                     <div class ="input-box">
                         <label> Business Trade Name </label>
-                 <input type = "text" name = "BTM" placeholder = "D/B/A" required>
+                        <input type = "text" name = "business_trade_name" placeholder = "D/B/A" required>
                         </div>
                     <div class = "input-box">
                         <label> Telephone Number </label>
                         <div class="tel-input">
-                        <input type = "tel" name = "telnum" placeholder = "e.g. 09xx-xxx-xxxx">
+                        <input type = "tel" name = "telephone_num" placeholder = "e.g. 09xx-xxx-xxxx">
                     </div>
                     </div>
 
@@ -122,13 +122,13 @@
                 <div class="form-card">
                     <div class="input-box">
                         <label>Product Category</label>
-                    <select class="custom-select">
-                            <option>Meat</option>
-                            <option>Veggies</option>
-                            <option>Dry Goods</option>
-                            <option>Fish</option>
-                            <option>Cooked Food</option>
-                            <option>Others</option>
+                        <select class="custom-select" name="product_category">
+                            <option value="meat">Meat</option>
+                            <option value="veggies">Veggies</option>
+                            <option value="dry_goods">Dry Goods</option>
+                            <option value="fish">Fish</option>
+                            <option value="cooked_food">Cooked Food</option>
+                            <option value="others">Others</option>
                         </select>
                     </div>
                 </div>
@@ -137,35 +137,35 @@
                 <div class = "input-box">
                     <label> Stall Number </label>
                     <div class="stall-input">
-                    <input type = "number" name = "stallnum" placeholder = "e.g. 1-500" min="1" max="500" required>
+                    <input type = "number" name = "stall_num" placeholder = "e.g. 1-500" min="1" max="500" required>
                     <br>  
                     <br>
                     </div>
 
                     <label>Permit/BIN Number</label>
-                    <input type = "text" name = "permitnum" placeholder = "e.g. LLLxx-xxxx" pattern="[a-zA-Z0-9]+" title="Please enter only letters and numbers (no spaces or special characters)." required>
+                    <input type = "text" name = "permit_num" placeholder = "e.g. LLLxx-xxxx" pattern="[a-zA-Z0-9]+" title="Please enter only letters and numbers (no spaces or special characters)." required>
                     <br>
                     <br>
 
                     <label> Sanitary Permit No. </label>
-                    <input type = "text" name = "sanitarynum" placeholder = "LL-xx-xxxx-xxxxx" pattern="[a-zA-Z0-9\-]+" title="Please enter only letters, numbers, and hyphens (no spaces or other special characters)." required>
+                    <input type = "text" name = "sanitary_permit_num" placeholder = "LL-xx-xxxx-xxxxx" pattern="[a-zA-Z0-9\-]+" title="Please enter only letters, numbers, and hyphens (no spaces or other special characters)." required>
                     <br>
                     <br>
 
                     <label> Waste Management </label>
                         <div class="radio-group">
-                            <label class="radio-btn"><input type="checkbox"> Daily Cleaning</label>
-                            <label class="radio-btn"><input type="checkbox"> Segregation</label>
-                            <label class="radio-btn"><input type="checkbox"> Grease Trap</label>
-                            <label class="radio-btn"><input type="checkbox"> Proper Waste Disposal</label>
-                            <label class="radio-btn"><input type="checkbox"> Others</label>
-                            <input type="text" name="other_symptoms" placeholder="Specify Here...">
+                            <label class="radio-btn"><input type="checkbox" name="waste_management" value="daily_cleaning"> Daily Cleaning</label>
+                            <label class="radio-btn"><input type="checkbox" name="waste_management" value="segregation"> Segregation</label>
+                            <label class="radio-btn"><input type="checkbox" name="waste_management" value="grease_trap"> Grease Trap</label>
+                            <label class="radio-btn"><input type="checkbox" name="waste_management" value="proper_waste_disposal"> Proper Waste Disposal</label>
+                            <label class="radio-btn"><input type="checkbox" name="waste_management" value="others"> Others</label>
+                            <input type="text" name="waste_management_others" placeholder="Specify Here...">
                         </div>
                     <br>
                     <br>
 
                     <label>Sanitary Rating</label>
-                     <label class="radio-btn"><input type="radio" name="sanitary" value="1"> 1 (poor) </label>
+                        <label class="radio-btn"><input type="radio" name="sanitary" value="1"> 1 (poor) </label>
                         <label class="radio-btn"><input type="radio" name="sanitary" value="2"> 2 </label>
                         <label class="radio-btn"><input type="radio" name="sanitary" value="3"> 3 </label>
                         <label class="radio-btn"><input type="radio" name="sanitary" value="4"> 4 </label>
@@ -175,9 +175,9 @@
 
                     <label> Operating Hours </label>
                     <div class="time-range">
-                    <input type="time" name="startTime" class="form-control" required>
+                    <input type="time" name="start_time" class="form-control" required>
                     <span class="separator"> </span>
-                    <input type="time" name="endTime" class="form-control" required>
+                    <input type="time" name="end_time" class="form-control" required>
                     </div>
 
                 </div>
@@ -186,7 +186,7 @@
                 <div class ="form-card">
                 <div class="input-box">
                     <label>Additional Notes</label>
-                    <textarea placeholder="Type your notes here..."></textarea>
+                    <textarea name="additional_notes" placeholder="Type your notes here..."></textarea>
                 </div>
             </div>
         </div>
