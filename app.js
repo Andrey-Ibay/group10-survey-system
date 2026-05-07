@@ -1,12 +1,37 @@
 //Stat object to store the state (the inputs).
 const state = {};
 
+const confirmationUpdate = (state) => {
+    //Updates the confirmation section with the values from the state object.
+    document.getElementById("username").textContent = state.user_name || "";
+    document.getElementById("age").textContent = state.age || "";
+    document.getElementById("dob").textContent = state.date_of_birth || "";
+    document.getElementById("emergency_contact").textContent = state.emergency_contact || "";
+    document.getElementById("gender").textContent = state.sex || "";
+    document.getElementById("address").textContent = state.address || "";
+    document.getElementById("last_medical_checkup").textContent = state.last_checkup || "";
+    document.getElementById("symptoms").textContent = state.symptoms ? state.symptoms.join(", ") : "";
+    document.getElementById("other_symptoms").textContent = state.other_symptoms || "";
+    document.getElementById("access").textContent = state.access || "";
+    document.getElementById("vaccination_status").textContent = state.vaccination_status || "";
+    document.getElementById("medication").textContent = state.medication || "";
+    document.getElementById("smoking").textContent = state.smoking || "";
+    document.getElementById("conditions").textContent = state.conditions || "";
+    document.getElementById("alcohol").textContent = state.alcohol.replaceAll("_", " ") || "";
+    document.getElementById("exercise").textContent = state.exercise.replaceAll("_", " ") || "";
+    document.getElementById("sleep").textContent = state.sleep.replaceAll("_", " ") || "";
+    document.getElementById("contact_contagious_14days").textContent = state.contact_contagious_14days || "";
+    document.getElementById("dengue_typhoid_6months").textContent = state.dengue_typhoid_6months || "";
+    document.getElementById("mental_health_2weeks").textContent = state.mental_health_2weeks.replaceAll("_", " ") || "";
+    document.getElementById("additional_notes").textContent = state.additional_notes || "";
+};
+
 //Function that takes input from the input fields and stores it in the state object.
 const inputHandler = (event) => {
     //Handles checkbox inputs.
     if (event.target.type === "checkbox") {
         //Finds checkboxes with the same name.
-        const checkBoxes = event.target.closest(".radio-group").querySelectorAll(`input[name="${event.target.name}"]:checked`);
+        const checkBoxes = event.target.closest(".radio-group").querySelectorAll(`input[name="${event.target.name}"]:checked, textarea[name="${event.target.name}"]`);
         //Turns the checkboxes into an array
         const symptoms = Array.from(checkBoxes).map(checkbox => checkbox.value);
         state[event.target.name] = symptoms;
@@ -23,7 +48,7 @@ const logState = (mutationList, observer) => {
             //loops through the state object.
             for(const key in state){
                 //takes all input fields then updates the value.
-                mutation.target.querySelectorAll(`input[name="${key}"]`).forEach(input => {
+                mutation.target.querySelectorAll(`input[name="${key}"], textarea[name="${key}"]`).forEach(input => {
                     //if it is a checkbox, it will check the checkbox.
                     if(input.type === "checkbox"){
                         if(state[key].includes(input.value)) {
@@ -59,6 +84,7 @@ function renderContent(currentURL) {
         const cloneConfirmation = document.importNode(sections.confirmationSection.content, true);
         //Actual rendering of the confirmation section.
         cardsContainer.replaceChildren(cloneConfirmation);
+        confirmationUpdate(state);
     } else if(currentURL === "/health.html") {
         const cloneSurvey = document.importNode(sections.surveySection.content, true);
         //Actual rendering of the survey section.
