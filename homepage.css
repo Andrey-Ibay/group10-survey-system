@@ -1,0 +1,221 @@
+:root {
+    --green: #4CAF50;
+    --blue: #4A90E2;
+}
+
+/* Navbar */
+.navbar {
+    padding: 15px 10%;
+    background: #fff;
+    border-bottom: 1px solid #f0f0f0;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+.nav-container { display: flex; justify-content: space-between; align-items: center; }
+.nav-brand { color: var(--green); font-weight: 700; text-decoration: none; font-size: 18px; }
+.nav-right { display: flex; gap: 35px; align-items: center; }
+.nav-link { color: var(--green); font-weight: 700; text-decoration: none; font-size: 15px; }
+
+.nav-icons { display: flex; gap: 20px; color: #999; }
+.icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.nav-icon { width: 24px; height: 24px; }
+.icon-wrapper:hover { transform: translateY(-5px) scale(1.1); color: var(--blue); }
+
+
+.hero {
+   font-size: 1.4rem;
+   color: var(--blue);
+   font-family: arial;
+   font-weight: 500;
+   margin-top: 100px;
+}
+
+.hero-1 {
+    font-size: 2.25rem;
+    color: var(--green);
+    font-family: arial; 
+    font-weight: 800;
+    margin-top: -20px;
+}
+
+.survey {
+text-align: center;
+font-family: Arial;
+font-size: 1.25rem;
+color: var(--blue);
+padding-top: 50px;
+margin-top: -10px;
+margin-bottom: 40px;
+}
+
+.surveys-container {
+  display: flex;
+  justify-content: center; 
+  flex-wrap: wrap; 
+  padding-top: 10px;
+  margin-top: -10px;
+}
+
+.survey-card {
+border: 2px solid var(--white);
+padding: 0px 0px 20px 0px;
+background: white;
+box-shadow: 0 10px 30px rgba(0,0,0,0.27);
+font-family: sans-serif;
+max-width: 400px;
+flex-wrap: wrap;
+gap: 20px;
+justify-content: center;
+display: flex;
+align-items: flex-start;
+margin: 1rem;
+border-radius: 10px;
+}
+
+.health-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    display: block;
+}
+
+.image-wrapper-1 {
+width: 100%;
+position: relative;
+}
+
+.survey-header-1 {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  color: white;
+  margin: 0;
+  padding: 5px 20px;
+  box-sizing: border-box; 
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.survey-body-1 {
+    font-size: 15px;
+    font-family: sans-serif;
+    text-align: left;
+    height: 75px;
+    margin-left: 25px;
+    margin-right: 25px;
+}
+
+.health-button {
+  color: white;
+  background-color: rgb(51, 51, 211);
+  font-size: 15px;
+  padding: 10px 17px;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 2px solid rgb(51, 51, 211);
+  display: block; 
+  margin-left: 250px;
+  text-decoration: none;
+}
+
+
+.survey-header-2 {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  color: white;
+  margin: 0;
+  padding: 5px 20px;
+  box-sizing: border-box; 
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.survey-body-2 {
+    font-size: 14px;
+    font-family: sans-serif;
+    text-align: left;
+    height: 75px;
+    margin-left: 25px;
+    margin-right: 25px;
+}
+
+.vendor-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    display: block;
+}
+
+.image-wrapper-2 {
+width: 100%;
+position: relative;
+}
+
+.vendor-button {
+color: white;
+background-color: rgb(51, 51, 211);
+font-size: 15px;
+padding: 10px 17px;
+border-radius: 10px;
+cursor: pointer;
+text-decoration: none;
+border: 2px solid rgb(51, 51, 211);
+display: block; 
+margin-left: 250px;
+}
+
+main{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.main-container {
+  width: 90%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+body {
+  background-color: #ffffff;
+  
+  background-image: radial-gradient(
+    circle at 10% 90%, 
+    rgba(144, 238, 144, 0.4) 0%,
+    rgba(255, 255, 255, 0) 50%
+  );
+  
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  min-height: 100vh;
+  margin: 0;
+}
+
+.welcomeTexts {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  width: 60%
+}
+
+@media (max-width: 60rem) {
+  .surveys-container {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  };
+  .welcomeTexts {
+    align-items: center;
+    text-align: center;
+  };
+}
