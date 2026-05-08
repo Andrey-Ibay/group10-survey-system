@@ -76,7 +76,7 @@
             <div class="form-card">
                 <div class="input-box">
                     <label>Full name (LN, FN, M.I.)</label>
-                    <input type="text" name="user_name" placeholder="e.g. Dela Cruz, Juan A.">
+                    <input type="text" name="user_name" placeholder="e.g. Dela Cruz, Juan A." required>
                 </div>
 
                 <div class="input-box">
@@ -134,6 +134,7 @@
                     <div class="input-box">
                         <label>Vaccination Status</label>
                         <select name="vaccination_status" class="custom-select">
+                            <option value="" disabled selected>Choose your answer</option>
                             <option value="unvaccinated">Unvaccinated</option>
                             <option value="partially_vaccinated">Partially Vaccinated</option>
                             <option value="vaccinated">Vaccinated</option>
@@ -236,7 +237,7 @@
                 <div class ="form-card">
                 <div class="input-box">
                     <label>Additional Health Notes</label>
-                    <textarea placeholder="Type your notes here..."></textarea>
+                    <textarea name="additional_notes" placeholder="Type your notes here..."></textarea>
                 </div>
             </div>
         </div>
@@ -246,47 +247,121 @@
     <template id="confirmationSection">
             <!-- SECTION 3 -->
             <div class="section-wrapper" id="section-3">
-                <div class="green-header confirmation-header">CONFIRMATION</div>
+                <div class="green-header confirmation-header">CONFIRMATION - Please Review Your Information Carefully</div>
                 <div class="form-card confirmation-card">
                     <h3 class="conf-title">PERSONAL INFORMATION</h3>
                     <table class="conf-table">
                         <tr>
                             <td class="conf-label">Full Name</td>
-                            <td class="conf-value">Dela Cruz, Juan A.</td>
+                            <td class="conf-value" id="username"></td>
                         </tr>
                         <tr>
                             <td class="conf-label">Age</td>
-                            <td class="conf-value">105</td>
+                            <td class="conf-value" id="age"></td>
                         </tr>
                         <tr>
                             <td class="conf-label">Date of Birth</td>
-                            <td class="conf-value">Sta. Mesa</td>
+                            <td class="conf-value" id="dob"></td>
                         </tr>
                         <tr>
                             <td class="conf-label">Emergency Contact</td>
-                            <td class="conf-value">Sta. Mesa</td>
+                            <td class="conf-value" id="emergency_contact"></td>
                         </tr>
                         <tr>
                             <td class="conf-label">Gender</td>
-                            <td class="conf-value">Male</td>
+                            <td class="conf-value" id="gender"></td>
                         </tr>
                         <tr>
                             <td class="conf-label">Address</td>
-                            <td class="conf-value">Sta. Mesa</td>
+                            <td class="conf-value" id="address"></td>
                         </tr>
                         <tr>
                             <td class="conf-label">Last Medical Check-up</td>
-                            <td class="conf-value">Sta. Mesa</td>
+                            <td class="conf-value" id="last_medical_checkup"></td>
                         </tr>
                     </table>
-                    <div class="health-notes">
-                        <div class="notes-title">Additional health notes</div>
-                        <p class="notes-desc">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam hendrerit nisi sed 
-                            sollicitudin pellentesque. Nunc posuere purus rhoncus pulvinar aliquam. Ut aliquet 
-                            tristique nisl vitae volutpat.
-                        </p>
+                </div>
+                <div class="section-wrapper" id="section-2">
+                    <div class="green-header">HEALTH STATUS</div>
+                        <div class="form-card">
+                            <div class="input-box">
+                                <label>Vaccination Status</label>
+                                <p id="vaccination_status"></p>
+                            </div>
+                        </div>
+                        <div class="form-card">
+                            <div class="input-box">
+                                <label>Recent Symptoms</label>
+                                <div class="radio-group">
+                                    <p id="symptoms"></p>
+                                    Others:
+                                    <p id="other_symptoms"></p> 
+                                </div>
+                                <br>
+                        <div class = "input-box">
+                            <label> Existing Conditions </label>
+                            <p id="conditions"></p>
+                        </div>    
                     </div>
+                </div>
+                        
+                        <div class = "form-card">
+                        <div class = "input-box">
+                            <br>
+                            <label> Do you have regular access to the Barangay Health Center or a primary care physician for your medical needs? </label>
+                            <div class = "radio-group">
+                                    <p id="access"></p>
+                                </div>
+                            <br>
+                        <label> Are you currently taking any daily prescription medications for maintenance (e.g., for blood pressure, cholesterol, heart conditions)? </label>
+                            <div class = "radio-group">
+                                <p id="medication"></p>
+                            </div>
+                            <br>
+                            <label> Which of the following best describes your current smoking or vaping habits? </label>
+                            <div class = "radio-group">
+                                <p id="smoking"></p>
+                            </div>
+                            <br>
+                            <label> How often do you consume alcoholic beverages? </label>
+                            <div class = "radio-group">
+                                <p id="alcohol"></p>
+                            </div>
+                            <br>
+                            <label> On average, how many days a week do you engage in at least 30 minutes of moderate to vigorous physical activity (e.g., brisk walking, sports, heavy manual labor)? </label>
+                            <div class = "radio-group">
+                                <p id="exercise"></p>
+                            </div>
+                            <br>
+                            <label> On a typical night, how many hours of sleep do you usually get? </label>
+                            <div class = "radio-group">
+                                <p id="sleep"></p>
+                            </div>
+                            <br>
+                            <label> In the past 14 days, have you been in close contact with anyone formally diagnosed with a highly contagious illness (e.g., COVID-19, Tuberculosis)? </label>
+                            <div class = "radio-group">
+                                <p id="contact_contagious_14days"></p>
+                            </div>
+                            <br>
+                            <label> Have you or anyone currently living in your household been diagnosed with Dengue or Typhoid fever in the past 6 months? </label>    
+                            <div class = "radio-group">
+                                <p id="dengue_typhoid_6months"></p>
+                            </div>
+                            <br>
+                            <label> Over the past 2 weeks, how often have you felt down, unusually stressed, or overly anxious? </label>
+                            <div class = "radio-group">
+                                <p id="mental_health_2weeks"></p>
+                            </div>
+                        </div>
+                    </div>
+                        <div class ="form-card">
+                        <div class="input-box">
+                            <label>Additional Health Notes</label>
+                            <p id="additional_notes"></p>
+                        </div>
+                    </div>
+                        </div>
+
                     <div class="form-actions">
                     <a href="end.html" class="btn-submit">SUBMIT</a>
                     </div>

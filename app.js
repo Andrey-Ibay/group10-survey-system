@@ -1,12 +1,57 @@
 //Stat object to store the state (the inputs).
 const state = {};
 
+const confirmationUpdateHealth = (state) => {
+    //Updates the confirmation section with the values from the state object.
+    document.getElementById("username").textContent = state.user_name || "N / A";
+    document.getElementById("age").textContent = state.age || "N / A";
+    document.getElementById("dob").textContent = state.date_of_birth || "N / A";
+    document.getElementById("emergency_contact").textContent = state.emergency_contact || "N / A";
+    document.getElementById("gender").textContent = state.sex || "N / A";
+    document.getElementById("address").textContent = state.address || "N / A";
+    document.getElementById("last_medical_checkup").textContent = state.last_checkup || "N / A";
+    document.getElementById("symptoms").textContent = state.symptoms ? state.symptoms.join(", ") : "N / A";
+    document.getElementById("other_symptoms").textContent = state.other_symptoms || "N / A";
+    document.getElementById("access").textContent = state.access || "N / A";
+    document.getElementById("vaccination_status").textContent = state.vaccination_status?.replaceAll("_", " ") || "N / A";
+    document.getElementById("medication").textContent = state.medication || "N / A";
+    document.getElementById("smoking").textContent = state.smoking || "N / A";
+    document.getElementById("conditions").textContent = state.conditions || "N / A";
+    document.getElementById("alcohol").textContent = state.alcohol?.replaceAll("_", " ") || "N / A";
+    document.getElementById("exercise").textContent = state.exercise?.replaceAll("_", " ") || "N / A";
+    document.getElementById("sleep").textContent = state.sleep?.replaceAll("_", " ") || "N / A";
+    document.getElementById("contact_contagious_14days").textContent = state.contact_contagious_14days || "N / A";
+    document.getElementById("dengue_typhoid_6months").textContent = state.dengue_typhoid_6months || "N / A";
+    document.getElementById("mental_health_2weeks").textContent = state.mental_health_2weeks?.replaceAll("_", " ") || "N / A";
+    document.getElementById("additional_notes").textContent = state.additional_notes || "N / A";
+};
+
+const confirmationUpdateVendor = (state) => {
+    //Updates the confirmation section with the values from the state object.
+    document.getElementById("user_name").textContent = state.user_name || "N / A";
+    document.getElementById("permit_num").textContent = state.permit_num || "N / A";
+    document.getElementById("sanitary_permit_num").textContent = state.sanitary_permit_num || "N / A";
+    document.getElementById("waste_management").textContent = state.waste_management ? state.waste_management.join(", ").replaceAll("_", " ") : "N / A";
+    document.getElementById("waste_management_others").textContent = state.waste_management_others || "N / A";
+    document.getElementById("sanitary_rating").textContent = state.sanitary || "N / A";
+    document.getElementById("start_time").textContent = state.start_time || "N / A";
+    document.getElementById("end_time").textContent = state.end_time || "N / A";
+    document.getElementById("additional_notes").textContent = state.additional_notes || "N / A";
+    document.getElementById("address").textContent = state.address || "N / A";
+    document.getElementById("contact_num").textContent = state.contact || "N / A";
+    document.getElementById("gender").textContent = state.gender || "N / A";
+    document.getElementById("age").textContent = state.age || "N / A";
+    document.getElementById("telephone_num").textContent = state.telephone_num || "N / A";
+    document.getElementById("stall_num").textContent = state.stall_num || "N / A";
+    document.getElementById("business_trade_name").textContent = state.business_trade_name || "N / A";
+};
+
 //Function that takes input from the input fields and stores it in the state object.
 const inputHandler = (event) => {
     //Handles checkbox inputs.
     if (event.target.type === "checkbox") {
         //Finds checkboxes with the same name.
-        const checkBoxes = event.target.closest(".radio-group").querySelectorAll(`input[name="${event.target.name}"]:checked`);
+        const checkBoxes = event.target.closest(".radio-group").querySelectorAll(`input[name="${event.target.name}"]:checked, textarea[name="${event.target.name}"], select[name="${event.target.name}"]`);
         //Turns the checkboxes into an array
         const symptoms = Array.from(checkBoxes).map(checkbox => checkbox.value);
         state[event.target.name] = symptoms;
@@ -23,7 +68,7 @@ const logState = (mutationList, observer) => {
             //loops through the state object.
             for(const key in state){
                 //takes all input fields then updates the value.
-                mutation.target.querySelectorAll(`input[name="${key}"]`).forEach(input => {
+                mutation.target.querySelectorAll(`input[name="${key}"], textarea[name="${key}"], select[name="${key}"]`).forEach(input => {
                     //if it is a checkbox, it will check the checkbox.
                     if(input.type === "checkbox"){
                         if(state[key].includes(input.value)) {
@@ -44,7 +89,7 @@ const logState = (mutationList, observer) => {
 };
 
 //Function that puts the content on the screen based on the URL. If the URL is "/confirmation", it will render the confirmation section.
-function renderContent(currentURL) {
+function renderContent(currentURL, previousURL) {
     const cardsContainer = document.querySelector(".cards-container");
     
     //Points toward the template elements in the HTML.
@@ -59,6 +104,11 @@ function renderContent(currentURL) {
         const cloneConfirmation = document.importNode(sections.confirmationSection.content, true);
         //Actual rendering of the confirmation section.
         cardsContainer.replaceChildren(cloneConfirmation);
+        if(previousURL === "/health.html"){
+            confirmationUpdateHealth(state);
+        }else if(previousURL === "/vendor.html"){
+            confirmationUpdateVendor(state);
+        }
     } else if(currentURL === "/health.html") {
         const cloneSurvey = document.importNode(sections.surveySection.content, true);
         //Actual rendering of the survey section.
@@ -82,16 +132,21 @@ function renderContent(currentURL) {
 };
 
 //Pushes the URL to the browser and renders the content
-const navigateToSection = (url) => {
+const navigateToSection = (url, currentURL) => {
     window.history.pushState({state}, "", url);
-    renderContent(url);
+    //url is the next section, currentURL is the previous section. This is used to determine which confirmation update function to call.
+    renderContent(url, currentURL);
 };
 
 //Event listener for the next button.
 const navigate = (url) => {
+    //Scrolls to the top of the page
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    //Stores the current URL before navigating to the next section.
+    const currentURL = window.location.pathname;
     //Prevents the page from refreshing
     window.event.preventDefault();
-    navigateToSection(url);
+    navigateToSection(url, currentURL);
 };
 
 //Function for the Back button to go back to the previous page.

@@ -87,7 +87,6 @@
                     <div class="radio-group">
                         <label class="radio-btn"><input type="radio" name="sex" value="male"> Male</label>
                         <label class="radio-btn"><input type="radio" name="sex" value="female"> Female</label>
-                        <label class="radio-btn"><input type="radio" name="sex" value ="other"> Other</label>
                     </div>
                 </div>
                 <div class="input-box">
@@ -123,6 +122,7 @@
                     <div class="input-box">
                         <label>Product Category</label>
                         <select class="custom-select" name="product_category">
+                            <option value="" disabled selected>Choose your answer...</option>
                             <option value="meat">Meat</option>
                             <option value="veggies">Veggies</option>
                             <option value="dry_goods">Dry Goods</option>
@@ -176,7 +176,7 @@
                     <label> Operating Hours </label>
                     <div class="time-range">
                     <input type="time" name="start_time" class="form-control" required>
-                    <span class="separator"> </span>
+                    <span class="separator"> to </span>
                     <input type="time" name="end_time" class="form-control" required>
                     </div>
 
@@ -196,34 +196,103 @@
     <template id="confirmationSection">
             <!-- SECTION 3 -->
             <div class="section-wrapper" id="section-3">
-                <div class="green-header confirmation-header">CONFIRMATION</div>
+                <div class="green-header confirmation-header">CONFIRMATION - Please Review Your Information Carefully</div>
                 <div class="form-card confirmation-card">
-                    <h3 class="conf-title">Personal Information</h3>
+                    <h3 class="conf-title">PERSONAL INFORMATION</h3>
                     <table class="conf-table">
                         <tr>
                             <td class="conf-label">Registered Owner</td>
-                            <td class="conf-value">Dela Cruz, Juan A.</td>
+                            <td class="conf-value" id="user_name"></td>
                         </tr>
                         <tr>
                             <td class="conf-label">Age</td>
-                            <td class="conf-value">105</td>
+                            <td class="conf-value" id="age"></td>
                         </tr>
                         <tr>
                             <td class="conf-label">Gender</td>
-                            <td class="conf-value">Male</td>
+                            <td class="conf-value" id="gender"></td>
                         </tr>
                         <tr>
                             <td class="conf-label">Business Address</td>
-                            <td class="conf-value">Sta. Mesa</td>
+                            <td class="conf-value" id="address"></td>
+                        </tr>
+                        <tr>
+                            <td class="conf-label">Contact Number</td>
+                            <td class="conf-value" id="contact_num"></td>
                         </tr>
                     </table>
-                    <div class="health-notes">
-                        <div class="notes-title">Additional Notes</div>
-                        <p class="notes-desc">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam hendrerit nisi sed 
-                            sollicitudin pellentesque. Nunc posuere purus rhoncus pulvinar aliquam. Ut aliquet 
-                            tristique nisl vitae volutpat.
-                        </p>
+                </div>
+                <div class="section-wrapper" id="section-2">
+                    <div class="green-header">Business Information</div>
+                        <div class="form-card">
+                            <div class ="input-box">
+                                <label> Business Trade Name </label>
+                                <p id="business_trade_name"></p>
+                                </div>
+                            <div class = "input-box">
+                                <label> Telephone Number </label>
+                                <div class="tel-input">
+                                <p id="telephone_num"></p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="form-card">
+                            <div class="input-box">
+                                <label>Product Category</label>
+                                <p id="product_category"></p>
+                            </div>
+                        </div>
+                        
+                        <div class = "form-card">
+                        <div class = "input-box">
+                            <label> Stall Number </label>
+                            <div class="stall-input">
+                            <p id="stall_num"></p>
+                            <br>  
+                            <br>
+                            </div>
+
+                            <label>Permit/BIN Number</label>
+                            <p id="permit_num"></p>
+                            <br>
+                            <br>
+
+                            <label> Sanitary Permit No. </label>
+                            <p id="sanitary_permit_num"></p>
+                            <br>
+                            <br>
+
+                            <label> Waste Management </label>
+                                <div class="radio-group">
+                                    <p id="waste_management"></p>
+                                    Others:
+                                    <p id="waste_management_others"></p>
+                                </div>
+                            <br>
+                            <br>
+
+                            <label>Sanitary Rating</label>
+                                <p id="sanitary_rating"></p>
+                            <br>
+                            <br>
+
+                            <label> Operating Hours </label>
+                            <div class="time-range">
+                            <p id="start_time"></p>
+                            <span class="separator"> to </span>
+                            <p id="end_time"></p>
+                            </div>
+
+                        </div>
+                        </div>
+
+                        <div class ="form-card">
+                        <div class="input-box">
+                            <label>Additional Notes</label>
+                            <p id="additional_notes"></p>
+                        </div>
                     </div>
                     <div class="form-actions">
                     <a href="end.html" class="btn-submit">SUBMIT</a>
