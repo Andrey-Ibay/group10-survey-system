@@ -140,6 +140,8 @@ const navigateToSection = (url, currentURL) => {
 
 //Event listener for the next button.
 const navigate = (url) => {
+    //Scrolls to the top of the page
+    window.scrollTo({ top: 0, behavior: "smooth" });
     //Stores the current URL before navigating to the next section.
     const currentURL = window.location.pathname;
     //Prevents the page from refreshing

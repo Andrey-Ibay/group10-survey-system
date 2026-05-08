@@ -3,6 +3,12 @@
     --blue: #4A90E2;
 }
 
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    background: #fff;
+}
+
 /* Navbar */
 .navbar {
     padding: 15px 10%;
