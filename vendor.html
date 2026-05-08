@@ -6,6 +6,7 @@
     <title>Survey Form - Full Version</title>
     <link rel="stylesheet" href="vendor.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
@@ -295,10 +296,20 @@
                         </div>
                     </div>
                     <div class="form-actions">
-                    <a href="end.html" class="btn-submit">SUBMIT</a>
+                    <button onclick="submitVendorSurvey()" class="btn-submit">SUBMIT</button>
                     </div>
                 </div>
             </div>
+    </template>
+    <template id="finishSection">
+        <!-- SECTION 4--> 
+        <div class="section-wrapper" id="section-4">
+            <div class="green-header">END</div>
+            <div class="form-card end-card">
+                <h3 class="thank-you-text">Thank you fellow citizen!</h3>
+                <p class="response-text">Response recorded.</p>
+            </div>
+        </div>
     </template>
     <script src="app.js" defer></script>
 </body>
