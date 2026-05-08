@@ -185,7 +185,6 @@ body {
 }
 
 .confirmation-card {
-    height: 500px;
     padding: 5px 30px 30px 30px;
 }
 
@@ -213,7 +212,7 @@ body {
     font-family: sans-serif;
     padding: 16px 12px;
     border-right: 1px solid #ccc; 
-    border-bottom: 1px solid #ccc; 
+    border-top: 1px solid #ccc; 
 }
 
 .conf-value {
@@ -223,7 +222,7 @@ width: 65%;
     font-size: 14px;
     font-family: sans-serif;
     padding: 16px 12px 16px 24px; 
-    border-bottom: 1px solid #ccc; 
+    border-top: 1px solid #ccc; 
 }
 
 .conf-table tr:first-child td {
@@ -298,6 +297,10 @@ width: 65%;
     font-size: 24px;
     font-weight: 600;
     color: #4A90E2;
+}
+
+#section-2 p{
+    color: var(--green);
 }
 
 .end-card {

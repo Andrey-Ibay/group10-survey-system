@@ -76,7 +76,7 @@
             <div class="form-card">
                 <div class="input-box">
                     <label>Full name (LN, FN, M.I.)</label>
-                    <input type="text" name="user_name" placeholder="e.g. Dela Cruz, Juan A.">
+                    <input type="text" name="user_name" placeholder="e.g. Dela Cruz, Juan A." required>
                 </div>
 
                 <div class="input-box">
@@ -134,6 +134,7 @@
                     <div class="input-box">
                         <label>Vaccination Status</label>
                         <select name="vaccination_status" class="custom-select">
+                            <option value="" disabled selected>Choose your answer</option>
                             <option value="unvaccinated">Unvaccinated</option>
                             <option value="partially_vaccinated">Partially Vaccinated</option>
                             <option value="vaccinated">Vaccinated</option>
@@ -293,6 +294,7 @@
                                 <label>Recent Symptoms</label>
                                 <div class="radio-group">
                                     <p id="symptoms"></p>
+                                    Others:
                                     <p id="other_symptoms"></p> 
                                 </div>
                                 <br>
@@ -352,17 +354,17 @@
                             </div>
                         </div>
                     </div>
-                        </div>
-
                         <div class ="form-card">
                         <div class="input-box">
                             <label>Additional Health Notes</label>
                             <p id="additional_notes"></p>
                         </div>
                     </div>
-                </div>
-                <div class="form-actions">
-                <a href="end.html" class="btn-submit">SUBMIT</a>
+                        </div>
+
+                    <div class="form-actions">
+                    <a href="end.html" class="btn-submit">SUBMIT</a>
+                    </div>
                 </div>
             </div>
     </template>
