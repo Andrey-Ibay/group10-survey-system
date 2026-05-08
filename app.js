@@ -98,8 +98,9 @@ function renderContent(currentURL, previousURL) {
     //Points toward the template elements in the HTML.
     const sections = {
         confirmationSection: document.querySelector("#confirmationSection"),
-        surveySection: document.querySelector("#surveySection"),
+        surveySectionHealth: document.querySelector("#surveySection"),
         surveySectionVendor: document.querySelector("#surveySectionVendor"),
+        surveySectionFinished: document.querySelector("#finishSection")
     }
 
     //Checks the URL and renders the appropriate section.
@@ -113,12 +114,15 @@ function renderContent(currentURL, previousURL) {
             confirmationUpdateVendor(state);
         }
     } else if(currentURL === "/health.html") {
-        const cloneSurvey = document.importNode(sections.surveySection.content, true);
+        const cloneSurvey = document.importNode(sections.surveySectionHealth.content, true);
         //Actual rendering of the survey section.
         cardsContainer.replaceChildren(cloneSurvey);
     } else if(currentURL === "/vendor.html") {
         const cloneSurvey = document.importNode(sections.surveySectionVendor.content, true);
         //Actual rendering of the survey section.
+        cardsContainer.replaceChildren(cloneSurvey);
+    } else if(currentURL === "/finish"){
+        const cloneSurvey = document.importNode(sections.surveySectionFinished.content, true);
         cardsContainer.replaceChildren(cloneSurvey);
     }
     
@@ -176,6 +180,7 @@ async function submitVendorSurvey(){
     }
 
     console.log("Submission Success.");
+    navigate("/finish");
 }
 //"popstate" is triggered when the user clicks the back or forward button. It will render the content based on the URL.
 window.addEventListener("popstate", () => {
