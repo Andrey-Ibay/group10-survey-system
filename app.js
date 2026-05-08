@@ -1,3 +1,6 @@
+const { createClient } = supabase;
+const db = createClient("https://yscicfmmwkikbdfvtwki.supabase.co", "sb_publishable_UZRIEjWtSTAZ1KflVlJVyA_2Ue2Dbuf");
+
 //Stat object to store the state (the inputs).
 const state = {};
 
@@ -154,6 +157,26 @@ const goBack = () => {
     window.history.back();
 }
 
+async function submitHealthSurvey(){
+    const {data, error} = await db.from("health_survey").insert([state]);
+
+    if(error){
+        console.error("Submit failed: ", error.message);
+        return;
+    }
+    console.log("Submission Success.");
+}
+
+async function submitVendorSurvey(){
+    const {data, error} = db.from("vendor_survey").insert([state]);
+
+    if(error){
+        console.error("Submit failed: ", error.message);
+        return;
+    }
+
+    console.log("Submission Success.");
+}
 //"popstate" is triggered when the user clicks the back or forward button. It will render the content based on the URL.
 window.addEventListener("popstate", () => {
     renderContent(window.location.pathname);
