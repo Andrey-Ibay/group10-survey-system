@@ -25,26 +25,35 @@ body {
 .nav-right {
   display: flex;
   align-items: center;
-  gap: 30px;
+  gap: 15px;
 }
 
 .survey-result-heading,.today-date, .username, .admin-text {
   color: white;
 }
 
+.survey-result-heading {
+  font-size: 1.5rem;
+}
+
 .email-icon { 
-  width: 24px; 
-  height: 24px; 
+  width: 25px; 
+  height: 25px; 
   color: #999;
 }
 
 .pfp {
-  width: 24px; 
-  height: 24px; 
+  width: 40px; 
+  height: 40px; 
   color: #999;
 }
 
 .admin-pfp {
   text-align: center;
+  font-size: 0.9rem;
+}
+
+.admin-text {
+  margin-top: -10px;
 }
 
