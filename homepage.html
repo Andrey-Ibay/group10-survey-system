@@ -7,72 +7,166 @@
     
     
     <link rel="stylesheet" href="homepage.css">
+    <link rel="stylesheet" href="login.css">
     
 </head>
 <body>
-    <nav class="navbar animate-fade-down">
-        <div class="nav-container">
+    <div class="main-containier">
+        <nav class="navbar animate-fade-down"> 
+            <div class="nav-container">
             <a href="#" class="nav-brand">Home</a>
-            <div class="nav-right">
-                <a href="#" class="nav-link">Contact Us</a>
+                <div class="nav-right">
+                <a href="#" class="nav-link">Contact</a>
                 <a href="#" class="nav-link">About</a>
-                <div class="nav-icons">
-                    <div class="icon-wrapper">
-                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                    </div>
-                    <div class="icon-wrapper">
+                    <div class="nav-icons">
+                        <div class="icon-wrapper pfp" onclick="toggleLogIn()">
                         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </nav>
+        </nav>
 
-    <main>
-        <div class="main-container">
-            <section class="welcomeTexts">
-                <h3 class="hero">Welcome to Brgy 146!</h3>
-                <h2 class="hero-1">Defining excellence together.</h2>
-            </section>
-    
-    
-            <h3 class="survey">Surveys</h3>
-            <section class="surveys-container">
-    
-                <!-- Survey Item 1 -->
-                <article class="survey-card">
-                <div class = "image-wrapper-1">
-                    <img src="assets/health-image.png" alt="HEALTH IMAGE" class="health-image">
-                    <div class="survey-header-1">
-                        <h3>BARANGAY HEALTH <br> MONITORING SYSTEM</h3>
-                    </div>
-                    </div>
-                    <div class="survey-body-1">
-                        <p>The barangay health monitoring system helps us monitor public health in our community.</p>
-                    </div>
-                        <a href="health.html" class="health-button">Take Survey</a>
-                
-                </article>
-    
-                <br>
-    
-                <!-- Survey Item 2 -->
-                <article class="survey-card">
+        <main>
+            <div class="main-container">
+                <section class="welcomeTexts">
+                    <h3 class="hero">Welcome to Brgy 146!</h3>
+                    <h2 class="hero-1">Defining excellence together.</h2>
+                </section>
+        
+        
+                <h3 class="survey">Surveys</h3>
+                <section class="surveys-container">
+        
+                    <!-- Survey Item 1 -->
+                    <article class="survey-card">
                     <div class = "image-wrapper-1">
-                        <img src="assets/vendor-image.png" alt="VENDOR IMAGE" class="vendor-image">
-                    <div class="survey-header-2">
-                        <h3>PUBLIC MARKET VENDOR <br> REGISTRATION </h3>
-                    </div>
-                    </div>
-                    <div class="survey-body-2">
-                        <p>A survey to help regulate our local market by tracking permits, products, and sanitation compliance.</p>
-                    </div>
-                        <a href="vendor.html" class="vendor-button">Take Survey</a>
+                        <img src="assets/health-image.png" alt="HEALTH IMAGE" class="health-image">
+                        <div class="survey-header-1">
+                            <h3>BARANGAY HEALTH <br> MONITORING SYSTEM</h3>
+                        </div>
+                        </div>
+                        <div class="survey-body-1">
+                            <p>The barangay health monitoring system helps us monitor public health in our community.</p>
+                        </div>
+                            <a href="health.html" class="health-button">Take Survey</a>
                     
-                </article>
-            </section>
-        </div>
-    </main>
+                    </article>
+        
+                    <br>
+        
+                    <!-- Survey Item 2 -->
+                    <article class="survey-card">
+                        <div class = "image-wrapper-1">
+                            <img src="assets/vendor-image.png" alt="VENDOR IMAGE" class="vendor-image">
+                        <div class="survey-header-2">
+                            <h3>PUBLIC MARKET VENDOR <br> REGISTRATION </h3>
+                        </div>
+                        </div>
+                        <div class="survey-body-2">
+                            <p>A survey to help regulate our local market by tracking permits, products, and sanitation compliance.</p>
+                        </div>
+                            <a href="vendor.html" class="vendor-button">Take Survey</a>
+                        
+                    </article>
+                </section>
+            </div>
+        </main>
+    </div>
 
+    <div class="login-container">
+        <img src="assets/barangaylogo.png" alt="barangay-logo" class="barangay-logo">
+
+        <h3 class="hello-heading">Hello, Admin!</h3>
+        <p class="sub-heading">Login to access your account</p>
+
+        <label for="email" class="email">Email</label>
+        <img src="assets/email-icon.png" alt="email-icon" class="email-icon">
+        <input type="text" name="email" id="email" placeholder="Enter your email" class="input-email">
+
+        <label for="password" class="password">Password</label>
+        <img src="assets/password-icon.png" alt="lock-icon" class="password-icon">
+        <input type="password" name="password" id="password" placeholder="Enter your password" class="input-password">
+
+        <img src="assets/eye-icon.png" alt="eye-icon" class="eye-icon" onclick="changeIcon()">
+        <div class="eye-dash"></div>
+
+        <input type="checkbox" name="remember" id="remember" class="remember">
+        <label for="remember" class="remember-label">Remember me</label>
+
+        <p class="forgot-password">Forgot password?</p>
+
+        <button class="login-button">Login</button>
+
+        <button class="close-btn" onclick="closeLogIn()"></button>
+
+        <div class="horizontal-line"></div>
+        <p class="msg">have a nice day</p>
+    </div>
+
+    <script>
+        const eyeDash = document.querySelector(".eye-dash");
+        const passwordField = document.querySelector(".input-password");
+        const inputField = document.querySelector(".input-email");
+        const loginContainer = document.querySelector(".login-container");
+        const loginIcon = document.querySelector(".pfp");
+        const mainContainer = document.querySelector(".main-container");
+        const closeButton = document.querySelector(".close-btn");
+
+        let loginToggle = false;
+
+        const changeIcon = () => {
+            eyeDash.style.display.includes("flex") ? eyeDash.style.display = "none" : eyeDash.style.display = "flex";
+
+            passwordField.type.includes("password") ? passwordField.type = "text" : passwordField.type = "password";
+        }
+
+        passwordField.addEventListener("focus", () => {
+            eyeDash.style.top = "65.35%";
+        });
+
+        passwordField.addEventListener("blur", () => {
+            eyeDash.style.top = "65.25%";
+        });
+
+        inputField.addEventListener("focus", () => {
+            eyeDash.style.top = "65.35%";
+        });
+
+        inputField.addEventListener("blur", () => {
+            eyeDash.style.top = "65.25%";
+        });
+
+        const toggleLogIn = () => {
+            if (!loginToggle) {
+                loginToggle = true;
+                loginContainer.style.display = "flex";
+                document.body.style.overflow = "hidden";
+
+                mainContainer.style.filter = "blur(8px)";
+                mainContainer.style.pointerEvents = "none";
+                mainContainer.style.userSelect = "none";
+
+                window.scrollTo({
+                    top: 0,
+                    left: 0,
+                    behavior: 'smooth' // This creates the sliding effect instead of a jump
+                });
+            } else {
+                loginToggle = false;
+                closeLogIn();
+            }
+        }
+
+        const closeLogIn = () => {
+            loginToggle = false;
+            loginContainer.style.display = "none";
+            document.body.style.overflow = "";
+
+            mainContainer.style.filter = "";
+            mainContainer.style.pointerEvents = "";
+            mainContainer.style.userSelect = "";
+        }
+    </script>
 </body>
 </html>

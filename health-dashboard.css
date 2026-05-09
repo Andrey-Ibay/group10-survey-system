@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: #1A1A1A;
+  margin: 0;
+  font-family: "Inter", sans-serif;
+}
+
+.nav-container {
+  position: sticky;
+  display: flex;
+  background-color: #111827;
+  padding: 15px;
+  padding-left: 40px;
+  padding-right: 90px;
+  top: 0;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.survey-result-heading,.today-date, .username, .admin-text {
+  color: white;
+}
+
+.email-icon { 
+  width: 24px; 
+  height: 24px; 
+  color: #999;
+}
+
+.pfp {
+  width: 24px; 
+  height: 24px; 
+  color: #999;
+}
+
+.admin-pfp {
+  text-align: center;
+}
+
