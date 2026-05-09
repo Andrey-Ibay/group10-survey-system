@@ -161,6 +161,7 @@ const goBack = () => {
     window.history.back();
 }
 
+//Submitting survey data to the database.
 async function submitHealthSurvey(){
     const {data, error} = await db.from("health_survey").insert([state]);
 
@@ -182,6 +183,122 @@ async function submitVendorSurvey(){
     console.log("Submission Success.");
     navigate("/finish");
 }
+
+//Fetches full database inputs of health survey.
+async function fetchHealthData(){
+    //returns an array of objects
+    const {data, error} = await db.from("health_survey")
+                            .select("*")
+                            .order("created_at", {ascending: false});
+    if(error){
+        console.error("Fetch failed: ", error.message);
+        return;
+    }
+
+    console.log(data);
+    return data;
+}
+
+//Fetches full database inputs of vendor survey.
+async function fetchVendorData(){
+    //returns an array of objects
+    const {data, error} = await db.from("vendor_survey")
+                            .select("*")
+                            .order("created_at", {ascending: false});
+    if(error){
+        console.error("Fetch failed: ", error.message);
+        return;
+    }
+
+    console.log(data);
+    return data;
+}
+
+/*---------------------- NEW TEST FUNCTIONS -------------------------
+//prepares and loads the data to dashboard.
+async function loadDataToDashboard(){
+    //arrays of objects
+    const vendorData = await fetchVendorData();
+    const healthData = await fetchHealthData();
+
+    renderDashboard(healthData, "health-container");
+
+}
+
+const renderDashboard = (responseData, containerID) =>{
+    const container = document.querySelector(`#${containerID}`);
+
+    const header = Object.keys(responseData[0]);
+    const value = responseData.map(key => Object.values(key))
+    const table = document.createElement("table");
+    const headRow = document.createElement("tr");
+    const dataRow = document.createElement("tr");
+    
+    header.forEach(h => {
+        const th = document.createElement("th");
+        th.textContent = h;
+        headRow.appendChild(th);
+    });
+
+    value.forEach(v => {
+        const td = document.createElement("td");
+        td.textContent = v;
+        dataRow.appendChild(td);
+    });
+    
+    table.appendChild(headRow);
+    table.appendChild(dataRow)
+    container.appendChild(table);
+
+    console.log(table);
+
+}
+*/
+
+
+
+//-------------------------------------------------------------------
+
+//------------------------------BAR VISUALIZATIONS------------------------------
+
+//------------------------------EXPORT-------------------------------
+
+async function prepareExport() {
+    const fetchHealth = await fetchHealthData();
+    exportCSV(fetchHealth, "health_dataset.csv");
+};
+
+function exportCSV(responseData, filename){
+    //Headers
+    const headers = Object.keys(responseData[0]);
+    //Row
+    const valuesPerResponse = responseData.map(response => Object.values(response));
+
+    //CSV File body
+    //Contains 2 arrays, the header and the body
+    const rowsCSV = [headers.join(","),
+        ...valuesPerResponse.map(value => value.map(data => 
+            Array.isArray(data) ? data.join(" | ") : String(data ?? "").replaceAll(",", "")
+        ).join(","))].join("\n")
+    
+    //console.log(valuesPerResponse.map(value => value.map(data => Array.isArray(data) ? data.join(" | ") : data) + "\n"))
+    console.log(rowsCSV);
+
+    //a downloadable blob
+    const blob = new Blob([rowsCSV], {type: "text/csv"});
+    const url = URL.createObjectURL(blob);
+
+    //download trigger
+    const aTag = document.createElement("a");
+    aTag.href = url;
+    aTag.download = filename;
+    aTag.click();
+
+    //cleanup
+    URL.revokeObjectURL(url);
+}
+
+
 //"popstate" is triggered when the user clicks the back or forward button. It will render the content based on the URL.
 window.addEventListener("popstate", () => {
     renderContent(window.location.pathname);
