@@ -11,7 +11,8 @@ async function checkAuth(){
     }
 }
 
-checkAuth();
+//Uncheck when implemented login.html
+//checkAuth();
 
 
 
