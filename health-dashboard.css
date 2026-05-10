@@ -5,11 +5,19 @@
 }
 
 body {
+  min-height: 100vh;
   background: white;
   margin: 0;
   font-family: "Inter", sans-serif;
 }
 
+main{
+  display: flex;
+  flex-direction: row;
+}
+.sidebar, .nav-left{
+  min-height: 100vh;
+}
 .nav-container {
   position: sticky;
   display: flex;
@@ -70,18 +78,16 @@ body {
 
 .nav-left {
   color: white;
-  position: absolute;
   width: 280px;
   height: 85dvh;
-  top: 15%;
-  padding-left: 25px;
+  padding: 25px 0px 0px 25px;
   opacity: 1;
   background-color: #D0FFD780;
-
 }
 
 .heading-nav-left {
   color: #36B249;
+  margin: 0;
   font-size: 1.6rem;
 }
 
@@ -163,7 +169,6 @@ body {
   font-weight: bold;
   border-radius: 10px;
   cursor: pointer;
-  margin-bottom: 20px;
 }
 
 .save-icon {
@@ -252,7 +257,6 @@ body {
   align-items: center;
   justify-content: center;
   gap: 20px;
-  margin-left: 265px;
   margin-top: 10px;
 }
 
@@ -262,19 +266,23 @@ body {
   justify-content: center;
   border-radius: 20px;
   width: 380px;
-  height: 110px;
   box-shadow: 0px 4px 10px 2px #b1b0b040;
   background: white;
 }
 
-.responses-icon-wrapper {
-  position: absolute;
-  top: 15%;
+.health-dashboard-container{
   display: flex;
-  width: 380px;
   align-items: center;
+  flex-direction: column;
+  width: 100%;
+  padding: 0rem 2rem 0rem 2rem;
+}
+.responses-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   gap: 35px;
-  padding-left: 45px;
+  padding-bottom: 1rem;
 }
 
 .top-3-txt {
@@ -283,20 +291,32 @@ body {
 
 .rsp {
   font-size: 2.3rem;
+  margin: 0;
   color: #36B249;
+}
+
+.outercontainer{
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+}
+.outer-outercontainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 
 .demohealth-container {
   z-index: 0;
-  position: absolute;
   gap: 20px;
+  padding: 2rem 0 0 0rem;
   color: black;
   display: flex;
-  align-items: start;
+  flex-direction: row;
+  justify-content: start;
   border-bottom: 1px solid #cccccc61;
-  width: 1180px;
-  top: 33.5%;
-  left: 20.4%;
+;
 }
 
 .demographics-button {
@@ -323,23 +343,18 @@ body {
   align-items: center;
   justify-content: center;
   background: white;
-  box-shadow: 0px 4px 10px 2px #b1b0b040;
+  box-shadow: 0px 0px 10px 2px #b1b0b040;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
 }
 
 .scrollable-container {
-  position: absolute;
-  top: 43.5%;
-  left: 20.4%;
   display: flex;
   align-items: start;
-  width: 850px;
-  height: 400px;     
+  width: 100%;   
+  height: 60vh;
   overflow-y: auto !important; 
   overflow-x: hidden;
-  padding-top: 20px;
-  padding-left: 20px;
   border-radius: 10px;
   color: black;
   background: white;
@@ -516,16 +531,18 @@ body {
   font-size: 1rem;
 }
 
+.scrollable-and-gender-container{
+  display: flex;
+  flex-direction: row;
+}
+
 .gender-result-container {
-  position: absolute;
   display: grid;
   justify-content: center;
   text-align: center;
   align-items: center;
-  top: 43.4%;
-  right: 2.7%;
   height: 400px;
-  width: 310px;
+  margin-left: 1rem;
   border-radius: 10px;
   background: white;
   box-shadow: 0px 4px 10px 2px #b1b0b040;
@@ -551,6 +568,7 @@ body {
 
 .male-num, .female-num {
   color: #36B249;
+  margin: 0;
   font-size: 2.3rem;
 }
 
