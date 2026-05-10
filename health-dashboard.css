@@ -149,7 +149,30 @@ body {
   cursor: pointer;
 }
 
-.log-out-btn:hover {
+.save-btn {
+  background-color: transparent;
+  border: 1px solid #36B249;
+  width: 200px;
+  height: 60px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding-left: 27px;
+  color: #36B249;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.save-icon {
+  width: 20px;
+  filter: blur(0.7px);
+}
+
+.log-out-btn:hover,
+.save-btn:hover {
   background-color: #01ff2716;
 }
 
@@ -499,8 +522,8 @@ body {
   justify-content: center;
   text-align: center;
   align-items: center;
-  top: 43.5%;
-  right: 2.6%;
+  top: 43.4%;
+  right: 2.7%;
   height: 400px;
   width: 310px;
   border-radius: 10px;
@@ -530,3 +553,14 @@ body {
   color: #36B249;
   font-size: 2.3rem;
 }
+
+/* Tablet */
+@media (max-width: 1199px) {
+
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+
+}
+

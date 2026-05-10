@@ -180,7 +180,13 @@
 
         document.addEventListener("keydown", (e) => {
             if (e.key === "Enter") {
-                loginAdmin();
+                const isVisible = window.getComputedStyle(loginContainer).display === "flex";
+                const currentEmail = inputField.value.trim();
+                const currentPass = passwordField.value.trim();
+
+                if (isVisible && currentEmail !== "" && currentPass !== "") {
+                    loginAdmin();
+                }
             }
         });
     </script>
