@@ -172,6 +172,7 @@ async function submitHealthSurvey(){
         return;
     }
     console.log("Submission Success.");
+    navigate("/finish");
 }
 
 async function submitVendorSurvey(){

@@ -11,7 +11,8 @@ async function checkAuth(){
     }
 }
 
-checkAuth();
+//uncomment when you are going to use it.
+//checkAuth();
 
 
 
