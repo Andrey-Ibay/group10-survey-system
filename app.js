@@ -1,6 +1,8 @@
 const { createClient } = supabase;
 const db = createClient("https://yscicfmmwkikbdfvtwki.supabase.co", "sb_publishable_UZRIEjWtSTAZ1KflVlJVyA_2Ue2Dbuf");
 
+// -------------------------------SURVEY SIDE SCRIPT--------------------------
+
 //Stat object to store the state (the inputs).
 const state = {};
 
@@ -260,8 +262,38 @@ const renderDashboard = (responseData, containerID) =>{
 //-------------------------------------------------------------------
 
 //------------------------------BAR VISUALIZATIONS------------------------------
+document.addEventListener("DOMContentLoaded", async () =>{
+    const divData = document.querySelectorAll(".data-field");
+    const line = document.querySelectorAll(".lines");
+    //Fetch only the specific data specified in divData from the database
+    
+    //returns an array of promises, where each promise is the returned object
+    //NOTE: a NodeList is not an array, therefore cannot be used with map()
+    //      which is why you must convert it to an array first.
 
-//------------------------------EXPORT-------------------------------
+    const data = Array.from(divData).map(async (question) => {
+        const questionData = await db.from("health_survey")
+                        .select("*", {count: "exact", head: true})
+                        .eq(question.dataset.row, question.dataset.item);
+
+        return questionData;
+    })
+    
+    //converts the promises from data into actual array of objects
+    const receivedData = await Promise.all(data);
+    //array of objects into arrays
+    const dataCount = receivedData.map(data => data.count);
+    //array where each element represents the average of each data.
+    const averages = dataCount.map(count => count / dataCount.length);
+
+    //Accesses every "line" in the html file
+    const renderedLine = line.forEach(element => element.style.strokeDashoffset = averages[0]); 
+    
+    console.log(averages);
+});
+
+
+//------------------------------DOWNLOAD DATASET-------------------------------
 
 async function prepareExport() {
     const fetchHealth = await fetchHealthData();
