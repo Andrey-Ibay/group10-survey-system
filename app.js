@@ -1,6 +1,8 @@
 const { createClient } = supabase;
 const db = createClient("https://yscicfmmwkikbdfvtwki.supabase.co", "sb_publishable_UZRIEjWtSTAZ1KflVlJVyA_2Ue2Dbuf");
 
+// -------------------------------SURVEY SIDE SCRIPT--------------------------
+
 //Stat object to store the state (the inputs).
 const state = {};
 
@@ -161,6 +163,7 @@ const goBack = () => {
     window.history.back();
 }
 
+//Submitting survey data to the database.
 async function submitHealthSurvey(){
     const {data, error} = await db.from("health_survey").insert([state]);
 
@@ -169,6 +172,7 @@ async function submitHealthSurvey(){
         return;
     }
     console.log("Submission Success.");
+    navigate("/finish");
 }
 
 async function submitVendorSurvey(){
@@ -182,6 +186,87 @@ async function submitVendorSurvey(){
     console.log("Submission Success.");
     navigate("/finish");
 }
+
+//Fetches full database inputs of health survey.
+async function fetchHealthData(){
+    //returns an array of objects
+    const {data, error} = await db.from("health_survey")
+                            .select("*")
+                            .order("created_at", {ascending: false});
+    if(error){
+        console.error("Fetch failed: ", error.message);
+        return;
+    }
+
+    console.log(data);
+    return data;
+}
+
+//Fetches full database inputs of vendor survey.
+async function fetchVendorData(){
+    //returns an array of objects
+    const {data, error} = await db.from("vendor_survey")
+                            .select("*")
+                            .order("created_at", {ascending: false});
+    if(error){
+        console.error("Fetch failed: ", error.message);
+        return;
+    }
+
+    console.log(data);
+    return data;
+}
+
+/*---------------------- NEW TEST FUNCTIONS -------------------------
+//prepares and loads the data to dashboard.
+async function loadDataToDashboard(){
+    //arrays of objects
+    const vendorData = await fetchVendorData();
+    const healthData = await fetchHealthData();
+
+    renderDashboard(healthData, "health-container");
+
+}
+
+const renderDashboard = (responseData, containerID) =>{
+    const container = document.querySelector(`#${containerID}`);
+
+    const header = Object.keys(responseData[0]);
+    const value = responseData.map(key => Object.values(key))
+    const table = document.createElement("table");
+    const headRow = document.createElement("tr");
+    const dataRow = document.createElement("tr");
+    
+    header.forEach(h => {
+        const th = document.createElement("th");
+        th.textContent = h;
+        headRow.appendChild(th);
+    });
+
+    value.forEach(v => {
+        const td = document.createElement("td");
+        td.textContent = v;
+        dataRow.appendChild(td);
+    });
+    
+    table.appendChild(headRow);
+    table.appendChild(dataRow)
+    container.appendChild(table);
+
+    console.log(table);
+
+}
+*/
+
+//----------------------------LOG IN--------------------------------
+
+
+
+//-------------------------------------------------------------------
+
+
+
+
 //"popstate" is triggered when the user clicks the back or forward button. It will render the content based on the URL.
 window.addEventListener("popstate", () => {
     renderContent(window.location.pathname);
