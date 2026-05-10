@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Brgy 146 Portal</title>
-    
-    
     <link rel="stylesheet" href="homepage.css">
     <link rel="stylesheet" href="login.css">
     
@@ -96,7 +94,7 @@
 
         <p class="forgot-password">Forgot password?</p>
 
-        <button class="login-button">Login</button>
+        <button class="login-button" onclick="loginAdmin()">Login</button>
 
         <button class="close-btn" onclick="closeLogIn()"></button>
 
@@ -112,6 +110,7 @@
         const loginIcon = document.querySelector(".pfp");
         const mainContainer = document.querySelector(".main-container");
         const closeButton = document.querySelector(".close-btn");
+        const loginButton = document.querySelector(".login-button");
 
         let loginToggle = false;
 
@@ -167,6 +166,23 @@
             mainContainer.style.pointerEvents = "";
             mainContainer.style.userSelect = "";
         }
+
+        const loginAdmin = () => {
+            const emailInput = inputField.value.trim();
+            const passInput = passwordField.value.trim();
+
+            if (emailInput === "gestercalvo@gmail.com" && passInput === "pogiako123") {
+                window.location.href = "health-dashboard.html";
+            } else {
+                alert("Wrong password or Email");
+            }
+        };
+
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+                loginAdmin();
+            }
+        });
     </script>
 </body>
 </html>
