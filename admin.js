@@ -25,7 +25,6 @@ async function loadHealthDashboard(){
     const percentageDisplay = document.querySelectorAll(".percent");
     const ageRespondents = document.querySelectorAll(".num-rsp-age");
     const agePercentage = document.querySelectorAll(".percent-age");
-    const line = document.querySelectorAll(".lines");
     const maleNum = document.querySelector(".male-num");
     const femaleNum = document.querySelector(".female-num");
     const overviewRsp = document.querySelector("#responses");
@@ -137,8 +136,6 @@ async function loadHealthDashboard(){
     //make it suitable for percentage use.
     const percentage = averages.map(a => a * 100);
     console.log(totalRespondents)
-    //Accesses every "line" in the html file
-    const renderedLine = line.forEach(element => element.style.strokeDashoffset = averages[0]); 
     
     //Rendering
     nodeListConversion.forEach((e, index) => e.style.setProperty('--progress', `${percentage[index]}%`))
@@ -165,40 +162,39 @@ async function loadHealthDashboard(){
 
 
 async function loadVendorDashboard(){
-    const divData = document.querySelectorAll(".data-field");
+    const divData = document.querySelectorAll(".data-field-vendor");
     const divDataAge = document.querySelectorAll(".data-field-age-vendor");
-    const questionRespondentDisplay = document.querySelectorAll(".num-rsp");
-    const percentageDisplay = document.querySelectorAll(".percent");
+    const questionRespondentDisplay = document.querySelectorAll(".num-rsp-vendor");
+    const percentageDisplay = document.querySelectorAll(".percent-vendor");
     const ageRespondents = document.querySelectorAll(".num-rsp-age-vendor");
     const agePercentage = document.querySelectorAll(".percent-age-vendor");
-    const line = document.querySelectorAll(".lines");
-    const maleNum = document.querySelector(".male-num");
-    const femaleNum = document.querySelector(".female-num");
+    const maleNum = document.querySelector(".male-num-vendor");
+    const femaleNum = document.querySelector(".female-num-vendor");
     const overviewRsp = document.querySelector("#responses-vendor");
     const overviewSick = document.querySelector("#sanitary-avg");
     const overviewSymptom = document.querySelector("#top-pc");
 
     //total number of respondents
-    const { count: totalRespondents } = await db.from("health_survey")
+    const { count: totalRespondents } = await db.from("vendor_survey")
                                                 .select("*", { count: "exact", head: true})
 
     overviewRsp.textContent = totalRespondents;
 
-    //Display of symptoms and sickness
-    const symptoms = await Promise.all([
-        db.from("health_survey")
+    //Display of waste management
+    const wastemanagement = await Promise.all([
+        db.from("vendor_survey")
             .select("*", {count: "exact", head: true})
             .contains("symptoms", ["fever"]),
-        db.from("health_survey")
+        db.from("vendor_survey")
             .select("*", {count: "exact", head: true})
             .contains("symptoms", ["cough"]),
-        db.from("health_survey")
+        db.from("vendor_survey")
             .select("*", {count: "exact", head: true})
             .contains("symptoms", ["fatigue"]),
-        db.from("health_survey")
+        db.from("vendor_survey")
             .select("*", {count: "exact", head: true})
             .contains("symptoms", ["loss_of_taste_smell"]),
-        db.from("health_survey")
+        db.from("vendor_survey")
             .select("*", {count: "exact", head: true})
             .contains("symptoms", ["others"]),
     ]);
@@ -283,8 +279,7 @@ async function loadVendorDashboard(){
     //make it suitable for percentage use.
     const percentage = averages.map(a => a * 100);
     console.log(totalRespondents)
-    //Accesses every "line" in the html file
-    const renderedLine = line.forEach(element => element.style.strokeDashoffset = averages[0]); 
+    
     
     //Rendering
     nodeListConversion.forEach((e, index) => e.style.setProperty('--progress', `${percentage[index]}%`))
@@ -309,9 +304,44 @@ async function loadVendorDashboard(){
 
 //------------------------------DOWNLOAD DATASET-------------------------------
 
-async function prepareExport() {
-    const fetchHealth = await fetchHealthData();
-    exportCSV(fetchHealth, "health_dataset.csv");
+//Fetches full database inputs of health survey.
+async function fetchHealthData(){
+    //returns an array of objects
+    const {data, error} = await db.from("health_survey")
+                            .select("*")
+                            .order("created_at", {ascending: false});
+    if(error){
+        console.error("Fetch failed: ", error.message);
+        return;
+    }
+
+    console.log(data);
+    return data;
+}
+
+//Fetches full database inputs of vendor survey.
+async function fetchVendorData(){
+    //returns an array of objects
+    const {data, error} = await db.from("vendor_survey")
+                            .select("*")
+                            .order("created_at", {ascending: false});
+    if(error){
+        console.error("Fetch failed: ", error.message);
+        return;
+    }
+
+    console.log(data);
+    return data;
+}
+
+async function prepareExport(dataset) {
+    if(dataset === "vendor"){
+        const fetchHealth = await fetchHealthData();
+        exportCSV(fetchHealth, "health_dataset.csv");
+    }else{
+        const fetchHealth = await fetchHealthData();
+        exportCSV(fetchHealth, "health_dataset.csv");
+    }
 };
 
 function exportCSV(responseData, filename){
