@@ -171,8 +171,8 @@ async function loadVendorDashboard(){
     const maleNum = document.querySelector(".male-num-vendor");
     const femaleNum = document.querySelector(".female-num-vendor");
     const overviewRsp = document.querySelector("#responses-vendor");
-    const overviewSick = document.querySelector("#sanitary-avg");
-    const overviewSymptom = document.querySelector("#top-pc");
+    const overviewSan = document.querySelector("#sanitary-avg");
+    const overviewPC = document.querySelector("#top-pc");
 
     //total number of respondents
     const { count: totalRespondents } = await db.from("vendor_survey")
@@ -181,53 +181,56 @@ async function loadVendorDashboard(){
     overviewRsp.textContent = totalRespondents;
 
     //Display of waste management
-    const wastemanagement = await Promise.all([
+    const wasteManagement = await Promise.all([
         db.from("vendor_survey")
             .select("*", {count: "exact", head: true})
-            .contains("symptoms", ["fever"]),
+            .contains("waste_management", ["daily_cleaning"]),
         db.from("vendor_survey")
             .select("*", {count: "exact", head: true})
-            .contains("symptoms", ["cough"]),
+            .contains("waste_management", ["segregation"]),
         db.from("vendor_survey")
             .select("*", {count: "exact", head: true})
-            .contains("symptoms", ["fatigue"]),
+            .contains("waste_management", ["proper_waste_disposal"]),
         db.from("vendor_survey")
             .select("*", {count: "exact", head: true})
-            .contains("symptoms", ["loss_of_taste_smell"]),
-        db.from("vendor_survey")
-            .select("*", {count: "exact", head: true})
-            .contains("symptoms", ["others"]),
+            .contains("waste_management", ["others"]),
     ]);
 
     //turns results into an array
-    const symptomsArray = symptoms.map(s => s.count);
+    const wasteManagementArray = wasteManagement.map(s => s.count);
     
     //Reference array for labelling
-    const symptomNames = ["Fever", "Cough", "Fatigue", "Loss of taste/smell", "Others"];
+    const wmArray = ["Daily Cleaning", "Segregation", "Grease Trap", "Proper Waste Disposal", "Others"];
     //Rendering the most common symptom
-    overviewSymptom.textContent = symptomNames[symptomsArray.indexOf(Math.max(...symptomsArray))];
+    overviewPC.textContent = wmArray[wasteManagementArray.indexOf(Math.max(...wasteManagementArray))];
 
-    //Fetches the total number of people who are sick (checks if symptoms is not empty)
-    const { count: totalSickPeople } = await db.from("health_survey")
-                                                .select("*", {count: "exact", head: true})
-                                                .not("symptoms", "is", null);
-
-    overviewSick.textContent = totalSickPeople;
+    //use later for sanitary average
+    const sanitaryRates = await db.from("vendor_survey")
+                                    .select("sanitary")
+    
+    //Turns sanitary scores into one array
+    const sanitaryScores = sanitaryRates.data.map(data => Number(data.sanitary));
+    //Adds the scores
+    const sanitaryScoresSum = Math.sumPrecise(sanitaryScores);
+    
+    const sanitaryAverage = sanitaryScoresSum / sanitaryScores.length;
+    
+    overviewSan.textContent = sanitaryAverage.toFixed(1);
 
     //Fetches data for age groups
     const ages = await Promise.all([
-        db.from("health_survey")
+        db.from("vendor_survey")
             .select("*", {count: "exact", head: true})
             .lte("age", 12),
-        db.from("health_survey")
+        db.from("vendor_survey")
             .select("*", {count: "exact", head: true})
             .lte("age", 19)
             .gt("age", 12),
-        db.from("health_survey")
+        db.from("vendor_survey")
             .select("*", {count: "exact", head: true})
             .lte("age", 59)
             .gt("age", 19),
-        db.from("health_survey")
+        db.from("vendor_survey")
             .select("*", {count: "exact", head: true})
             .gt("age", 59),   
     ]);
@@ -252,12 +255,12 @@ async function loadVendorDashboard(){
     const data = Array.from(divData).map(async (question) => {
         //If the element expects an array
         if(question.dataset.type === "array"){
-            return db.from("health_survey")
+            return db.from("vendor_survey")
                         .select("*", {count: "exact", head: true})
                         .contains(question.dataset.row, [question.dataset.item]);
 
         }
-        return db.from("health_survey")
+        return db.from("vendor_survey")
                     .select("*", {count: "exact", head: true})
                     .eq(question.dataset.row, question.dataset.item);
 
@@ -289,10 +292,10 @@ async function loadVendorDashboard(){
     
     //Number of males and females
     const [males, females] = await Promise.all([
-        db.from("health_survey")
+        db.from("vendor_survey")
             .select("*", {count: "exact", head: true})
             .eq("sex", "male"),
-        db.from("health_survey")
+        db.from("vendor_survey")
             .select("*", {count: "exact", head: true})
             .eq("sex", "female")
     ])
