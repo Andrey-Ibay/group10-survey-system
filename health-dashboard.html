@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="health-dashboard.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <title>Health Dash Board</title>
 </head>
@@ -49,29 +50,36 @@
       </div>
     </nav>
   
-    <!--<div class="health-dashboard-container">
+    <div class="health-dashboard-container">
       <div class="three-boxes-container">
+         
           <div class="box-1">
-            <h3>Total Responses</h3>
             <div class="responses-icon-wrapper">
-              <img src="assets/responses-icon.png" alt="responses-icon">
-              <h4 class="rsp" id="responses">0</h4>
+              <div class="metric-icon"><i class="fa-solid fa-user-group"></i></div>
+              <div class="metric-info">
+                <h3>Total Responses</h3>
+                <h4 class="rsp" id="responses">0</h4>
+              </div>
             </div>
           </div>
   
           <div class="box-2">
-            <h3>Sick Individuals</h3>
             <div class="responses-icon-wrapper">
               <img src="assets/sick-icon.png" alt="sick-icon">
-              <h4 class="rsp" id="sick">0</h4>
+              <div class="metric-info">
+                <h3>Sanitary Average</h3>
+                <h4 class="rsp" id="sick">0</h4>
+              </div>
             </div>
           </div>
   
           <div class="box-3">
-            <h3>Most Common Symptom</h3>
             <div class="responses-icon-wrapper">
               <img src="assets/symptoms-icon.png" alt="symptoms-icon">
-              <h4 class="rsp" id="mostsymptom"></h4>
+              <div class="metric-info">
+                <h3>Frequent Product Categories</h3>
+                <h4 class="rsp" id="mostsymptom"></h4>
+              </div>
             </div>
             
           </div>
@@ -87,7 +95,7 @@
             <h4>Health Status</h4>
           </div>
   
-          <button class="save-btn" onclick="prepareExport()"><img src="assets/save-icon.png" alt="save-icon" class="save-icon">Export Dataset as CSV</button>
+          <button class="save-btn" onclick="prepareExport('health')"><img src="assets/save-icon.png" alt="save-icon" class="save-icon">Export Dataset as CSV</button>
           </div>
         <div class="outercontainer">
           <div class="scrollable-container">
@@ -560,7 +568,8 @@
               </div>
             </div>
         
-        </div>
+          </div>
+          
           <div class="gender-result-container">
             <div class="male-wrapper">
               <h4 class="male-txt">Male</h4>
@@ -579,33 +588,38 @@
               </div>
             </div>
           </div>
-        
         </div>
         </div>
-    </div>-->
+    </div>
     <div class="vendor-dashboard-container">
       <div class="three-boxes-container">
           <div class="box-1">
-            <h3>Total Responses</h3>
             <div class="responses-icon-wrapper">
-              <img src="assets/responses-icon.png" alt="responses-icon">
-              <h4 class="rsp" id="responses-vendor">0</h4>
+              <div class="metric-icon"><i class="fa-solid fa-user-group"></i></div>
+              <div class="metric-info">
+                <h3>Total Responses</h3>
+                <h4 class="rsp" id="responses-vendor">0</h4>
+              </div>
             </div>
           </div>
   
           <div class="box-2">
-            <h3>Sanitary Average</h3>
             <div class="responses-icon-wrapper">
-              <img src="assets/sick-icon.png" alt="sick-icon">
-              <h4 class="rsp" id="sanitary-avg">0</h4>
+              <div class="metric-icon"><i class="fa-solid fa-user-group"></i></div>
+              <div class="metric-info">
+                <h3>Sanitary Average</h3>
+                <h4 class="rsp" id="sanitary-avg">0</h4>
+              </div>
             </div>
           </div>
   
           <div class="box-3">
-            <h3>Frequent Product Categories</h3>
             <div class="responses-icon-wrapper">
-              <img src="assets/symptoms-icon.png" alt="symptoms-icon">
-              <h4 class="rsp" id="top-pc"></h4>
+              <div class="metric-icon"><i class="fa-solid fa-chart-pie"></i></div>
+              <div class="metric-info">
+                <h3>Frequent Product Categories</h3>
+                <h4 class="rsp" id="top-pc"></h4>
+              </div>
             </div>
             
           </div>
@@ -613,7 +627,7 @@
         <div class="outer-outercontainer">
           <div class="demohealth-container">
         
-          <div class="demographics-button-vendor" onclick="toggleActiveDemo()">
+          <div class="demographics-button-vendor" onclick="toggleActiveDemoVendor()">
             <h4>Demographics</h4>
           </div>
   
@@ -627,7 +641,7 @@
           <div class="scrollable-container">
             <div class="content-box">
              
-              <div class="question-container-demo">
+              <div class="question-container-demo-vendor">
                 <p class="question">Age</p>
                 <div class="choices-1-container">
                   <div class="data-field-age-vendor">
@@ -735,7 +749,7 @@
               </div>
     
               <div class="question-container">
-                <p class="question">Recent Symptoms</p>
+                <p class="question">Waste Management</p>
                 <div class="choices-1-container">
                   <div class="data-field-vendor" data-row="waste_management" data-item="daily_cleaning" data-type="array">
                     <p class="choice">Daily Cleaning</p>
@@ -839,26 +853,26 @@
               </div>
         
         </div>
-          <div class="gender-result-container">
-            <div class="male-wrapper">
-              <h4 class="male-txt">Male</h4>
-      
-              <div class="male-icon-wrapper">
-                <img src="assets/male-icon.png" alt="male-icon">
-                <h3 class="male-num-vendor">0</h3>
-              </div>
-            </div>
-            <div class="female-wrapper">
-              <h4 class="female-txt">Female</h4>
-      
-              <div class="female-icon-wrapper">
-                <img src="assets/female-icon.png" alt="female-icon">
-                <h3 class="female-num-vendor">0</h3>
-              </div>
-            </div>
-          </div>
         
+      </div>
+      <div class="gender-result-container">
+        <div class="male-wrapper">
+          <h4 class="male-txt">Male</h4>
+  
+          <div class="male-icon-wrapper">
+            <img src="assets/male-icon.png" alt="male-icon">
+            <h3 class="male-num-vendor">0</h3>
+          </div>
         </div>
+        <div class="female-wrapper">
+          <h4 class="female-txt">Female</h4>
+  
+          <div class="female-icon-wrapper">
+            <img src="assets/female-icon.png" alt="female-icon">
+            <h3 class="female-num-vendor">0</h3>
+          </div>
+        </div>
+      </div>
         </div>
     </div>
     <div class="logout-confirm-container">
