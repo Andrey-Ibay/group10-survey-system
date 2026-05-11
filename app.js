@@ -176,7 +176,7 @@ async function submitHealthSurvey(){
     navigate('/finish');
 }
 
-async function submitVendorSurvey(event){
+async function submitVendorSurvey(){
     const {data, error} = await db.from("vendor_survey").insert([state]);
 
     if(error){
