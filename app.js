@@ -42,13 +42,14 @@ const confirmationUpdateVendor = (state) => {
     document.getElementById("start_time").textContent = state.start_time || "N / A";
     document.getElementById("end_time").textContent = state.end_time || "N / A";
     document.getElementById("additional_notes").textContent = state.additional_notes || "N / A";
-    document.getElementById("address").textContent = state.address || "N / A";
-    document.getElementById("contact_num").textContent = state.contact || "N / A";
-    document.getElementById("gender").textContent = state.gender || "N / A";
+    document.getElementById("address").textContent = state.business_address || "N / A";
+    document.getElementById("contact_num").textContent = state.contact_num || "N / A";
+    document.getElementById("gender").textContent = state.sex || "N / A";
     document.getElementById("age").textContent = state.age || "N / A";
     document.getElementById("telephone_num").textContent = state.telephone_num || "N / A";
     document.getElementById("stall_num").textContent = state.stall_num || "N / A";
     document.getElementById("business_trade_name").textContent = state.business_trade_name || "N / A";
+    document.getElementById("product_category").textContent = state.product_category || "N / A";
 };
 
 //Function that takes input from the input fields and stores it in the state object.
