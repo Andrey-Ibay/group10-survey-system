@@ -150,12 +150,12 @@ const navigateToSection = (url, currentURL) => {
 
 //Event listener for the next button.
 const navigate = (url) => {
+    //Prevents the page from refreshing
+    //window.event.preventDefault();
     //Scrolls to the top of the page
     window.scrollTo({ top: 0, behavior: "smooth" });
     //Stores the current URL before navigating to the next section.
     const currentURL = window.location.pathname;
-    //Prevents the page from refreshing
-    window.event.preventDefault();
     navigateToSection(url, currentURL);
 };
 
@@ -173,7 +173,7 @@ async function submitHealthSurvey(){
         return;
     }
     console.log("Submission Success.");
-    navigate("/finish");
+    navigate('/finish');
 }
 
 async function submitVendorSurvey(){
@@ -185,7 +185,7 @@ async function submitVendorSurvey(){
     }
 
     console.log("Submission Success.");
-    navigate("/finish");
+    navigate('/finish');
 }
 
 
