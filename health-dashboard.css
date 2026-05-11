@@ -158,7 +158,7 @@ main{
 .save-btn {
   background-color: transparent;
   border: 1px solid #36B249;
-  width: 200px;
+  width: 16rem;
   height: 60px;
   display: flex;
   gap: 12px;
@@ -257,6 +257,7 @@ main{
   align-items: center;
   justify-content: center;
   gap: 20px;
+  width: 100%;
   margin-top: 10px;
 }
 
@@ -265,7 +266,7 @@ main{
   align-items: center;
   justify-content: center;
   border-radius: 20px;
-  width: 380px;
+  padding: 0 4rem 0 4rem;
   box-shadow: 0px 4px 10px 2px #b1b0b040;
   background: white;
 }
@@ -297,13 +298,14 @@ main{
 
 .outercontainer{
   display: flex;
-  flex-direction: column;
-  width: 70%;
+  flex-direction: row;
+  width: 100%;
 }
 .outer-outercontainer{
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: start;
+  align-items: start;
+  flex-direction: column;
   width: 100%;
 }
 
@@ -351,7 +353,7 @@ main{
 .scrollable-container {
   display: flex;
   align-items: start;
-  width: 100%;   
+  width: 80%;   
   height: 60vh;
   overflow-y: auto !important; 
   overflow-x: hidden;
@@ -431,7 +433,8 @@ main{
     margin-top: -10px;
 }
 
-.choices-1, .choices-2, .choices-3, .choices-4, .choices-5 {
+/*The :not prevents the following selectors from inheriting the design*/
+.data-field, .data-field-age{
   position: relative;
   width: 70%;
   border-radius: 10px;
@@ -442,22 +445,22 @@ main{
   gap: 20px;
   align-items: center;
   justify-content: center;
-  background-color: #D0FFD780;
+  background-color: #76df85f6;
   color: white;
 }
 
-.choices-1::after {
+.data-field::after, .data-field-age::after {
   content: "";
   border-radius: 10px;
   position: absolute;
   top: 0;
   left: 0;
   height: 100%;
-  width: 56%;              
+  width: var(--progress, 0%);              
   background-color: #36B249; 
   z-index: 0;             
 }
-
+/*
 .choices-2::after {
   content: "";
   border-radius: 10px;
@@ -505,7 +508,7 @@ main{
   background-color: #36B249; 
   z-index: 0;             
 }
-
+*/
 .choice {
   flex: 1;
   z-index: 1;
@@ -514,51 +517,54 @@ main{
 .num-percent-container {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   row-gap: 20px;
   column-gap: 20px;
+  width: 20%;
   margin-right: 20px;
 }
 
-.num-rsp {
-  font-size: 0.7rem;
+.num-rsp, .num-rsp-age {
+  font-size: 0.8rem;
   font-weight: 500;
 }
 
-.percent {
+.percent, .percent-age {
   color: #36B249;
   font-weight: bold;
   font-size: 1rem;
 }
 
-.scrollable-and-gender-container{
-  display: flex;
-  flex-direction: row;
-}
-
 .gender-result-container {
-  display: grid;
-  justify-content: center;
-  text-align: center;
-  align-items: center;
-  height: 400px;
+  display: flex;
+  flex-direction: column;
   margin-left: 1rem;
+  width: 30%;
   border-radius: 10px;
-  background: white;
-  box-shadow: 0px 4px 10px 2px #b1b0b040;
 }
 
 .male-txt, .female-txt {
   color: black;
-  margin-top: 45px;
+  margin: 0;
+  padding: 0 2rem 0 2rem;
+}
+.male-wrapper, .female-wrapper{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: white;
+  padding: 2rem;
+  margin: 1rem;
+  box-shadow: 0px 4px 10px 2px #b1b0b040;
+  border-radius: 10px;
 }
 
 .male-icon-wrapper, .female-icon-wrapper {
   display: flex;
   align-items: center;
-  margin-top: -60px;
-  padding-left: 5px;
+  padding: 1rem;
   gap: 10px;
+  
 }
 
 .line-dividor {

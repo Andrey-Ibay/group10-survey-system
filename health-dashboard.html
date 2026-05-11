@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="health-dashboard.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <title>Health Dash Board</title>
 </head>
 <body>
@@ -54,7 +55,7 @@
             <h3>Total Responses</h3>
             <div class="responses-icon-wrapper">
               <img src="assets/responses-icon.png" alt="responses-icon">
-              <h4 class="rsp">2504</h4>
+              <h4 class="rsp" id="responses">0</h4>
             </div>
           </div>
   
@@ -62,7 +63,7 @@
             <h3>Sick Individuals</h3>
             <div class="responses-icon-wrapper">
               <img src="assets/sick-icon.png" alt="sick-icon">
-              <h4 class="rsp">129</h4>
+              <h4 class="rsp" id="sick">0</h4>
             </div>
           </div>
   
@@ -70,13 +71,12 @@
             <h3>Most Common Symptom</h3>
             <div class="responses-icon-wrapper">
               <img src="assets/symptoms-icon.png" alt="symptoms-icon">
-              <h4 class="rsp">Fever</h4>
+              <h4 class="rsp" id="mostsymptom"></h4>
             </div>
             
           </div>
         </div>
         <div class="outer-outercontainer">
-        <div class="outercontainer">
           <div class="demohealth-container">
         
           <div class="demographics-button" onclick="toggleActiveDemo()">
@@ -87,51 +87,51 @@
             <h4>Health Status</h4>
           </div>
   
-          <button class="save-btn"><img src="assets/save-icon.png" alt="save-icon" class="save-icon">Export to CSV</button>
+          <button class="save-btn" onclick="prepareExport()"><img src="assets/save-icon.png" alt="save-icon" class="save-icon">Export Dataset as CSV</button>
           </div>
-          <div class="scrollable-and-gender-container">
+        <div class="outercontainer">
           <div class="scrollable-container">
             <div class="content-box">
     
               <div class="question-container-demo">
                 <p class="question">Age</p>
                 <div class="choices-1-container">
-                  <div class="choices-1">
-                    <p class="choice">0 - 12</p>
+                  <div class="data-field-age">
+                    <p class="choice">0 - 12 years old</p>
                   </div>
                   <div class="num-percent-container">
-                    <p class="num-rsp">3534</p>
-                    <p class="percent">56%</p>
+                    <p class="num-rsp-age">0</p>
+                    <p class="percent-age">0%</p>
                   </div>
                 </div>
     
                 <div class="choices-2-container">
-                  <div class="choices-2">
-                    <p class="choice">13 - 19</p>
+                  <div class="data-field-age">
+                    <p class="choice">13 - 19 years old</p>
                   </div>
                   <div class="num-percent-container">
-                    <p class="num-rsp">504</p>
-                    <p class="percent">21%</p>
+                    <p class="num-rsp-age">0</p>
+                    <p class="percent-age">0%</p>
                   </div>
                 </div>
                 
                 <div class="choices-3-container">
-                  <div class="choices-3" >
-                    <p class="choice">20 - 59</p>
+                  <div class="data-field-age" >
+                    <p class="choice">20 - 59 years old</p>
                   </div>
                   <div class="num-percent-container">
-                    <p class="num-rsp">769</p>
-                    <p class="percent">33%</p>
+                    <p class="num-rsp-age">0</p>
+                    <p class="percent-age">0%</p>
                   </div>
                 </div>
     
                 <div class="choices-4-container">
-                  <div class="choices-4" >
-                    <p class="choice">60+</p>
+                  <div class="data-field-age" >
+                    <p class="choice">60+ years old</p>
                   </div>
                   <div class="num-percent-container">
-                    <p class="num-rsp">769</p>
-                    <p class="percent">83%</p>
+                    <p class="num-rsp-age">0</p>
+                    <p class="percent-age">0%</p>
                   </div>
                 </div>
               </div>
@@ -139,7 +139,7 @@
               <div class="question-container">
                 <p class="question">Vaccination Status</p>
                 <div class="choices-1-container">
-                  <div class="choices-1" data-row="vaccination_status" data-item="unvaccinated">
+                  <div class="data-field" data-row="vaccination_status" data-item="unvaccinated">
                     <p class="choice">Unvaccinated</p>
                   </div>
                   <div class="num-percent-container">
@@ -149,7 +149,7 @@
                 </div>
     
                 <div class="choices-2-container">
-                  <div class="choices-2" data-row="vaccination_status" data-item="partially_vaccinated">
+                  <div class="data-field" data-row="vaccination_status" data-item="partially_vaccinated">
                     <p class="choice">Partially Vaccinated</p>
                   </div>
                   <div class="num-percent-container">
@@ -159,7 +159,7 @@
                 </div>
                 
                 <div class="choices-3-container">
-                  <div class="choices-3" data-row="vaccination_status" data-item="vaccinated">
+                  <div class="data-field" data-row="vaccination_status" data-item="vaccinated">
                     <p class="choice">Fully Vaccinated</p>
                   </div>
                   <div class="num-percent-container">
@@ -172,7 +172,7 @@
               <div class="question-container">
                 <p class="question">Recent Symptoms</p>
                 <div class="choices-1-container">
-                  <div class="choices-1" data-row="symptoms" data-item="fever">
+                  <div class="data-field" data-row="symptoms" data-item="fever" data-type="array">
                     <p class="choice">Fever</p>
                   </div>
                   <div class="num-percent-container">
@@ -182,7 +182,7 @@
                 </div>
     
                 <div class="choices-2-container">
-                  <div class="choices-2" data-row="symptoms" data-item="cough">
+                  <div class="data-field" data-row="symptoms" data-item="cough" data-type="array">
                     <p class="choice">Cough</p>
                   </div>
                   <div class="num-percent-container">
@@ -192,7 +192,7 @@
                 </div>
     
                 <div class="choices-3-container">
-                  <div class="choices-3" data-row="symptoms" data-item="fatigue">
+                  <div class="data-field" data-row="symptoms" data-item="fatigue" data-type="array">
                     <p class="choice">Fatigue</p>
                   </div>
                   <div class="num-percent-container">
@@ -202,7 +202,7 @@
                 </div>
     
                 <div class="choices-4-container">
-                  <div class="choices-4" data-row="symptoms" data-item="loss_of_taste_smell">
+                  <div class="data-field" data-row="symptoms" data-item="loss_of_taste_smell" data-type="array">
                     <p class="choice">Lost of Taste/Smell</p>
                   </div>
                   <div class="num-percent-container">
@@ -212,7 +212,7 @@
                 </div>
     
                 <div class="choices-5-container">
-                  <div class="choices-5" data-row="symptoms" data-item="others">
+                  <div class="data-field" data-row="symptoms" data-item="others" data-type="array">
                     <p class="choice">Others</p>
                   </div>
                   <div class="num-percent-container">
@@ -225,7 +225,7 @@
               <div class="question-container">
                 <p class="question">Do you have regular access to the Barangay Health Center or a primary care physician for your medical needs?</p>
                 <div class="choices-1-container">
-                  <div class="choices-1" data-row="access" data-item="yes">
+                  <div class="data-field" data-row="access" data-item="yes">
                     <p class="choice">Yes</p>
                   </div>
                   <div class="num-percent-container">
@@ -235,7 +235,7 @@
                 </div>
     
                 <div class="choices-2-container">
-                  <div class="choices-2" data-row="access" data-item="no">
+                  <div class="data-field" data-row="access" data-item="no">
                     <p class="choice">No</p>
                   </div>
                   <div class="num-percent-container">
@@ -245,7 +245,7 @@
                 </div>
     
                 <div class="choices-3-container">
-                  <div class="choices-3" data-row="access" data-item="prefer_not_to_say">
+                  <div class="data-field" data-row="access" data-item="prefer_not_to_say">
                     <p class="choice">Prefer not to say</p>
                   </div>
                   <div class="num-percent-container">
@@ -258,7 +258,7 @@
               <div class="question-container">
                 <p class="question">Are you currently taking any daily prescription medications for maintenance (e.g., for blood pressure, cholesterol, heart conditions)?</p>
                 <div class="choices-1-container">
-                  <div class="choices-1" data-row="medication" data-item="yes">
+                  <div class="data-field" data-row="medication" data-item="yes">
                     <p class="choice">Yes</p>
                   </div>
                   <div class="num-percent-container">
@@ -268,7 +268,7 @@
                 </div>
     
                 <div class="choices-2-container">
-                  <div class="choices-2" data-row="medication" data-item="no">
+                  <div class="data-field" data-row="medication" data-item="no">
                     <p class="choice">No</p>
                   </div>
                   <div class="num-percent-container">
@@ -281,7 +281,7 @@
               <div class="question-container">
                 <p class="question">Which of the following best describes your current smoking or vaping habits?</p>
                 <div class="choices-1-container">
-                  <div class="choices-1" data-row="smoking" data-item="daily"></div>>
+                  <div class="data-field" data-row="smoking" data-item="daily">
                     <p class="choice">I smoke/vape daily</p>
                   </div>
                   <div class="num-percent-container">
@@ -291,7 +291,7 @@
                 </div>
     
                 <div class="choices-2-container">
-                  <div class="choices-2" data-row="smoking" data-item="occasionally">
+                  <div class="data-field" data-row="smoking" data-item="occasionally">
                     <p class="choice">I smoke/vape occasionally (socially)</p>
                   </div>
                   <div class="num-percent-container">
@@ -301,7 +301,7 @@
                 </div>
     
                 <div class="choices-3-container">
-                  <div class="choices-3" data-row="smoking" data-item="quit">
+                  <div class="data-field" data-row="smoking" data-item="quit">
                     <p class="choice">I used to smoke/vape but have quit</p>
                   </div>
                   <div class="num-percent-container">
@@ -311,7 +311,7 @@
                 </div>
     
                 <div class="choices-4-container">
-                  <div class="choices-4" data-row="smoking" data-item="never">
+                  <div class="data-field" data-row="smoking" data-item="never">
                     <p class="choice"> I have never smoked/vaped</p>
                   </div>
                   <div class="num-percent-container">
@@ -324,7 +324,7 @@
               <div class="question-container">
                 <p class="question">How often do you consume alcoholic beverages?</p>
                 <div class="choices-1-container">
-                  <div class="choices-1" data-row="alcohol" data-item="never">
+                  <div class="data-field" data-row="alcohol" data-item="never">
                     <p class="choice">Never</p>
                   </div>
                   <div class="num-percent-container">
@@ -334,7 +334,7 @@
                 </div>
     
                 <div class="choices-2-container">
-                  <div class="choices-2" data-row="alcohol" data-item="1_to_3_months">
+                  <div class="data-field" data-row="alcohol" data-item="1_to_3_months">
                     <p class="choice"> 1-3 times a month</p>
                   </div>
                   <div class="num-percent-container">
@@ -344,7 +344,7 @@
                 </div>
     
                 <div class="choices-3-container">
-                  <div class="choices-3" data-row="alcohol" data-item="1_to_3_times_a_week">
+                  <div class="data-field" data-row="alcohol" data-item="1_to_3_times_a_week">
                     <p class="choice"> 1-3 times a week</p>
                   </div>
                   <div class="num-percent-container">
@@ -354,7 +354,7 @@
                 </div>
     
                 <div class="choices-4-container">
-                  <div class="choices-4" data-row="alcohol" data-item="4_or_more_times_a_week">
+                  <div class="data-field" data-row="alcohol" data-item="4_or_more_times_a_week">
                     <p class="choice">4 or more times a week</p>
                   </div>
                   <div class="num-percent-container">
@@ -367,7 +367,7 @@
               <div class="question-container">
                 <p class="question">On average, how many days a week do you engage in at least 30 minutes of moderate to vigorous physical activity (e.g., brisk walking, sports, heavy manual labor)?</p>
                 <div class="choices-1-container">
-                  <div class="choices-1" data-row="exercise" data-item="0_days">
+                  <div class="data-field" data-row="exercise" data-item="0_days">
                     <p class="choice"> 0 days (Primarily Sedentary)</p>
                   </div>
                   <div class="num-percent-container">
@@ -377,7 +377,7 @@
                 </div>
     
                 <div class="choices-2-container">
-                  <div class="choices-2">
+                  <div class="data-field">
                     <p class="choice" data-row="exercise" data-item="1_to_2_days"> 1-2 days</p>
                   </div>
                   <div class="num-percent-container">
@@ -387,7 +387,7 @@
                 </div>
     
                 <div class="choices-3-container">
-                  <div class="choices-3" data-row="exercise" data-item="3_to_4_days">
+                  <div class="data-field" data-row="exercise" data-item="3_to_4_days">
                     <p class="choice">3-4 days</p>
                   </div>
                   <div class="num-percent-container">
@@ -397,7 +397,7 @@
                 </div>
     
                 <div class="choices-4-container">
-                  <div class="choices-4" data-row="exercise" data-item="5_or_more_days">
+                  <div class="data-field" data-row="exercise" data-item="5_or_more_days">
                     <p class="choice">5 or more days</p>
                   </div>
                   <div class="num-percent-container">
@@ -410,7 +410,7 @@
               <div class="question-container">
                 <p class="question">On a typical night, how many hours of sleep do you usually get?</p>
                 <div class="choices-1-container">
-                  <div class="choices-1" data-row="sleep" data-item="less_than_5">
+                  <div class="data-field" data-row="sleep" data-item="less_than_5">
                     <p class="choice">Less than 5 hours</p>
                   </div>
                   <div class="num-percent-container">
@@ -420,7 +420,7 @@
                 </div>
     
                 <div class="choices-2-container" >
-                  <div class="choices-2" data-row="sleep" data-item="5_to_6">
+                  <div class="data-field" data-row="sleep" data-item="5_to_6">
                     <p class="choice">5-6 hours</p>
                   </div>
                   <div class="num-percent-container">
@@ -430,7 +430,7 @@
                 </div>
     
                 <div class="choices-3-container">
-                  <div class="choices-3" data-row="sleep" data-item="7_to_8">
+                  <div class="data-field" data-row="sleep" data-item="7_to_8">
                     <p class="choice">7-8 hours</p>
                   </div>
                   <div class="num-percent-container">
@@ -440,7 +440,7 @@
                 </div>
     
                 <div class="choices-4-container">
-                  <div class="choices-4" data-row="sleep" data-item="more_than_8">
+                  <div class="data-field" data-row="sleep" data-item="more_than_8">
                     <p class="choice">More than 8 hours</p>
                   </div>
                   <div class="num-percent-container">
@@ -453,7 +453,7 @@
               <div class="question-container">
                 <p class="question">In the past 14 days, have you been in close contact with anyone formally diagnosed with a highly contagious illness (e.g., COVID-19, Tuberculosis)?</p>
                 <div class="choices-1-container">
-                  <div class="choices-1" data-row="contact_contagious_14days" data-item="yes">
+                  <div class="data-field" data-row="contact_contagious_14days" data-item="yes">
                     <p class="choice">Yes</p>
                   </div>
                   <div class="num-percent-container">
@@ -463,7 +463,7 @@
                 </div>
     
                 <div class="choices-2-container">
-                  <div class="choices-2" data-row="contact_contagious_14days" data-item="no">
+                  <div class="data-field" data-row="contact_contagious_14days" data-item="no">
                     <p class="choice">No</p>
                   </div>
                   <div class="num-percent-container">
@@ -473,7 +473,7 @@
                 </div>
     
                 <div class="choices-3-container">
-                  <div class="choices-3" data-row="contact_contagious_14days" data-item="unsure">
+                  <div class="data-field" data-row="contact_contagious_14days" data-item="unsure">
                     <p class="choice">Unsure</p>
                   </div>
                   <div class="num-percent-container">
@@ -486,7 +486,7 @@
               <div class="question-container">
                 <p class="question">Have you or anyone currently living in your household been diagnosed with Dengue or Typhoid fever in the past 6 months?</p>
                 <div class="choices-1-container">
-                  <div class="choices-1" data-row="dengue_typhoid_6months" data-item="yes">
+                  <div class="data-field" data-row="dengue_typhoid_6months" data-item="yes">
                     <p class="choice">Yes</p>
                   </div>
                   <div class="num-percent-container">
@@ -496,7 +496,7 @@
                 </div>
     
                 <div class="choices-2-container">
-                  <div class="choices-2" data-row="dengue_typhoid_6months" data-item="no">
+                  <div class="data-field" data-row="dengue_typhoid_6months" data-item="no">
                     <p class="choice">No</p>
                   </div>
                   <div class="num-percent-container">
@@ -506,7 +506,7 @@
                 </div>
     
                 <div class="choices-3-container">
-                  <div class="choices-3" data-row="dengue_typhoid_6months" data-item="unsure">
+                  <div class="data-field" data-row="dengue_typhoid_6months" data-item="unsure">
                     <p class="choice">Unsure</p>
                   </div>
                   <div class="num-percent-container">
@@ -519,7 +519,7 @@
               <div class="question-container">
                 <p class="question">Over the past 2 weeks, how often have you felt down, unusually stressed, or overly anxious?</p>
                 <div class="choices-1-container">
-                  <div class="choices-1" data-row="mental_health_2weeks" data-item="not_at_all">
+                  <div class="data-field" data-row="mental_health_2weeks" data-item="not_at_all">
                     <p class="choice"> Not at all</p>
                   </div>
                   <div class="num-percent-container">
@@ -529,7 +529,7 @@
                 </div>
     
                 <div class="choices-2-container">
-                  <div class="choices-2" data-row="mental_health_2weeks" data-item="several_days">
+                  <div class="data-field" data-row="mental_health_2weeks" data-item="several_days">
                     <p class="choice">Several days</p>
                   </div>
                   <div class="num-percent-container">
@@ -539,7 +539,7 @@
                 </div>
     
                 <div class="choices-3-container">
-                  <div class="choices-3"  data-row="mental_health_2weeks" data-item="more_than_half">
+                  <div class="data-field"  data-row="mental_health_2weeks" data-item="more_than_half">
                     <p class="choice">More than half the days</p>
                   </div>
                   <div class="num-percent-container">
@@ -549,7 +549,7 @@
                 </div>
     
                 <div class="choices-4-container">
-                  <div class="choices-4" data-row="mental_health_2weeks" data-item="nearly_every_day">
+                  <div class="data-field" data-row="mental_health_2weeks" data-item="nearly_every_day">
                     <p class="choice">Nearly every day</p>
                   </div>
                   <div class="num-percent-container">
@@ -559,23 +559,24 @@
                 </div>
               </div>
             </div>
-          </div>
+        
         </div>
           <div class="gender-result-container">
-            <h4 class="male-txt">Male</h4>
-    
-            <div class="male-icon-wrapper">
-              <img src="assets/male-icon.png" alt="male-icon">
-              <h3 class="male-num">749</h3>
+            <div class="male-wrapper">
+              <h4 class="male-txt">Male</h4>
+      
+              <div class="male-icon-wrapper">
+                <img src="assets/male-icon.png" alt="male-icon">
+                <h3 class="male-num">0</h3>
+              </div>
             </div>
-            
-            <div class="line-dividor"></div>
-    
-            <h4 class="female-txt">Female</h4>
-    
-            <div class="female-icon-wrapper">
-              <img src="assets/female-icon.png" alt="female-icon">
-              <h3 class="female-num">1593</h3>
+            <div class="female-wrapper">
+              <h4 class="female-txt">Female</h4>
+      
+              <div class="female-icon-wrapper">
+                <img src="assets/female-icon.png" alt="female-icon">
+                <h3 class="female-num">0</h3>
+              </div>
             </div>
           </div>
         
@@ -600,5 +601,6 @@
     
   </main>
   <script src="health-dashboard.js" defer></script>
+  <script src="admin.js" defer></script>
 </body>
 </html>
