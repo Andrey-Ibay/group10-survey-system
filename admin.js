@@ -309,9 +309,44 @@ async function loadVendorDashboard(){
 
 //------------------------------DOWNLOAD DATASET-------------------------------
 
-async function prepareExport() {
-    const fetchHealth = await fetchHealthData();
-    exportCSV(fetchHealth, "health_dataset.csv");
+//Fetches full database inputs of health survey.
+async function fetchHealthData(){
+    //returns an array of objects
+    const {data, error} = await db.from("health_survey")
+                            .select("*")
+                            .order("created_at", {ascending: false});
+    if(error){
+        console.error("Fetch failed: ", error.message);
+        return;
+    }
+
+    console.log(data);
+    return data;
+}
+
+//Fetches full database inputs of vendor survey.
+async function fetchVendorData(){
+    //returns an array of objects
+    const {data, error} = await db.from("vendor_survey")
+                            .select("*")
+                            .order("created_at", {ascending: false});
+    if(error){
+        console.error("Fetch failed: ", error.message);
+        return;
+    }
+
+    console.log(data);
+    return data;
+}
+
+async function prepareExport(dataset) {
+    if(dataset === "vendor"){
+        const fetchHealth = await fetchHealthData();
+        exportCSV(fetchHealth, "health_dataset.csv");
+    }else{
+        const fetchHealth = await fetchHealthData();
+        exportCSV(fetchHealth, "health_dataset.csv");
+    }
 };
 
 function exportCSV(responseData, filename){

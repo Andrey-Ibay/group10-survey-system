@@ -188,35 +188,6 @@ async function submitVendorSurvey(){
     navigate("/finish");
 }
 
-//Fetches full database inputs of health survey.
-async function fetchHealthData(){
-    //returns an array of objects
-    const {data, error} = await db.from("health_survey")
-                            .select("*")
-                            .order("created_at", {ascending: false});
-    if(error){
-        console.error("Fetch failed: ", error.message);
-        return;
-    }
-
-    console.log(data);
-    return data;
-}
-
-//Fetches full database inputs of vendor survey.
-async function fetchVendorData(){
-    //returns an array of objects
-    const {data, error} = await db.from("vendor_survey")
-                            .select("*")
-                            .order("created_at", {ascending: false});
-    if(error){
-        console.error("Fetch failed: ", error.message);
-        return;
-    }
-
-    console.log(data);
-    return data;
-}
 
 /*---------------------- NEW TEST FUNCTIONS -------------------------
 //prepares and loads the data to dashboard.
