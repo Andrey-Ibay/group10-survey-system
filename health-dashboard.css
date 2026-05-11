@@ -270,14 +270,26 @@ main{
   box-shadow: 0px 4px 10px 2px #b1b0b040;
   background: white;
 }
+/*-------------- DASHBOARD -----------*/
 
 .health-dashboard-container{
+  display: none;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  padding: 0rem 2rem 0rem 2rem;
+}
+
+.vendor-dashboard-container{
   display: flex;
   align-items: center;
   flex-direction: column;
   width: 100%;
   padding: 0rem 2rem 0rem 2rem;
 }
+
+
+/*------------------------------------*/
 .responses-icon-wrapper {
   display: flex;
   align-items: center;
@@ -321,7 +333,22 @@ main{
 ;
 }
 
+
 .demographics-button {
+  z-index: 100;
+  cursor: pointer;
+  font-size: 0.9rem;
+  width: 205px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #36B249;
+  color: white;
+  box-shadow: 0px 4px 10px 2px #b1b0b040;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+.demographics-button-vendor {
   z-index: 100;
   cursor: pointer;
   font-size: 0.9rem;
@@ -337,6 +364,19 @@ main{
 }
 
 .health-status-button {
+  z-index: 100;
+  cursor: pointer;
+  font-size: 0.9rem;
+  width: 205px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  box-shadow: 0px 0px 10px 2px #b1b0b040;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+.business-info-button {
   z-index: 100;
   cursor: pointer;
   font-size: 0.9rem;
@@ -433,7 +473,12 @@ main{
     margin-top: -10px;
 }
 
-/*The :not prevents the following selectors from inheriting the design*/
+/*=================================================
+
+DATA FIELDS
+
+
+==================================================*/
 .data-field, .data-field-age{
   position: relative;
   width: 70%;
@@ -460,55 +505,33 @@ main{
   background-color: #36B249; 
   z-index: 0;             
 }
-/*
-.choices-2::after {
+.data-field-vendor, .data-field-age-vendor{
+  position: relative;
+  width: 70%;
+  border-radius: 10px;
+  padding-left: 20px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  background-color: #76df85f6;
+  color: white;
+}
+
+.data-field-vendor::after, .data-field-age-vendor::after {
   content: "";
   border-radius: 10px;
   position: absolute;
   top: 0;
   left: 0;
   height: 100%;
-  width: 21%;              
+  width: var(--progress, 0%);              
   background-color: #36B249; 
   z-index: 0;             
 }
 
-.choices-3::after {
-  content: "";
-  border-radius: 10px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 33%;              
-  background-color: #36B249; 
-  z-index: 0;             
-}
-
-.choices-4::after {
-  content: "";
-  border-radius: 10px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 83%;              
-  background-color: #36B249; 
-  z-index: 0;             
-}
-
-.choices-5::after {
-  content: "";
-  border-radius: 10px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 7%;              
-  background-color: #36B249; 
-  z-index: 0;             
-}
-*/
 .choice {
   flex: 1;
   z-index: 1;
@@ -524,12 +547,21 @@ main{
   margin-right: 20px;
 }
 
+.num-rsp-vendor, .num-rsp-age-vendor {
+  font-size: 0.8rem;
+  font-weight: 500;
+}
 .num-rsp, .num-rsp-age {
   font-size: 0.8rem;
   font-weight: 500;
 }
 
 .percent, .percent-age {
+  color: #36B249;
+  font-weight: bold;
+  font-size: 1rem;
+}
+.percent-vendor, .percent-age-vendor {
   color: #36B249;
   font-weight: bold;
   font-size: 1rem;
