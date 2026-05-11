@@ -537,6 +537,7 @@ DATA FIELDS
   z-index: 1;
 }
 
+/*-----nums-----*/
 .num-percent-container {
   display: flex;
   align-items: center;
@@ -556,6 +557,7 @@ DATA FIELDS
   font-weight: 500;
 }
 
+/*----------Percent------------*/
 .percent, .percent-age {
   color: #36B249;
   font-weight: bold;
@@ -605,6 +607,11 @@ DATA FIELDS
 }
 
 .male-num, .female-num {
+  color: #36B249;
+  margin: 0;
+  font-size: 2.3rem;
+}
+.male-num-vendor, .female-num-vendor {
   color: #36B249;
   margin: 0;
   font-size: 2.3rem;

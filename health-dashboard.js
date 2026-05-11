@@ -33,6 +33,16 @@ const toggleActiveHealth = () => {
     demoContainer.style.display = "none"
     healthContainers.forEach(div => div.style.setProperty("display", "grid", "important"));
 }
+const toggleActiveVendor = () => {
+    healthButton.style.background = "white";
+    healthButton.style.color = "black";
+    
+    demoButton.style.background = "#36B249";
+    demoButton.style.color = "white";
+
+    healthContainers.style.display = "none"
+    demoContainer.forEach(div => div.style.setProperty("display", "grid", "important"));
+}
 
 const healthNavButton = document.querySelector(".health-button");
 const vendorNavButton = document.querySelector(".vendor-button");
