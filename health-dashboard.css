@@ -4,16 +4,24 @@
   box-sizing: border-box;
 }
 
+html {
+  width: 100%;
+  scroll-behavior: smooth;
+}
+
 body {
   min-height: 100vh;
   background: white;
   margin: 0;
   font-family: "Inter", sans-serif;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 main{
   display: flex;
   flex-direction: row;
+  width: 100%;
 }
 .sidebar, .nav-left{
   min-height: 100vh;
@@ -642,10 +650,160 @@ DATA FIELDS
 /* Tablet */
 @media (max-width: 1199px) {
 
+  main {
+    flex-direction: column;
+  }
+
+  .nav-container {
+    padding: 0.5rem 1.5rem;
+  }
+
+  .sidebar, .nav-left {
+    min-height: auto;
+    width: 100%;
+  }
+
+  .nav-left {
+    height: auto;
+    padding: 1.25rem;
+  }
+
+  .health-button,
+  .vendor-button,
+  .log-out-btn {
+    width: 100%;
+  }
+
+  .health-dashboard-container,
+  .vendor-dashboard-container {
+    padding: 0 1rem 1rem;
+  }
+
+  .three-boxes-container {
+    flex-wrap: wrap;
+  }
+
+  .box-1, .box-2, .box-3 {
+    width: calc(50% - 10px);
+    min-width: 260px;
+  }
+
+  .outercontainer {
+    flex-direction: column;
+  }
+
+  .scrollable-container,
+  .gender-result-container {
+    width: 100%;
+  }
+
+  .gender-result-container {
+    margin-left: 0;
+  }
+
+  .demohealth-container {
+    flex-wrap: wrap;
+  }
+
+  .save-btn,
+  .demographics-button,
+  .demographics-button-vendor,
+  .health-status-button,
+  .business-info-button {
+    width: 100%;
+  }
+
 }
 
 /* Mobile */
 @media (max-width: 767px) {
+
+  .nav-container {
+    padding: 0.75rem 1rem;
+    gap: 1rem;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .nav-right {
+    width: 100%;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .survey-result-heading {
+    font-size: 1.1rem;
+  }
+
+  .three-boxes-container {
+    gap: 12px;
+  }
+
+  .box-1, .box-2, .box-3 {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .demohealth-container {
+    gap: 10px;
+  }
+
+  .demographics-button,
+  .demographics-button-vendor,
+  .health-status-button,
+  .business-info-button,
+  .save-btn {
+    width: 100%;
+  }
+
+  .scrollable-container {
+    height: 55vh;
+  }
+
+  .question-container,
+  .question-container-demo,
+  .question-container-demo-vendor {
+    width: 100%;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .question {
+    width: 100%;
+  }
+
+  .choices-1-container,
+  .choices-2-container,
+  .choices-3-container,
+  .choices-4-container,
+  .choices-5-container {
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .data-field,
+  .data-field-age,
+  .data-field-vendor,
+  .data-field-age-vendor {
+    width: 100%;
+  }
+
+  .num-percent-container {
+    width: 100%;
+    margin-right: 0;
+  }
+
+  .gender-result-container {
+    width: 100%;
+  }
+
+  .male-wrapper, .female-wrapper {
+    margin: 0.5rem 0;
+    padding: 1rem;
+  }
 
 }
 
