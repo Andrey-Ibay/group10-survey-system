@@ -77,7 +77,7 @@ const healthNavActive = () => {
     healthIcon.src = "assets/health-icon-active.png";
     vendorIcon.src = "assets/vendor-icon.png";
 
-    healthDashboard.style.display = ""
+    healthDashboard.style.display = "flex"
     vendorDashboard.style.display = "none";
 }
 
@@ -109,5 +109,5 @@ const cancelLogOut = () => {
 }
 
 const confirmLogOut = () => {
-    window.location.href = "homepage.html";
+    window.location.href = "index.html";
 }
