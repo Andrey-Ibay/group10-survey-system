@@ -30,7 +30,7 @@ main{
   position: sticky;
   display: flex;
   background: #36B249;
-  padding: 0.5rem 5rem 0.5rem 5rem;
+  padding: 0.5rem 2rem 0.5rem 2rem;
   top: 0;
   justify-content: space-between;
   align-items: center;
@@ -333,7 +333,7 @@ main{
 }
 
 .rsp {
-  font-size: 2rem;
+  font-size: 1.6rem;
   margin: 0;
   color: #36B249;
 }
@@ -702,7 +702,7 @@ DATA FIELDS
   }
 
   .demohealth-container {
-    flex-wrap: wrap;
+    justify-content: space-between;
   }
 
   .save-btn,

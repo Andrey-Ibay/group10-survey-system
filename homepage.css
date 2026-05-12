@@ -236,7 +236,7 @@ body {
   };
 }
 
-@media (width < 520px) {
+@media (width < 600px) {
   .welcomeTexts{
     width: 90%;
   }
