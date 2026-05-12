@@ -8,6 +8,7 @@ body {
     margin: 0;
 }
 
+
 /* Navbar */
 .navbar {
     position: sticky;
@@ -49,6 +50,7 @@ body {
     font-family: arial; 
     font-weight: 800;
     margin-top: -20px;
+    width: 100%;
 }
 
 .survey {
@@ -215,7 +217,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: start;
-  width: 60%
+  width: 60%;
 }
 
 ::-webkit-scrollbar {
@@ -232,4 +234,39 @@ body {
     align-items: center;
     text-align: center;
   };
+}
+
+@media (width < 520px) {
+  .welcomeTexts{
+    width: 90%;
+  }
+  a.nav-link{
+    display: none;
+  }
+  p{
+    font-size: 0.7rem;
+  }
+  .hero{
+    font-size: 1rem;
+  }
+  .hero-1{
+    font-size: 1.5rem;
+  }
+  .survey{
+    margin-bottom: 1rem;
+    font-size: 1rem;
+  }
+  .vendor-button,.health-button{
+    margin: 0;
+  }
+  .login-container{
+    width: 90% !important;
+    height: auto !important;
+  }
+  .email, .password {
+    left: 0 !important;
+  }
+  .email-icon, .password-icon {
+    left: 0 !important;
+  }
 }
