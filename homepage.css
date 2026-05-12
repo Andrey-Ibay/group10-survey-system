@@ -8,6 +8,7 @@ body {
     margin: 0;
 }
 
+
 /* Navbar */
 .navbar {
     position: sticky;
@@ -49,6 +50,7 @@ body {
     font-family: arial; 
     font-weight: 800;
     margin-top: -20px;
+    width: 100%;
 }
 
 .survey {
@@ -232,4 +234,25 @@ body {
     align-items: center;
     text-align: center;
   };
+}
+
+@media (width < 520px) {
+  a.nav-link{
+    display: none;
+  }
+  p{
+    font-size: 0.75rem;
+  }
+  h3{
+    font-size: 1rem;
+  }
+  h4{
+    font-size: 1rem;
+  }
+  .survey{
+    margin-bottom: 1rem;
+  }
+  .vendor-button,.health-button{
+    margin: 0;
+  }
 }

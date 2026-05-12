@@ -283,7 +283,7 @@ width: 65%;
     text-decoration: none;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.126);
     border-radius: 25px;
-    width: 8rem;
+    width: 10rem;
     background-color: white;
     color: var(--green);
     border: solid 1px #ddd;
@@ -301,11 +301,18 @@ width: 65%;
     text-decoration: none;
 }
 
+.response-text {
+    text-align: start;
+    font-size: 18px;
+    font-weight: 500;
+    margin-top: 0;
+}
 .thank-you-text {
-    text-align: center;
+    text-align: start;
     font-size: 24px;
     font-weight: 600;
     color: #4A90E2;
+    margin: 20px 0 10px 0;
 }
 
 .end-card {
