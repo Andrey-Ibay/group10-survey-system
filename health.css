@@ -263,7 +263,7 @@ width: 65%;
     display: flex;
     justify-content: space-between; 
     align-items: center;
-    padding: 40px 12px 12px 12px; 
+    padding: 20px 12px 12px 12px; 
     font-family: 'Inter', sans-serif;
 }
 
@@ -332,7 +332,9 @@ width: 100%;
   transition: border-color 0.2s ease, box-shadow 0.2s ease; 
   font-family: sans-serif;
 }
-
+#responsiveBack{
+    display: none;
+}
 .tel-input input {
 width: 100%;
   padding: 12px 15px;
@@ -418,4 +420,24 @@ input[type="radio"], input[type="checkbox"] { accent-color: var(--blue); transfo
     .navbar {
         padding: 15px 1rem;
     }
+}
+@media (width < 520px) {
+    a.nav-link{
+        display: none;
+    }
+    #responsiveBack{
+        display: flex;
+    }
+    .back-link{
+    display: flex;
+    justify-content: center;
+    text-decoration: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.126);
+    border-radius: 8px;
+    width: 10rem;
+    background-color: white;
+    color: var(--green);
+    border: solid 1px #ddd;
+    padding: 12px 24px;
+}
 }
