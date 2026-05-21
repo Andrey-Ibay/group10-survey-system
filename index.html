@@ -4,76 +4,109 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Brgy 146 Portal</title>
-    
-    
     <link rel="stylesheet" href="homepage.css">
-    
+    <link rel="stylesheet" href="home.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
-    <nav class="navbar animate-fade-down">
-        <div class="nav-container">
+    <div class="main-containier">
+        <nav class="navbar animate-fade-down"> 
+            <div class="nav-container">
             <a href="#" class="nav-brand">Home</a>
-            <div class="nav-right">
-                <a href="#" class="nav-link">Contact Us</a>
+                <div class="nav-right">
+                <a href="#" class="nav-link">Contact</a>
                 <a href="#" class="nav-link">About</a>
-                <div class="nav-icons">
-                    <div class="icon-wrapper">
-                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                    </div>
-                    <div class="icon-wrapper">
-                        <a href="login.html">FOR TESTING PURPOSES ONLY</a>
+                    <div class="nav-icons">
+                        <div class="icon-wrapper pfp" onclick="toggleLogIn()">
                         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </nav>
+        </nav>
 
-    <main>
-        <div class="main-container">
-            <section class="welcomeTexts">
-                <h3 class="hero">Welcome to Brgy 146!</h3>
-                <h2 class="hero-1">Defining excellence together.</h2>
-            </section>
-    
-    
-            <h3 class="survey">Surveys</h3>
-            <section class="surveys-container">
-    
-                <!-- Survey Item 1 -->
-                <article class="survey-card">
-                <div class = "image-wrapper-1">
-                    <img src="assets/health-image.png" alt="HEALTH IMAGE" class="health-image">
-                    <div class="survey-header-1">
-                        <h3>BARANGAY HEALTH <br> MONITORING SYSTEM</h3>
-                    </div>
-                    </div>
-                    <div class="survey-body-1">
-                        <p>The barangay health monitoring system helps us monitor public health in our community.</p>
-                    </div>
-                        <a href="health.html" class="health-button">Take Survey</a>
-                
-                </article>
-    
-                <br>
-    
-                <!-- Survey Item 2 -->
-                <article class="survey-card">
+        <main>
+            <div class="main-container">
+                <section class="welcomeTexts">
+                    <h3 class="hero">Welcome to Brgy 146!</h3>
+                    <h2 class="hero-1">Defining excellence together.</h2>
+                </section>
+        
+        
+                <h3 class="survey">Surveys</h3>
+                <section class="surveys-container">
+        
+                    <!-- Survey Item 1 -->
+                    <article class="survey-card">
                     <div class = "image-wrapper-1">
-                        <img src="assets/vendor-image.png" alt="VENDOR IMAGE" class="vendor-image">
-                    <div class="survey-header-2">
-                        <h3>PUBLIC MARKET VENDOR <br> REGISTRATION </h3>
-                    </div>
-                    </div>
-                    <div class="survey-body-2">
-                        <p>A survey to help regulate our local market by tracking permits, products, and sanitation compliance.</p>
-                    </div>
-                        <a href="vendor.html" class="vendor-button">Take Survey</a>
+                        <img src="assets/health-image.png" alt="HEALTH IMAGE" class="health-image">
+                        <div class="survey-header-1">
+                            <h3>BARANGAY HEALTH <br> MONITORING SYSTEM</h3>
+                        </div>
+                        </div>
+                        <div class="survey-body-1">
+                            <p>The barangay health monitoring system helps us monitor public health in our community.</p>
+                        </div>
+                            <a href="health.html" class="health-button">Take Survey</a>
                     
-                </article>
-            </section>
-        </div>
-    </main>
+                    </article>
+        
+                    <br>
+        
+                    <!-- Survey Item 2 -->
+                    <article class="survey-card">
+                        <div class = "image-wrapper-1">
+                            <img src="assets/vendor-image.png" alt="VENDOR IMAGE" class="vendor-image">
+                        <div class="survey-header-2">
+                            <h3>PUBLIC MARKET VENDOR <br> REGISTRATION </h3>
+                        </div>
+                        </div>
+                        <div class="survey-body-2">
+                            <p>A survey to help regulate our local market by tracking permits, products, and sanitation compliance.</p>
+                        </div>
+                            <a href="vendor.html" class="vendor-button">Take Survey</a>
+                        
+                    </article>
+                </section>
+            </div>
+        </main>
+    </div>
 
+    <div class="login-container">
+        <img src="assets/barangaylogo.png" alt="barangay-logo" class="barangay-logo">
+
+        <h3 class="hello-heading">Hello, Admin!</h3>
+        <p class="sub-heading">Login to access your account</p>
+
+        <label for="email" class="email">Email</label>
+        <div class="input-group">
+            <input type="text" name="email" id="email" placeholder="Enter your email" class="input-email">
+        </div>
+
+        <label for="password" class="password">Password</label>
+        <div class="input-group">
+            
+            <input type="password" name="password" id="password" placeholder="Enter your password" class="input-password">
+        </div>
+
+        <img src="assets/eye-icon.png" alt="eye-icon" class="eye-icon" onclick="changeIcon()">
+        <div class="eye-dash"></div>
+
+        <div class="remember-section">
+            <input type="checkbox" name="remember" id="remember" class="remember">
+            <label for="remember" class="remember-label">Remember me</label>
+        </div>
+
+        
+        <button class="login-button" onclick="adminLogin()">Login</button>
+        
+        <button class="close-btn" onclick="closeLogIn()"></button>
+        
+        <p class="forgot-password">Forgot password?</p>
+        <div class="horizontal-line"></div>
+        <p class="msg">have a nice day</p>
+    </div>
+
+    <script src="home.js" defer></script>
 </body>
 </html>

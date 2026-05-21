@@ -6,12 +6,16 @@
 /* 1. Smooth Scroll Logic - ADDED */
 html {
     scroll-behavior: smooth;
+    width: 100%;
 }
 
 body {
     font-family: 'Inter', sans-serif;
     margin: 0;
-    background: #fff;
+    background: #f0fdf4;
+    min-height: 100vh;
+    width: 100%;
+    overflow-x: hidden;
 }
 
 /* Navbar */
@@ -41,9 +45,9 @@ body {
 .icon-wrapper:hover { transform: translateY(-5px) scale(1.1); color: var(--blue); }
 
 /* Main Layout */
-.main-content {display: flex; align-items: center; flex-direction: column; height: 100vh;}
-.container{display: flex; flex-direction: column; margin-top: 2rem;}
-.content-layout {position: relative; display: flex; justify-content: start; gap: 60px; align-items: flex-start; margin: 2rem 2rem 2rem 2rem; width: 100%;}
+.main-content {display: flex; align-items: center; flex-direction: column; min-height: 100vh; width: 100%;}
+.container{display: flex; flex-direction: column; margin-top: 2rem; width: 100%;}
+.content-layout {position: relative; display: flex; justify-content: center; gap: 60px; align-items: flex-start; margin: 2rem; width: calc(100% - 4rem); flex-wrap: wrap;}
 
 /* Stepper SECTION - UPDATED FOR INTERACTIVITY */
 /*Added containers and modified styles for clean stepper manipulation*/
@@ -83,7 +87,7 @@ body {
         position: absolute;
         right: 0;
         top: 0;
-        background-color: rgb(34, 206, 34);
+        background-color: rgb(87, 255, 87);
         border-radius: 2px;
         width: 100%;
         height: 0%;
@@ -153,7 +157,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 50px;
-    width: 40rem; 
+    width: min(40rem, 100%); 
     padding-bottom: 100px;
 }
 
@@ -254,7 +258,7 @@ width: 65%;
     display: flex;
     justify-content: space-between; 
     align-items: center;
-    padding: 40px 12px 12px 12px; 
+    padding: 20px 12px 12px 12px; 
     font-family: 'Inter', sans-serif;
 }
 
@@ -274,7 +278,7 @@ width: 65%;
     text-decoration: none;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.126);
     border-radius: 25px;
-    width: 8rem;
+    width: 10rem;
     background-color: white;
     color: var(--green);
     border: solid 1px #ddd;
@@ -291,12 +295,18 @@ width: 65%;
     cursor: pointer;
     text-decoration: none;
 }
-
+.response-text{
+    text-align: start;
+    font-size: 18px;
+    font-weight: 500;
+    margin-top: 0;
+}
 .thank-you-text {
-    text-align: center;
+    text-align: start;
     font-size: 24px;
     font-weight: 600;
     color: #4A90E2;
+    margin: 20px 0 10px 0;
 }
 
 #section-2 p{
@@ -368,7 +378,9 @@ label {
     font-weight: bold;
     display: block;
 }
-
+#responsiveBack{
+        display: none;
+    }
 
 /* Inputs & Forms */
 .input-box { margin-bottom: 20px; }
@@ -402,5 +414,44 @@ input[type="radio"], input[type="checkbox"] { accent-color: var(--blue); transfo
     to { height: 70%; }
 }
 @media (max-width: 60rem) {
-    .stepper-section { display: none; };
+    .content-layout {
+        margin: 1rem;
+        width: calc(100% - 2rem);
+        gap: 1.5rem;
+    }
+
+    .stepper-section { display: none; }
+
+    .cards-container {
+        width: 100%;
+        flex-basis: 100%;
+    }
+
+    .back-wrapper {
+        width: 100%;
+    }
+
+    .navbar {
+        padding: 15px 1rem;
+    }
+}
+@media (width < 600px) {
+    a.nav-link{
+        display: none;
+    }
+    #responsiveBack{
+        display: flex;
+    }
+    .back-link{
+    display: flex;
+    justify-content: center;
+    text-decoration: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.126);
+    border-radius: 8px;
+    width: 10rem;
+    background-color: white;
+    color: var(--green);
+    border: solid 1px #ddd;
+    padding: 12px 24px;
+    }
 }

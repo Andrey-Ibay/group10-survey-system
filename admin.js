@@ -11,15 +11,95 @@ async function checkAuth(){
     }
 }
 
-//Uncheck when implemented login.html
+//uncomment when you are going to use it.
 //checkAuth();
 
 
 
-//------------------------------BAR VISUALIZATIONS------------------------------
-document.addEventListener("DOMContentLoaded", async () =>{
+//------------------------------HEALTH DASHBOARD------------------------------
+
+async function loadHealthDashboard(){
     const divData = document.querySelectorAll(".data-field");
-    const line = document.querySelectorAll(".lines");
+    const divDataAge = document.querySelectorAll(".data-field-age");
+    const questionRespondentDisplay = document.querySelectorAll(".num-rsp");
+    const percentageDisplay = document.querySelectorAll(".percent");
+    const ageRespondents = document.querySelectorAll(".num-rsp-age");
+    const agePercentage = document.querySelectorAll(".percent-age");
+    const maleNum = document.querySelector(".male-num");
+    const femaleNum = document.querySelector(".female-num");
+    const overviewRsp = document.querySelector("#responses");
+    const overviewSick = document.querySelector("#sick");
+    const overviewSymptom = document.querySelector("#mostsymptom");
+
+    //total number of respondents
+    const { count: totalRespondents } = await db.from("health_survey")
+                                                .select("*", { count: "exact", head: true})
+
+    overviewRsp.textContent = totalRespondents;
+
+    //Display of symptoms and sickness
+    const symptoms = await Promise.all([
+        db.from("health_survey")
+            .select("*", {count: "exact", head: true})
+            .contains("symptoms", ["fever"]),
+        db.from("health_survey")
+            .select("*", {count: "exact", head: true})
+            .contains("symptoms", ["cough"]),
+        db.from("health_survey")
+            .select("*", {count: "exact", head: true})
+            .contains("symptoms", ["fatigue"]),
+        db.from("health_survey")
+            .select("*", {count: "exact", head: true})
+            .contains("symptoms", ["loss_of_taste_smell"]),
+        db.from("health_survey")
+            .select("*", {count: "exact", head: true})
+            .contains("symptoms", ["others"]),
+    ]);
+
+    //turns results into an array
+    const symptomsArray = symptoms.map(s => s.count);
+    
+    //Reference array for labelling
+    const symptomNames = ["Fever", "Cough", "Fatigue", "Loss of taste/smell", "Others"];
+    //Rendering the most common symptom
+    overviewSymptom.textContent = symptomNames[symptomsArray.indexOf(Math.max(...symptomsArray))];
+
+    //Fetches the total number of people who are sick (checks if symptoms is not empty)
+    const { count: totalSickPeople } = await db.from("health_survey")
+                                                .select("*", {count: "exact", head: true})
+                                                .not("symptoms", "is", null);
+
+    overviewSick.textContent = totalSickPeople;
+
+    //Fetches data for age groups
+    const ages = await Promise.all([
+        db.from("health_survey")
+            .select("*", {count: "exact", head: true})
+            .lte("age", 12),
+        db.from("health_survey")
+            .select("*", {count: "exact", head: true})
+            .lte("age", 19)
+            .gt("age", 12),
+        db.from("health_survey")
+            .select("*", {count: "exact", head: true})
+            .lte("age", 59)
+            .gt("age", 19),
+        db.from("health_survey")
+            .select("*", {count: "exact", head: true})
+            .gt("age", 59),   
+    ]);
+    
+    //Calculate percentage
+    function agePercent(index){
+        const result = (ages[index].count / totalRespondents) * 100;
+        return result;
+    }
+
+    //Rendering Ages
+    divDataAge.forEach((element, ageGroup) => element.style.setProperty("--progress", `${agePercent(ageGroup)}%`))
+    ageRespondents.forEach((e, index) => e.textContent = ages[index].count);
+    agePercentage.forEach((e, index) => e.textContent = `${agePercent(index).toFixed(1)}%`);
+    
     //Fetch only the specific data specified in divData from the database
     
     //returns an array of promises, where each promise is the returned object
@@ -27,32 +107,244 @@ document.addEventListener("DOMContentLoaded", async () =>{
     //      which is why you must convert it to an array first.
 
     const data = Array.from(divData).map(async (question) => {
-        const questionData = await db.from("health_survey")
+        //If the element expects an array
+        if(question.dataset.type === "array"){
+            return db.from("health_survey")
                         .select("*", {count: "exact", head: true})
-                        .eq(question.dataset.row, question.dataset.item);
+                        .contains(question.dataset.row, [question.dataset.item]);
 
-        return questionData;
+        }
+        return db.from("health_survey")
+                    .select("*", {count: "exact", head: true})
+                    .eq(question.dataset.row, question.dataset.item);
+
     })
     
     //converts the promises from data into actual array of objects
     const receivedData = await Promise.all(data);
-    //array of objects into arrays
+
+    //Converts the nodelists into an array
+    const nodeListConversion = Array.from(divData);
+    const respondentElements = Array.from(questionRespondentDisplay);
+    const percentElements = Array.from(percentageDisplay);
+    
+    
+    //array of objects into arrays (each element now represents total count)
     const dataCount = receivedData.map(data => data.count);
     //array where each element represents the average of each data.
-    const averages = dataCount.map(count => count / dataCount.length);
-
-    //Accesses every "line" in the html file
-    const renderedLine = line.forEach(element => element.style.strokeDashoffset = averages[0]); 
+    const averages = dataCount.map(count => count / totalRespondents);
+    //make it suitable for percentage use.
+    const percentage = averages.map(a => a * 100);
+    console.log(totalRespondents)
     
-    console.log(averages);
-});
+    //Rendering
+    nodeListConversion.forEach((e, index) => e.style.setProperty('--progress', `${percentage[index]}%`))
+    respondentElements.forEach((e, index) => e.textContent = dataCount[index]);
+    percentElements.forEach((e, index) => e.textContent = `${percentage[index].toFixed(1)}%`);
+    
+    
+    //Number of males and females
+    const [males, females] = await Promise.all([
+        db.from("health_survey")
+            .select("*", {count: "exact", head: true})
+            .eq("sex", "male"),
+        db.from("health_survey")
+            .select("*", {count: "exact", head: true})
+            .eq("sex", "female")
+    ])
+
+    maleNum.textContent = males.count;
+    femaleNum.textContent = females.count;
+};
+
+
+//----------------------------  VENDOR DASHBOARD   -------------------------------------
+
+
+async function loadVendorDashboard(){
+    const divData = document.querySelectorAll(".data-field-vendor");
+    const divDataAge = document.querySelectorAll(".data-field-age-vendor");
+    const questionRespondentDisplay = document.querySelectorAll(".num-rsp-vendor");
+    const percentageDisplay = document.querySelectorAll(".percent-vendor");
+    const ageRespondents = document.querySelectorAll(".num-rsp-age-vendor");
+    const agePercentage = document.querySelectorAll(".percent-age-vendor");
+    const maleNum = document.querySelector(".male-num-vendor");
+    const femaleNum = document.querySelector(".female-num-vendor");
+    const overviewRsp = document.querySelector("#responses-vendor");
+    const overviewSan = document.querySelector("#sanitary-avg");
+    const overviewPC = document.querySelector("#top-pc");
+
+    //total number of respondents
+    const { count: totalRespondents } = await db.from("vendor_survey")
+                                                .select("*", { count: "exact", head: true})
+
+    overviewRsp.textContent = totalRespondents;
+
+    //Display of waste management
+    const wasteManagement = await Promise.all([
+        db.from("vendor_survey")
+            .select("*", {count: "exact", head: true})
+            .contains("waste_management", ["daily_cleaning"]),
+        db.from("vendor_survey")
+            .select("*", {count: "exact", head: true})
+            .contains("waste_management", ["segregation"]),
+        db.from("vendor_survey")
+            .select("*", {count: "exact", head: true})
+            .contains("waste_management", ["proper_waste_disposal"]),
+        db.from("vendor_survey")
+            .select("*", {count: "exact", head: true})
+            .contains("waste_management", ["others"]),
+    ]);
+
+    //turns results into an array
+    const wasteManagementArray = wasteManagement.map(s => s.count);
+    
+    //Reference array for labelling
+    const wmArray = ["Daily Cleaning", "Segregation", "Grease Trap", "Proper Waste Disposal", "Others"];
+    //Rendering the most common symptom
+    overviewPC.textContent = wmArray[wasteManagementArray.indexOf(Math.max(...wasteManagementArray))];
+
+    //use later for sanitary average
+    const sanitaryRates = await db.from("vendor_survey")
+                                    .select("sanitary")
+    
+    //Turns sanitary scores into one array
+    const sanitaryScores = sanitaryRates.data.map(data => Number(data.sanitary));
+    //Adds the scores
+    const sanitaryScoresSum = Math.sumPrecise(sanitaryScores);
+    
+    const sanitaryAverage = sanitaryScoresSum / sanitaryScores.length;
+    
+    overviewSan.textContent = sanitaryAverage.toFixed(1);
+
+    //Fetches data for age groups
+    const ages = await Promise.all([
+        db.from("vendor_survey")
+            .select("*", {count: "exact", head: true})
+            .lte("age", 12),
+        db.from("vendor_survey")
+            .select("*", {count: "exact", head: true})
+            .lte("age", 19)
+            .gt("age", 12),
+        db.from("vendor_survey")
+            .select("*", {count: "exact", head: true})
+            .lte("age", 59)
+            .gt("age", 19),
+        db.from("vendor_survey")
+            .select("*", {count: "exact", head: true})
+            .gt("age", 59),   
+    ]);
+    
+    //Calculate percentage
+    function agePercent(index){
+        const result = (ages[index].count / totalRespondents) * 100;
+        return result;
+    }
+
+    //Rendering Ages
+    divDataAge.forEach((element, ageGroup) => element.style.setProperty("--progress", `${agePercent(ageGroup)}%`))
+    ageRespondents.forEach((e, index) => e.textContent = ages[index].count);
+    agePercentage.forEach((e, index) => e.textContent = `${agePercent(index).toFixed(1)}%`);
+    
+    //Fetch only the specific data specified in divData from the database
+    
+    //returns an array of promises, where each promise is the returned object
+    //NOTE: a NodeList is not an array, therefore cannot be used with map()
+    //      which is why you must convert it to an array first.
+
+    const data = Array.from(divData).map(async (question) => {
+        //If the element expects an array
+        if(question.dataset.type === "array"){
+            return db.from("vendor_survey")
+                        .select("*", {count: "exact", head: true})
+                        .contains(question.dataset.row, [question.dataset.item]);
+
+        }
+        return db.from("vendor_survey")
+                    .select("*", {count: "exact", head: true})
+                    .eq(question.dataset.row, question.dataset.item);
+
+    })
+    
+    //converts the promises from data into actual array of objects
+    const receivedData = await Promise.all(data);
+
+    //Converts the nodelists into an array
+    const nodeListConversion = Array.from(divData);
+    const respondentElements = Array.from(questionRespondentDisplay);
+    const percentElements = Array.from(percentageDisplay);
+    
+    
+    //array of objects into arrays (each element now represents total count)
+    const dataCount = receivedData.map(data => data.count);
+    //array where each element represents the average of each data.
+    const averages = dataCount.map(count => count / totalRespondents);
+    //make it suitable for percentage use.
+    const percentage = averages.map(a => a * 100);
+    console.log(totalRespondents)
+    
+    
+    //Rendering
+    nodeListConversion.forEach((e, index) => e.style.setProperty('--progress', `${percentage[index]}%`))
+    respondentElements.forEach((e, index) => e.textContent = dataCount[index]);
+    percentElements.forEach((e, index) => e.textContent = `${percentage[index].toFixed(1)}%`);
+    
+    
+    //Number of males and females
+    const [males, females] = await Promise.all([
+        db.from("vendor_survey")
+            .select("*", {count: "exact", head: true})
+            .eq("sex", "male"),
+        db.from("vendor_survey")
+            .select("*", {count: "exact", head: true})
+            .eq("sex", "female")
+    ])
+
+    maleNum.textContent = males.count;
+    femaleNum.textContent = females.count;
+};
 
 
 //------------------------------DOWNLOAD DATASET-------------------------------
 
-async function prepareExport() {
-    const fetchHealth = await fetchHealthData();
-    exportCSV(fetchHealth, "health_dataset.csv");
+//Fetches full database inputs of health survey.
+async function fetchHealthData(){
+    //returns an array of objects
+    const {data, error} = await db.from("health_survey")
+                            .select("*")
+                            .order("created_at", {ascending: false});
+    if(error){
+        console.error("Fetch failed: ", error.message);
+        return;
+    }
+
+    console.log(data);
+    return data;
+}
+
+//Fetches full database inputs of vendor survey.
+async function fetchVendorData(){
+    //returns an array of objects
+    const {data, error} = await db.from("vendor_survey")
+                            .select("*")
+                            .order("created_at", {ascending: false});
+    if(error){
+        console.error("Fetch failed: ", error.message);
+        return;
+    }
+
+    console.log(data);
+    return data;
+}
+
+async function prepareExport(dataset) {
+    if(dataset === "vendor"){
+        const fetchHealth = await fetchHealthData();
+        exportCSV(fetchHealth, "health_dataset.csv");
+    }else{
+        const fetchHealth = await fetchHealthData();
+        exportCSV(fetchHealth, "health_dataset.csv");
+    }
 };
 
 function exportCSV(responseData, filename){
@@ -84,3 +376,10 @@ function exportCSV(responseData, filename){
     //cleanup
     URL.revokeObjectURL(url);
 }
+
+
+
+
+//-----RENDER-------
+loadHealthDashboard();
+loadVendorDashboard();

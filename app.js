@@ -29,6 +29,7 @@ const confirmationUpdateHealth = (state) => {
     document.getElementById("dengue_typhoid_6months").textContent = state.dengue_typhoid_6months || "N / A";
     document.getElementById("mental_health_2weeks").textContent = state.mental_health_2weeks?.replaceAll("_", " ") || "N / A";
     document.getElementById("additional_notes").textContent = state.additional_notes || "N / A";
+    document.getElementById("tel_no").textContent = state.tel_no || "N / A";
 };
 
 const confirmationUpdateVendor = (state) => {
@@ -42,13 +43,14 @@ const confirmationUpdateVendor = (state) => {
     document.getElementById("start_time").textContent = state.start_time || "N / A";
     document.getElementById("end_time").textContent = state.end_time || "N / A";
     document.getElementById("additional_notes").textContent = state.additional_notes || "N / A";
-    document.getElementById("address").textContent = state.address || "N / A";
-    document.getElementById("contact_num").textContent = state.contact || "N / A";
-    document.getElementById("gender").textContent = state.gender || "N / A";
+    document.getElementById("address").textContent = state.business_address || "N / A";
+    document.getElementById("contact_num").textContent = state.contact_num || "N / A";
+    document.getElementById("gender").textContent = state.sex || "N / A";
     document.getElementById("age").textContent = state.age || "N / A";
     document.getElementById("telephone_num").textContent = state.telephone_num || "N / A";
     document.getElementById("stall_num").textContent = state.stall_num || "N / A";
     document.getElementById("business_trade_name").textContent = state.business_trade_name || "N / A";
+    document.getElementById("product_category").textContent = state.product_category || "N / A";
 };
 
 //Function that takes input from the input fields and stores it in the state object.
@@ -61,10 +63,42 @@ const inputHandler = (event) => {
         const symptoms = Array.from(checkBoxes).map(checkbox => checkbox.value);
         state[event.target.name] = symptoms;
         return;
+    } else {
+        const [isValid, errorMsg] = validateData(event);
+        console.log(event.target.value);    
+        if(isValid === false){
+            console.log("Invalid input: ", errorMsg);
+            return;
+        }else{
+            const stateKey = event.target.name;
+            state[stateKey] = event.target.value;
+            console.log("Input updated");
+            return;
+        }
     }
-    const stateKey = event.target.name;
-    state[stateKey] = event.target.value;
 };
+
+const validateData = (event) => {
+    const stopBtn = document.querySelector("#nextBtn");
+    if(event.target.type === "tel"){
+        const telnum = /^\d{11}$/g;
+        if(!telnum.test(event.target.value)){
+            stopBtn.disabled = true;
+            stopBtn.style.backgroundColor = "#d1d5db";
+            stopBtn.style.color = "gray";
+            event.target.style.borderColor = "red";
+            event.target.nextElementSibling.textContent = "Invalid telephone number.";
+            return [false, "Invalid telephone number."];
+        }else{
+            stopBtn.disabled = false;
+            stopBtn.style.backgroundColor = "white";
+            stopBtn.style.color = "#4CAF50";
+            event.target.style.borderColor = "#d1d5db";
+            event.target.nextElementSibling.textContent = "";
+            return [true, ""];
+        }
+    }
+}
 
 //(test) Callback function to log the state object whenever it changes.
 const logState = (mutationList, observer) => {
@@ -149,12 +183,12 @@ const navigateToSection = (url, currentURL) => {
 
 //Event listener for the next button.
 const navigate = (url) => {
+    //Prevents the page from refreshing
+    //window.event.preventDefault();
     //Scrolls to the top of the page
     window.scrollTo({ top: 0, behavior: "smooth" });
     //Stores the current URL before navigating to the next section.
     const currentURL = window.location.pathname;
-    //Prevents the page from refreshing
-    window.event.preventDefault();
     navigateToSection(url, currentURL);
 };
 
@@ -172,10 +206,11 @@ async function submitHealthSurvey(){
         return;
     }
     console.log("Submission Success.");
+    navigate('/finish');
 }
 
 async function submitVendorSurvey(){
-    const {data, error} = db.from("vendor_survey").insert([state]);
+    const {data, error} = await db.from("vendor_survey").insert([state]);
 
     if(error){
         console.error("Submit failed: ", error.message);
@@ -183,88 +218,11 @@ async function submitVendorSurvey(){
     }
 
     console.log("Submission Success.");
-    navigate("/finish");
+    navigate('/finish');
 }
-
-//Fetches full database inputs of health survey.
-async function fetchHealthData(){
-    //returns an array of objects
-    const {data, error} = await db.from("health_survey")
-                            .select("*")
-                            .order("created_at", {ascending: false});
-    if(error){
-        console.error("Fetch failed: ", error.message);
-        return;
-    }
-
-    console.log(data);
-    return data;
-}
-
-//Fetches full database inputs of vendor survey.
-async function fetchVendorData(){
-    //returns an array of objects
-    const {data, error} = await db.from("vendor_survey")
-                            .select("*")
-                            .order("created_at", {ascending: false});
-    if(error){
-        console.error("Fetch failed: ", error.message);
-        return;
-    }
-
-    console.log(data);
-    return data;
-}
-
-/*---------------------- NEW TEST FUNCTIONS -------------------------
-//prepares and loads the data to dashboard.
-async function loadDataToDashboard(){
-    //arrays of objects
-    const vendorData = await fetchVendorData();
-    const healthData = await fetchHealthData();
-
-    renderDashboard(healthData, "health-container");
-
-}
-
-const renderDashboard = (responseData, containerID) =>{
-    const container = document.querySelector(`#${containerID}`);
-
-    const header = Object.keys(responseData[0]);
-    const value = responseData.map(key => Object.values(key))
-    const table = document.createElement("table");
-    const headRow = document.createElement("tr");
-    const dataRow = document.createElement("tr");
-    
-    header.forEach(h => {
-        const th = document.createElement("th");
-        th.textContent = h;
-        headRow.appendChild(th);
-    });
-
-    value.forEach(v => {
-        const td = document.createElement("td");
-        td.textContent = v;
-        dataRow.appendChild(td);
-    });
-    
-    table.appendChild(headRow);
-    table.appendChild(dataRow)
-    container.appendChild(table);
-
-    console.log(table);
-
-}
-*/
-
-//----------------------------LOG IN--------------------------------
-
 
 
 //-------------------------------------------------------------------
-
-
-
 
 //"popstate" is triggered when the user clicks the back or forward button. It will render the content based on the URL.
 window.addEventListener("popstate", () => {

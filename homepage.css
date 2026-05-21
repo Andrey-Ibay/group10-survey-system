@@ -6,11 +6,14 @@
 body {
     font-family: 'Inter', sans-serif;
     margin: 0;
-    background: #fff;
 }
+
 
 /* Navbar */
 .navbar {
+    position: sticky;
+    top: 0;        
+    z-index: 1000;  
     padding: 15px 10%;
     background: #fff;
     border-bottom: 1px solid #f0f0f0;
@@ -47,6 +50,7 @@ body {
     font-family: arial; 
     font-weight: 800;
     margin-top: -20px;
+    width: 100%;
 }
 
 .survey {
@@ -186,12 +190,14 @@ main{
   align-items: center;
   flex-direction: column;
 }
+
 .main-container {
   width: 90%;
   display: flex;
   align-items: center;
   flex-direction: column;
 }
+
 body {
   background-color: #ffffff;
   
@@ -211,7 +217,11 @@ body {
   display: flex;
   flex-direction: column;
   align-items: start;
-  width: 60%
+  width: 60%;
+}
+
+::-webkit-scrollbar {
+  width: 0px;
 }
 
 @media (max-width: 60rem) {
@@ -224,4 +234,39 @@ body {
     align-items: center;
     text-align: center;
   };
+}
+
+@media (width < 600px) {
+  .welcomeTexts{
+    width: 90%;
+  }
+  a.nav-link{
+    display: none;
+  }
+  p{
+    font-size: 0.7rem;
+  }
+  .hero{
+    font-size: 1rem;
+  }
+  .hero-1{
+    font-size: 1.5rem;
+  }
+  .survey{
+    margin-bottom: 1rem;
+    font-size: 1rem;
+  }
+  .vendor-button,.health-button{
+    margin: 0;
+  }
+  .login-container{
+    width: 90% !important;
+    height: auto !important;
+  }
+  .email, .password {
+    left: 0 !important;
+  }
+  .email-icon, .password-icon {
+    left: 0 !important;
+  }
 }
