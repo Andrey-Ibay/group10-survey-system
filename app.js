@@ -79,27 +79,87 @@ const inputHandler = (event) => {
 };
 
 const validateData = (event) => {
-    const stopBtn = document.querySelector("#nextBtn");
     if(event.target.type === "tel"){
         const telnum = /^\d{11}$/g;
         if(!telnum.test(event.target.value)){
-            stopBtn.disabled = true;
-            stopBtn.style.backgroundColor = "#d1d5db";
-            stopBtn.style.color = "gray";
-            event.target.style.borderColor = "red";
+            disableNextButton();
             event.target.nextElementSibling.textContent = "Invalid telephone number.";
+            event.target.style.borderColor = "red";
             return [false, "Invalid telephone number."];
         }else{
-            stopBtn.disabled = false;
-            stopBtn.style.backgroundColor = "white";
-            stopBtn.style.color = "#4CAF50";
-            event.target.style.borderColor = "#d1d5db";
+            enableNextButton();
             event.target.nextElementSibling.textContent = "";
+            event.target.style.borderColor = "#d1d5db";
             return [true, ""];
         }
     }
+    if(event.target.name === "age"){
+        const age = parseInt(event.target.value);
+        if(isNaN(age)){
+            disableNextButton();
+            event.target.nextElementSibling.textContent = "Age must be a number.";
+            event.target.style.borderColor = "red";
+            return [false, "Age must be a number."];
+        }else if(age < 0){
+            disableNextButton();
+            event.target.nextElementSibling.textContent = "Age cannot be negative.";
+            event.target.style.borderColor = "red";
+            return [false, "Age cannot be negative."];
+        }else if(age < 18){
+            disableNextButton();
+            event.target.nextElementSibling.textContent = "Age must be at least 18.";
+            event.target.style.borderColor = "red";
+            return [false, "Age must be at least 18."];
+        }else if(age > 120){
+            disableNextButton();
+            event.target.nextElementSibling.textContent = "Age must be less than or equal to 120.";
+            event.target.style.borderColor = "red";
+            return [false, "Age must be less than or equal to 120."];
+        }else{
+            enableNextButton();
+            event.target.nextElementSibling.textContent = "";
+            event.target.style.borderColor = "#d1d5db";
+            return [true, ""];
+        }
+    }else{
+        enableNextButton();
+        event.target.nextElementSibling.textContent = "";
+        event.target.style.borderColor = "#d1d5db";
+        return [true, ""];
+    }
+}
+const validateRequired = () => {
+    const cardsContainer = document.querySelector(".cards-container");
+    const requiredInputs = cardsContainer.querySelectorAll("input[required], textarea[required], select[required]");
+
+    let isFilled = true;
+    requiredInputs.forEach(input => {
+        if(input.value.trim() === ""){
+            disableNextButton();
+            input.style.borderColor = "red";
+            input.nextElementSibling.textContent = "This field is required.";
+            
+            isFilled = false;
+            return;
+        }
+    });
+    return isFilled;
+}
+//Enables the next button
+const enableNextButton = () => {
+    const stopBtn = document.querySelector("#nextBtn");
+    stopBtn.disabled = false;
+    stopBtn.style.backgroundColor = "white";
+    stopBtn.style.color = "#4CAF50";
 }
 
+//Disables the next button
+const disableNextButton = () => {
+    const stopBtn = document.querySelector("#nextBtn");
+    stopBtn.disabled = true;
+    stopBtn.style.backgroundColor = "#d1d5db";
+    stopBtn.style.color = "gray";
+}
 //(test) Callback function to log the state object whenever it changes.
 const logState = (mutationList, observer) => {
     for(const mutation of mutationList) {
@@ -181,15 +241,20 @@ const navigateToSection = (url, currentURL) => {
     renderContent(url, currentURL);
 };
 
-//Event listener for the next button.
+//Function for the next button.
 const navigate = (url) => {
-    //Prevents the page from refreshing
-    //window.event.preventDefault();
-    //Scrolls to the top of the page
-    window.scrollTo({ top: 0, behavior: "smooth" });
-    //Stores the current URL before navigating to the next section.
-    const currentURL = window.location.pathname;
-    navigateToSection(url, currentURL);
+    //Checks if required fields are filled before going to the next page.
+    if(validateRequired()){
+        console.log("all fields filled.")
+        //Scrolls to the top of the page
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        //Stores the current URL before navigating to the next section.
+        const currentURL = window.location.pathname;
+        navigateToSection(url, currentURL);
+    }else{
+        console.log("Please fill required fields.");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }
 };
 
 //Function for the Back button to go back to the previous page.

@@ -15,11 +15,8 @@
             <a href="index.html" class="nav-brand">Home</a>
             <div class="nav-right">
                 <a href="#" class="nav-link">Contact Us</a>
-                <a href="#" class="nav-link">About</a>
                 <div class="nav-icons">
-                    <div class="icon-wrapper">
-                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                    </div>
+                    
                     <div class="icon-wrapper">
                         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
                     </div>
@@ -78,10 +75,12 @@
                 <div class="input-box">
                     <label>Registered Owner</label>
                     <input type="text" name="user_name" placeholder="Legal name of the permit holder..">
+                    <p class="error-message"></p>
                 </div>
                 <div class="input-box">
                     <label>Age</label>
-                    <input type="text" name="age" placeholder="1 - 120">
+                    <input type="text" inputmode="numeric" name="age" placeholder="18 - 120">
+                    <p class="error-message"></p>
                 </div>
                 <div class="input-box">
                     <label>Gender</label>
@@ -93,11 +92,14 @@
                 <div class="input-box">
                     <label>Business Address</label>
                     <input type="text" name="business_address" placeholder="Sta. Mesa">
+                    <p class="error-message"></p>
                 </div>
-                 <div class="input-box">
+                <div class="input-box">
                     <label>Contact Number</label>
                     <div class="tel-input">
-                    <input type="tel" name="contact_num" placeholder="e.g 09xx-xxx-xxxx" required>
+                        <input type="tel" name="contact_num" placeholder="e.g 09xx-xxx-xxxx" required>
+                        <p class="error-message"></p>
+                    </div>
                 </div>
             </div>
         </div>
