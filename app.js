@@ -58,10 +58,11 @@ const inputHandler = (event) => {
     //Handles checkbox inputs.
     if (event.target.type === "checkbox") {
         //Finds checkboxes with the same name.
-        const checkBoxes = event.target.closest(".radio-group").querySelectorAll(`input[name="${event.target.name}"]:checked, textarea[name="${event.target.name}"], select[name="${event.target.name}"]`);
+        const checkBoxes = event.target.closest(".checkbox-group").querySelectorAll(`input[name="${event.target.name}"]:checked, textarea[name="${event.target.name}"], select[name="${event.target.name}"]`);
         //Turns the checkboxes into an array
         const symptoms = Array.from(checkBoxes).map(checkbox => checkbox.value);
         state[event.target.name] = symptoms;
+        console.log("Checkbox check: ", state);
         return;
     } else {
         const [isValid, errorMsg] = validateData(event);
@@ -92,8 +93,25 @@ const validateData = (event) => {
             event.target.style.borderColor = "#d1d5db";
             return [true, ""];
         }
-    }
-    if(event.target.name === "age"){
+    }else if(event.target.type === "number"){
+        const num = parseInt(event.target.value);
+        if(isNaN(num)){
+            disableNextButton();
+            event.target.nextElementSibling.textContent = "Input must be a number.";
+            event.target.style.borderColor = "red";
+            return [false, "Invalid number."];
+        }else if(num < 0){
+            disableNextButton();
+            event.target.nextElementSibling.textContent = "Input must not be a negative number.";
+            event.target.style.borderColor = "red";
+            return [false, "Invalid number."];
+        }else{
+            enableNextButton();
+            event.target.nextElementSibling.textContent = "";
+            event.target.style.borderColor = "#d1d5db";
+            return [true, ""];
+        }
+    }else if(event.target.name === "age"){
         const age = parseInt(event.target.value);
         if(isNaN(age)){
             disableNextButton();
@@ -123,7 +141,8 @@ const validateData = (event) => {
         }
     }else{
         enableNextButton();
-        event.target.nextElementSibling.textContent = "";
+        console.log("Input valid.");
+        // event.target.nextElementSibling.textContent = "";
         event.target.style.borderColor = "#d1d5db";
         return [true, ""];
     }
@@ -131,8 +150,24 @@ const validateData = (event) => {
 const validateRequired = () => {
     const cardsContainer = document.querySelector(".cards-container");
     const requiredInputs = cardsContainer.querySelectorAll("input[required], textarea[required], select[required]");
+    const questionFields = document.querySelector("#section-2");
+    const requiredRadios = questionFields.querySelectorAll(".radio-group");
 
     let isFilled = true;
+    if(questionFields.checkValidity() === false){
+        disableNextButton();
+
+        requiredRadios.forEach(input => {
+            console.log(input);
+            if(input.querySelector("input[required]:checked") === null){
+                input.style.border = "solid red 2px";
+                input.style.borderRadius = "5px";
+                input.nextElementSibling.textContent = "This field is required.";
+                isFilled = false;
+                return;
+            }
+        })
+    }
     requiredInputs.forEach(input => {
         if(input.value.trim() === ""){
             disableNextButton();

@@ -125,7 +125,7 @@
                 <div class="input-box">
                     <label>Last Medical Checkup</label>
                     <div class = "dob-input">
-                        <input type="date" name="last_checkup" id="checkup" placeholder="YYYY-MM-DD" required>
+                        <input type="date" name="last_checkup" id="checkup" placeholder="YYYY-MM-DD">
                         <p class="error-message"></p>
                     </div>
                 </div>
@@ -133,7 +133,7 @@
         </div>
         
         <!-- SECTION 2 -->
-        <div class="section-wrapper" id="section-2">
+        <form class="section-wrapper" id="section-2">
             <div class="green-header">HEALTH STATUS</div>
                 <div class="form-card">
                     <div class="input-box">
@@ -149,7 +149,7 @@
                 <div class="form-card">
                     <div class="input-box">
                         <label>Recent Symptoms</label>
-                        <div class="radio-group">
+                        <div class="checkbox-group">
                             <label class="radio-btn"><input type="checkbox" name="symptoms" value="fever"> Fever</label>
                             <label class="radio-btn"><input type="checkbox" name="symptoms" value="cough"> Cough</label>
                             <label class="radio-btn"><input type="checkbox" name="symptoms" value="fatigue"> Fatigue</label>
@@ -157,85 +157,94 @@
                             <label class="radio-btn"><input type="checkbox" name="symptoms" value="others"> Others </label>
                             <input type="text" name="other_symptoms" placeholder="Specify Here...">
                         </div>
+                        
                         <br>
-                <div class = "input-box">
-                    <label> Existing Conditions </label>
-                    <input type = "text" name = "conditions" placeholder = "Type your answer here...">
-                </div>    
-            </div>
-        </div>
+                        <div class = "input-box">
+                            <label> Existing Conditions </label>
+                            <input type = "text" name = "conditions" placeholder = "Type your answer here...">
+                        </div>    
+                    </div>
+                </div>
                 
                 <div class = "form-card">
                 <div class = "input-box">
                     <br>
                     <label> Do you have regular access to the Barangay Health Center or a primary care physician for your medical needs? </label>
                     <div class = "radio-group">
-                            <label class="radio-btn"><input type="radio" name="access" value="yes"> Yes </label>
-                            <label class="radio-btn"><input type="radio" name="access" value="no"> No </label>
-                            <label class="radio-btn"><input type="radio" name="access" value="prefer_not_to_say"> Prefer not to say </label>
+                            <label class="radio-btn"><input type="radio" name="access" value="yes" required> Yes </label>
+                            <label class="radio-btn"><input type="radio" name="access" value="no" required> No </label>
+                            <label class="radio-btn"><input type="radio" name="access" value="prefer_not_to_say" required> Prefer not to say </label>
                         
                         </div>
+                        <p class="error-message"></p>
                     <br>
                    <label> Are you currently taking any daily prescription medications for maintenance (e.g., for blood pressure, cholesterol, heart conditions)? </label>
                     <div class = "radio-group">
-                        <label class="radio-btn"><input type="radio" name="medication" value="yes"> Yes </label>
-                        <label class="radio-btn"><input type="radio" name="medication" value="no"> No </label>
+                        <label class="radio-btn"><input type="radio" name="medication" value="yes" required> Yes </label>
+                        <label class="radio-btn"><input type="radio" name="medication" value="no" required> No </label>
                         </div>
+                        <p class="error-message"></p>
                     <br>
                     <label> Which of the following best describes your current smoking or vaping habits? </label>
                     <div class = "radio-group">
-                        <label class="radio-btn"><input type="radio" name="smoking" value="daily"> I smoke/vape daily </label>
-                        <label class="radio-btn"><input type="radio" name="smoking" value="occasionally"> I smoke/vape occasionally (socially) </label>
-                        <label class="radio-btn"><input type="radio" name="smoking" value="quit"> I used to smoke/vape but have quit </label>
-                        <label class="radio-btn"><input type="radio" name="smoking" value="never"> I have never smoked/vaped </label>
+                        <label class="radio-btn"><input type="radio" name="smoking" value="daily" required> I smoke/vape daily </label>
+                        <label class="radio-btn"><input type="radio" name="smoking" value="occasionally" required> I smoke/vape occasionally (socially) </label>
+                        <label class="radio-btn"><input type="radio" name="smoking" value="quit" required> I used to smoke/vape but have quit </label>
+                        <label class="radio-btn"><input type="radio" name="smoking" value="never" required> I have never smoked/vaped </label>
                         </div>
+                        <p class="error-message"></p>
                     <br>
                     <label> How often do you consume alcoholic beverages? </label>
                     <div class = "radio-group">
-                        <label class="radio-btn"><input type="radio" name="alcohol" value="never"> Never </label>
-                        <label class="radio-btn"><input type="radio" name="alcohol" value="1_to_3_months"> 1-3 times a month </label>
-                        <label class="radio-btn"><input type="radio" name="alcohol" value="1_to_3_times_a_week"> 1-3 times a week </label>
-                        <label class="radio-btn"><input type="radio" name="alcohol" value="4_or_more_times_a_week"> 4 or more times a week </label>
+                        <label class="radio-btn"><input type="radio" name="alcohol" value="never" required> Never </label>
+                        <label class="radio-btn"><input type="radio" name="alcohol" value="1_to_3_months" required> 1-3 times a month </label>
+                        <label class="radio-btn"><input type="radio" name="alcohol" value="1_to_3_times_a_week" required> 1-3 times a week </label>
+                        <label class="radio-btn"><input type="radio" name="alcohol" value="4_or_more_times_a_week" required> 4 or more times a week </label>
                         </div>
+                        <p class="error-message"></p>
                     <br>
                     <label> On average, how many days a week do you engage in at least 30 minutes of moderate to vigorous physical activity (e.g., brisk walking, sports, heavy manual labor)? </label>
                     <div class = "radio-group">
-                        <label class="radio-btn"><input type="radio" name="exercise" value="0_days"> 0 days (Primarily Sedentary) </label>
-                        <label class="radio-btn"><input type="radio" name="exercise" value="1_to_2_days"> 1-2 days </label>
-                        <label class="radio-btn"><input type="radio" name="exercise" value="3_to_4_days"> 3-4 days </label>
-                        <label class="radio-btn"><input type="radio" name="exercise" value="5_or_more_days"> 5 or more days </label>
+                        <label class="radio-btn"><input type="radio" name="exercise" value="0_days" required> 0 days (Primarily Sedentary) </label>
+                        <label class="radio-btn"><input type="radio" name="exercise" value="1_to_2_days" required> 1-2 days </label>
+                        <label class="radio-btn"><input type="radio" name="exercise" value="3_to_4_days" required> 3-4 days </label>
+                        <label class="radio-btn"><input type="radio" name="exercise" value="5_or_more_days" required> 5 or more days </label>
                     </div>
+                    <p class="error-message"></p>
                     <br>
                     <label> On a typical night, how many hours of sleep do you usually get? </label>
                     <div class = "radio-group">
-                        <label class="radio-btn"><input type="radio" name="sleep" value="less_than_5"> Less than 5 hours </label>
-                        <label class="radio-btn"><input type="radio" name="sleep" value="5_to_6"> 5-6 hours </label>
-                        <label class="radio-btn"><input type="radio" name="sleep" value="7_to_8"> 7-8 hours </label>
-                        <label class="radio-btn"><input type="radio" name="sleep" value="more_than_8"> More than 8 hours </label>
+                        <label class="radio-btn"><input type="radio" name="sleep" value="less_than_5" required> Less than 5 hours </label>
+                        <label class="radio-btn"><input type="radio" name="sleep" value="5_to_6" required> 5-6 hours </label>
+                        <label class="radio-btn"><input type="radio" name="sleep" value="7_to_8" required> 7-8 hours </label>
+                        <label class="radio-btn"><input type="radio" name="sleep" value="more_than_8" required> More than 8 hours </label>
                         </div>
+                        <p class="error-message"></p>
                     <br>
                     <label> In the past 14 days, have you been in close contact with anyone formally diagnosed with a highly contagious illness (e.g., COVID-19, Tuberculosis)? </label>
                     <div class = "radio-group">
-                        <label class="radio-btn"><input type="radio" name="contact_contagious_14days" value="yes"> Yes </label>
-                        <label class="radio-btn"><input type="radio" name="contact_contagious_14days" value="no"> No </label>
-                        <label class="radio-btn"><input type="radio" name="contact_contagious_14days" value="unsure"> Unsure </label>
+                        <label class="radio-btn"><input type="radio" name="contact_contagious_14days" value="yes" required> Yes </label>
+                        <label class="radio-btn"><input type="radio" name="contact_contagious_14days" value="no" required> No </label>
+                        <label class="radio-btn"><input type="radio" name="contact_contagious_14days" value="unsure" required> Unsure </label>
                     </div>
+                    <p class="error-message"></p>
                     <br>
                     <label> Have you or anyone currently living in your household been diagnosed with Dengue or Typhoid fever in the past 6 months? </label>    
                     <div class = "radio-group">
-                        <label class="radio-btn"><input type="radio" name="dengue_typhoid_6months" value="yes"> Yes </label>
-                        <label class="radio-btn"><input type="radio" name="dengue_typhoid_6months" value="no"> No </label>
-                        <label class="radio-btn"><input type="radio" name="dengue_typhoid_6months" value="unsure"> Unsure </label>
+                        <label class="radio-btn"><input type="radio" name="dengue_typhoid_6months" value="yes" required> Yes </label>
+                        <label class="radio-btn"><input type="radio" name="dengue_typhoid_6months" value="no" required> No </label>
+                        <label class="radio-btn"><input type="radio" name="dengue_typhoid_6months" value="unsure" required> Unsure </label>
                     </div>
+                    <p class="error-message"></p>
                     <br>
                     <label> Over the past 2 weeks, how often have you felt down, unusually stressed, or overly anxious? </label>
                     <div class = "radio-group">
-                        <label class="radio-btn"><input type="radio" name="mental_health_2weeks" value="not_at_all"> Not at all </label>
-                        <label class="radio-btn"><input type="radio" name="mental_health_2weeks" value="several_days"> Several days </label>
-                        <label class="radio-btn"><input type="radio" name="mental_health_2weeks" value="more_than_half"> More than half the days </label>
-                        <label class="radio-btn"><input type="radio" name="mental_health_2weeks" value="nearly_every_day"> Nearly every day </label>
+                        <label class="radio-btn"><input type="radio" name="mental_health_2weeks" value="not_at_all" required> Not at all </label>
+                        <label class="radio-btn"><input type="radio" name="mental_health_2weeks" value="several_days" required> Several days </label>
+                        <label class="radio-btn"><input type="radio" name="mental_health_2weeks" value="more_than_half" required> More than half the days </label>
+                        <label class="radio-btn"><input type="radio" name="mental_health_2weeks" value="nearly_every_day" required> Nearly every day </label>
                    </div>
-
+                   <p class="error-message"></p>
                 </div>
                 </div>
 
@@ -245,8 +254,8 @@
                     <textarea name="additional_notes" placeholder="Type your notes here..."></textarea>
                 </div>
             </div>
-        </div>
-        <button id="nextBtn" onclick="navigate('/confirmation')">Next</button>
+        </form>
+        <button type="button" id="nextBtn" onclick="navigate('/confirmation')">Next</button>
     </template>
     <!--  Template for confirmation page  -->
     <template id="confirmationSection">
