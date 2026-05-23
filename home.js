@@ -94,3 +94,98 @@ document.addEventListener("keydown", (e) => {
         }
     }
 });
+
+const contactContainer = document.querySelector(".contact-container");
+const contactNav = document.querySelector(".nav-contact");
+const contactName = document.querySelector(".contact-name");
+const contactMessage = document.querySelector(".contact-message");
+
+function sendMail() {
+    const currentName = contactName.value;
+    const currentMessage = contactMessage.value;
+
+    let params = {
+        name: currentName,
+        message: currentMessage
+    }
+
+    if (currentName === "") {
+            contactName.classList.add("error-border");
+    } else {
+        contactName.classList.remove("error-border");
+    }
+
+    if (currentMessage === "") {
+        contactMessage.classList.add("error-border");
+    } else {
+        contactMessage.classList.remove("error-border");
+    }
+
+    if (currentName !== "" && currentMessage !== "") {
+            emailjs.send("service_31efqoe", "template_tci35nl", params)
+        .then(function() {
+            alert("Message Sent Successfully!");
+        })
+        .catch(function(error) {
+            alert("Failed to send message");
+            console.log(error);
+        });
+
+        setTimeout (() => {
+            contactName.value = "";
+            contactMessage.value = "";
+        }, 1500)
+    }
+}
+
+const closeContact = () => {
+    contactContainer.style.display = "none";
+}
+
+const showContact = () => {
+    contactContainer.style.display = "grid";
+}
+
+document.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+
+        const isRendered = window.getComputedStyle(contactContainer).display === "grid";
+
+        const currentName = contactName.value;
+        const currentMessage = contactMessage.value;
+
+        if (isRendered && currentName !== "" && currentMessage !== "") {
+            e.preventDefault();
+            sendMail();
+            return;
+        }
+
+        e.preventDefault();
+
+        if (currentName === "") {
+            contactName.classList.add("error-border");
+        } else {
+            contactName.classList.remove("error-border");
+        }
+
+        if (currentMessage === "") {
+            contactMessage.classList.add("error-border");
+        } else {
+            contactMessage.classList.remove("error-border");
+        }
+    }
+});
+
+contactName.addEventListener("input", () => {
+    let value = contactName.value;
+
+    contactName.value = value.replace(/[0-9]/g, "");
+});
+
+contactName.addEventListener("focus", () => {
+    contactName.classList.remove("error-border");
+});
+
+contactMessage.addEventListener("focus", () => {
+    contactMessage.classList.remove("error-border");
+});
