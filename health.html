@@ -69,7 +69,7 @@
     <!-- TEMPLATE FOR SURVEY SECTIONS -->
     <template id="surveySection">
         <!-- SECTION 1 -->
-        <div class="section-wrapper" id="section-1">
+        <form class="section-wrapper" id="section-1">
             <div class="green-header">PERSONAL INFORMATION</div>
             <div class="form-card">
                 <div class="input-box">
@@ -111,9 +111,10 @@
                 <div class="input-box">
                     <label>Gender</label>
                     <div class="radio-group">
-                        <label class="radio-btn"><input type="radio" name="sex" value="male"> Male</label>
-                        <label class="radio-btn"><input type="radio" name="sex" value="female"> Female</label>
+                        <label class="radio-btn"><input type="radio" name="sex" value="male" required> Male</label>
+                        <label class="radio-btn"><input type="radio" name="sex" value="female" required> Female</label>
                     </div>
+                    <p class="error-message"></p>
                 </div>
 
                 <div class="input-box">
@@ -130,7 +131,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </form>
         
         <!-- SECTION 2 -->
         <form class="section-wrapper" id="section-2">
@@ -138,12 +139,13 @@
                 <div class="form-card">
                     <div class="input-box">
                         <label>Vaccination Status</label>
-                        <select name="vaccination_status" class="custom-select">
+                        <select name="vaccination_status" class="custom-select" required>
                             <option value="" disabled selected>Choose your answer</option>
                             <option value="unvaccinated">Unvaccinated</option>
                             <option value="partially_vaccinated">Partially Vaccinated</option>
                             <option value="vaccinated">Vaccinated</option>
                         </select>
+                        <p class="error-message"></p>
                     </div>
                 </div>
                 <div class="form-card">

@@ -78,9 +78,43 @@ const inputHandler = (event) => {
         }
     }
 };
+const validateDate = (dateValue) => {
+    const date = new Date();
+    const dayToday = date.getDate();
+    const monthToday = date.getMonth() + 1;
+    const yearToday = date.getFullYear();
 
+    const dateString = yearToday + "-" + monthToday + "-" + dayToday;
+    
+    console.log("Date String: ", dateString);
+
+    const today = new Date(dateString);
+    const inputDate = new Date(dateValue);
+
+    console.log("Today: ", today);
+    console.log("Input Date: ", inputDate);
+
+    if(inputDate > today){
+        return false;
+    }else{
+        return true;
+    }
+}
 const validateData = (event) => {
-    if(event.target.type === "tel"){
+    if(event.target.type === "date"){
+        const isDateValid = validateDate(event.target.value);
+        if(isDateValid){
+            enableNextButton();
+            event.target.nextElementSibling.textContent = "";
+            event.target.style.borderColor = "#d1d5db";
+            return [true, ""];
+        }else{
+            disableNextButton();
+            event.target.nextElementSibling.textContent = "Invalid Date. Must not go beyond current date.";
+            event.target.style.borderColor = "red";
+            return [false, "Invalid Date."];
+        }
+    }else if(event.target.type === "tel"){
         const telnum = /^\d{11}$/g;
         if(!telnum.test(event.target.value)){
             disableNextButton();
@@ -139,10 +173,17 @@ const validateData = (event) => {
             event.target.style.borderColor = "#d1d5db";
             return [true, ""];
         }
+    }else if(event.target.type === "radio"){
+        if(!(event.target.value === null)){
+            enableNextButton();
+            event.target.closest(".radio-group").nextElementSibling.textContent = "";
+            event.target.closest(".radio-group").style.border = "none";
+            return [true, ""];
+        }
     }else{
         enableNextButton();
         console.log("Input valid.");
-        // event.target.nextElementSibling.textContent = "";
+        event.target.closest(".input-box").querySelector(".error-message").textContent = "";
         event.target.style.borderColor = "#d1d5db";
         return [true, ""];
     }
@@ -151,7 +192,9 @@ const validateRequired = () => {
     const cardsContainer = document.querySelector(".cards-container");
     const requiredInputs = cardsContainer.querySelectorAll("input[required], textarea[required], select[required]");
     const questionFields = document.querySelector("#section-2");
+    const questionFieldsPersonalInfo = document.querySelector("#section-1");
     const requiredRadios = questionFields.querySelectorAll(".radio-group");
+    const requiredRadiosPersonalInfo = questionFieldsPersonalInfo.querySelectorAll(".radio-group");
 
     let isFilled = true;
     if(questionFields.checkValidity() === false){
@@ -162,7 +205,22 @@ const validateRequired = () => {
             if(input.querySelector("input[required]:checked") === null){
                 input.style.border = "solid red 2px";
                 input.style.borderRadius = "5px";
-                input.nextElementSibling.textContent = "This field is required.";
+                input.closest(".radio-group").nextElementSibling.textContent = "This field is required.";
+                isFilled = false;
+                // console.log("it broke here: ", input.querySelector("input[required]"));
+                console.log("input item at the time: ", input.querySelector("input"));
+                return;
+            }
+        })
+    }
+    if(questionFieldsPersonalInfo.checkValidity() === false){
+        disableNextButton();
+
+        requiredRadiosPersonalInfo.forEach(input => {
+            if(input.querySelector("input[required]:checked") === null){
+                input.style.border = "solid red 2px";
+                input.style.borderRadius = "5px";
+                input.closest(".radio-group").nextElementSibling.textContent = "This field is required.";
                 isFilled = false;
                 return;
             }
@@ -173,7 +231,7 @@ const validateRequired = () => {
             disableNextButton();
             input.style.borderColor = "red";
             input.nextElementSibling.textContent = "This field is required.";
-            
+
             isFilled = false;
             return;
         }
