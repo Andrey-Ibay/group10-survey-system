@@ -209,6 +209,11 @@ const validateRequired = () => {
                 isFilled = false;
                 // console.log("it broke here: ", input.querySelector("input[required]"));
                 console.log("input item at the time: ", input.querySelector("input"));
+                console.log("input validity: ", input.validity);
+                console.log("section validity: ", questionFields.validity);
+                console.log("section check validity: ", questionFields.checkValidity());
+                console.log("state: ", state);
+        
                 return;
             }
         })
