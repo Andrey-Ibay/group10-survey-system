@@ -7,6 +7,17 @@
     <link rel="stylesheet" href="homepage.css">
     <link rel="stylesheet" href="home.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+    </script>
+    <script type="text/javascript">
+        (function(){
+            emailjs.init({
+                publicKey: "UHJCNlWsCMoZsc7CV",
+            });
+        })();
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"/>
 </head>
 <body>
     <div class="main-containier">
@@ -14,8 +25,7 @@
             <div class="nav-container">
             <a href="#" class="nav-brand">Home</a>
                 <div class="nav-right">
-                <a href="#" class="nav-link">Contact</a>
-                <a href="#" class="nav-link">About</a>
+                <a href="#" class="nav-link nav-contact" onclick="showContact()">Contact</a>
                     <div class="nav-icons">
                         <div class="icon-wrapper pfp" onclick="toggleLogIn()">
                         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
@@ -97,7 +107,6 @@
             <label for="remember" class="remember-label">Remember me</label>
         </div>
 
-        
         <button class="login-button" onclick="adminLogin()">Login</button>
         
         <button class="close-btn" onclick="closeLogIn()"></button>
@@ -105,6 +114,30 @@
         <p class="forgot-password">Forgot password?</p>
         <div class="horizontal-line"></div>
         <p class="msg">have a nice day</p>
+    </div>
+
+    <div class="contact-container">
+        <div class="contact-heading">
+            <p class="heading-wrapper">Send an email to: 
+                <span class="email-heading">
+                    <br>
+                    brgy146surveysystem@gmail.com
+                </span>
+            </p>
+            <div onclick="closeContact()" class="contact-close-button"><i class="fa-solid fa-x contact-closed-btn"></i></div>
+        </div>
+
+        <div class="contact-inputs-container">
+            <input type="text" class="contact-name" placeholder="Type your name">
+            <textarea name="contact-message" class="contact-message" placeholder="Type your message..."></textarea>
+        </div>
+
+        <div>
+            <button onclick="sendMail()" class="send-button">
+                <span>Send</span>
+                <span><i class="fa-solid fa-paper-plane send-icon"></i></span> 
+            </button>
+        </div>       
     </div>
 
     <script src="home.js" defer></script>
