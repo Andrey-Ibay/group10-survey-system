@@ -75,15 +75,12 @@ async function loadHealthDashboard(){
     const ages = await Promise.all([
         db.from("health_survey")
             .select("*", {count: "exact", head: true})
-            .lte("age", 12),
-        db.from("health_survey")
-            .select("*", {count: "exact", head: true})
-            .lte("age", 19)
-            .gt("age", 12),
+            .lte("age", 34)
+            .gte("age", 18),
         db.from("health_survey")
             .select("*", {count: "exact", head: true})
             .lte("age", 59)
-            .gt("age", 19),
+            .gt("age", 34),
         db.from("health_survey")
             .select("*", {count: "exact", head: true})
             .gt("age", 59),   
@@ -221,18 +218,15 @@ async function loadVendorDashboard(){
     const ages = await Promise.all([
         db.from("vendor_survey")
             .select("*", {count: "exact", head: true})
-            .lte("age", 12),
-        db.from("vendor_survey")
-            .select("*", {count: "exact", head: true})
-            .lte("age", 19)
-            .gt("age", 12),
+            .lte("age", 34)
+            .gte("age", 18),
         db.from("vendor_survey")
             .select("*", {count: "exact", head: true})
             .lte("age", 59)
-            .gt("age", 19),
+            .gt("age", 34),
         db.from("vendor_survey")
             .select("*", {count: "exact", head: true})
-            .gt("age", 59),   
+            .gt("age", 59),     
     ]);
     
     //Calculate percentage

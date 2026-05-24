@@ -15,11 +15,8 @@
             <a href="index.html" class="nav-brand">Home</a>
             <div class="nav-right">
                 <a href="#" class="nav-link">Contact Us</a>
-                <a href="#" class="nav-link">About</a>
                 <div class="nav-icons">
-                    <div class="icon-wrapper">
-                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                    </div>
+                    
                     <div class="icon-wrapper">
                         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
                     </div>
@@ -72,16 +69,18 @@
     <!-- TEMPLATE FOR SURVEY SECTIONS -->
     <template id="surveySectionVendor">
         <!-- SECTION 1 -->
-        <div class="section-wrapper" id="section-1">
+        <form class="section-wrapper" id="section-1">
             <div class="green-header">PERSONAL INFORMATION</div>
             <div class="form-card">
                 <div class="input-box">
                     <label>Registered Owner</label>
-                    <input type="text" name="user_name" placeholder="Legal name of the permit holder..">
+                    <input type="text" name="user_name" placeholder="Legal name of the permit holder.." required>
+                    <p class="error-message"></p>
                 </div>
                 <div class="input-box">
                     <label>Age</label>
-                    <input type="text" name="age" placeholder="1 - 120">
+                    <input type="text" inputmode="numeric" name="age" placeholder="18 - 120" required>
+                    <p class="error-message"></p>
                 </div>
                 <div class="input-box">
                     <label>Gender</label>
@@ -89,108 +88,128 @@
                         <label class="radio-btn"><input type="radio" name="sex" value="male"> Male</label>
                         <label class="radio-btn"><input type="radio" name="sex" value="female"> Female</label>
                     </div>
+                    <p class="error-message"></p>
                 </div>
                 <div class="input-box">
                     <label>Business Address</label>
-                    <input type="text" name="business_address" placeholder="Sta. Mesa">
+                    <input type="text" name="business_address" placeholder="Sta. Mesa" required>
+                    <p class="error-message"></p>
                 </div>
-                 <div class="input-box">
+                <div class="input-box">
                     <label>Contact Number</label>
                     <div class="tel-input">
-                    <input type="tel" name="contact_num" placeholder="e.g 09xx-xxx-xxxx" required>
+                        <input type="tel" name="contact_num" placeholder="e.g 09xx-xxx-xxxx" required>
+                        <p class="error-message"></p>
+                    </div>
                 </div>
             </div>
-        </div>
+        </form>
         
         <!-- SECTION 2 -->
-        <div class="section-wrapper" id="section-2">
+        <form class="section-wrapper" id="section-2">
             <div class="green-header">Business Information</div>
-                <div class="form-card">
-                    <div class ="input-box">
-                        <label> Business Trade Name </label>
-                        <input type = "text" name = "business_trade_name" placeholder = "D/B/A" required>
-                        </div>
-                    <div class = "input-box">
-                        <label> Telephone Number </label>
-                        <div class="tel-input">
-                        <input type = "tel" name = "telephone_num" placeholder = "e.g. 09xx-xxx-xxxx">
-                    </div>
-                    </div>
-
+            <div class="form-card">
+                <div class ="input-box">
+                    <label> Business Trade Name </label>
+                    <input type = "text" name = "business_trade_name" placeholder = "D/B/A" required>
+                    <p class="error-message"></p>
                 </div>
-
-                <div class="form-card">
-                    <div class="input-box">
-                        <label>Product Category</label>
-                        <select class="custom-select" name="product_category">
-                            <option value="" disabled selected>Choose your answer...</option>
-                            <option value="meat">Meat</option>
-                            <option value="veggies">Veggies</option>
-                            <option value="dry_goods">Dry Goods</option>
-                            <option value="fish">Fish</option>
-                            <option value="cooked_food">Cooked Food</option>
-                            <option value="others">Others</option>
-                        </select>
+                <div class = "input-box">
+                    <label> Telephone Number </label>
+                    <div class="tel-input">
+                        <input type = "tel" name = "telephone_num" placeholder = "e.g. 09xx-xxx-xxxx" required>
+                        <p class="error-message"></p>
                     </div>
                 </div>
                 
-                <div class = "form-card">
+            </div>
+            
+            <div class="form-card">
+                <div class="input-box">
+                    <label>Product Category</label>
+                    <select class="custom-select" name="product_category" required>
+                        <option value="" disabled selected>Choose your answer...</option>
+                        <option value="meat">Meat</option>
+                        <option value="veggies">Veggies</option>
+                        <option value="dry_goods">Dry Goods</option>
+                        <option value="fish">Fish</option>
+                        <option value="cooked_food">Cooked Food</option>
+                        <option value="others">Others</option>
+                    </select>
+                    <p class="error-message"></p>
+                </div>
+            </div>
+            
+            <div class = "form-card">
                 <div class = "input-box">
                     <label> Stall Number </label>
                     <div class="stall-input">
-                    <input type = "number" name = "stall_num" placeholder = "e.g. 1-500" min="1" max="500" required>
-                    <br>  
-                    <br>
+                        <input type = "number" name = "stall_num" placeholder = "e.g. 1-500" min="1" max="500" required>
+                        <p class="error-message"></p>
+                        <br>  
+                        <br>
                     </div>
-
-                    <label>Permit/BIN Number</label>
-                    <input type = "text" name = "permit_num" placeholder = "e.g. LLLxx-xxxx" pattern="[a-zA-Z0-9]+" title="Please enter only letters and numbers (no spaces or special characters)." required>
-                    <br>
-                    <br>
-
-                    <label> Sanitary Permit No. </label>
-                    <input type = "text" name = "sanitary_permit_num" placeholder = "LL-xx-xxxx-xxxxx" pattern="[a-zA-Z0-9\-]+" title="Please enter only letters, numbers, and hyphens (no spaces or other special characters)." required>
-                    <br>
-                    <br>
-
+                    
+                    <div class="permit-num">
+                        <label>Permit/BIN Number</label>
+                        <input type = "number" name = "permit_num" placeholder = "e.g. LLLxx-xxxx" pattern="[a-zA-Z0-9]+" title="Please enter only letters and numbers (no spaces or special characters)." required>
+                        <p class="error-message"></p>
+                        <br>
+                        <br>
+                    </div>
+                    
+                    <div class="sanitary-permit">
+                        <label> Sanitary Permit No. </label>
+                        <input type = "number" name = "sanitary_permit_num" placeholder = "LL-xx-xxxx-xxxxx" pattern="[a-zA-Z0-9\-]+" title="Please enter only letters, numbers, and hyphens (no spaces or other special characters)." required>
+                        <p class="error-message"></p>
+                        <br>
+                        <br>
+                    </div>
+                    
                     <label> Waste Management </label>
-                        <div class="radio-group">
-                            <label class="radio-btn"><input type="checkbox" name="waste_management" value="daily_cleaning"> Daily Cleaning</label>
-                            <label class="radio-btn"><input type="checkbox" name="waste_management" value="segregation"> Segregation</label>
-                            <label class="radio-btn"><input type="checkbox" name="waste_management" value="grease_trap"> Grease Trap</label>
-                            <label class="radio-btn"><input type="checkbox" name="waste_management" value="proper_waste_disposal"> Proper Waste Disposal</label>
-                            <label class="radio-btn"><input type="checkbox" name="waste_management" value="others"> Others</label>
-                            <input type="text" name="waste_management_others" placeholder="Specify Here...">
-                        </div>
+                    <div class="checkbox-group">
+                        <label class="radio-btn"><input type="checkbox" name="waste_management" value="daily_cleaning"> Daily Cleaning</label>
+                        <label class="radio-btn"><input type="checkbox" name="waste_management" value="segregation"> Segregation</label>
+                        <label class="radio-btn"><input type="checkbox" name="waste_management" value="grease_trap"> Grease Trap</label>
+                        <label class="radio-btn"><input type="checkbox" name="waste_management" value="proper_waste_disposal"> Proper Waste Disposal</label>
+                        <label class="radio-btn"><input type="checkbox" name="waste_management" value="others"> Others</label>
+                        <input type="text" name="waste_management_others" placeholder="Specify Here...">
+                    </div>
+                    
                     <br>
                     <br>
-
+                    
                     <label>Sanitary Rating</label>
+                    <div class="radio-group">
                         <label class="radio-btn"><input type="radio" name="sanitary" value="1"> 1 (poor) </label>
                         <label class="radio-btn"><input type="radio" name="sanitary" value="2"> 2 </label>
                         <label class="radio-btn"><input type="radio" name="sanitary" value="3"> 3 </label>
                         <label class="radio-btn"><input type="radio" name="sanitary" value="4"> 4 </label>
                         <label class="radio-btn"><input type="radio" name="sanitary" value="5"> 5 (excellent) </label>
+                    </div>
+                    <p class="error-message"></p>
                     <br>
                     <br>
-
+                    
                     <label> Operating Hours </label>
                     <div class="time-range">
-                    <input type="time" name="start_time" class="form-control" required>
-                    <span class="separator"> to </span>
-                    <input type="time" name="end_time" class="form-control" required>
+                        <input type="time" name="start_time" class="form-control">
+                        <span class="separator"> to </span>
+                        <input type="time" name="end_time" class="form-control">
                     </div>
-
+                    <!-- <p class="error-message"></p> -->
+                    
                 </div>
-                </div>
-
-                <div class ="form-card">
+            </div>
+            
+            <div class ="form-card">
                 <div class="input-box">
                     <label>Additional Notes</label>
                     <textarea name="additional_notes" placeholder="Type your notes here..."></textarea>
+                    <p class="error-message"></p>
                 </div>
             </div>
-        </div>
+        </form>
         <button id="nextBtn" onclick="navigate('/confirmation')">Next</button>
     </template>
     <!--  Template for confirmation page  -->

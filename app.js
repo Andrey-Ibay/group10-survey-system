@@ -29,6 +29,7 @@ const confirmationUpdateHealth = (state) => {
     document.getElementById("dengue_typhoid_6months").textContent = state.dengue_typhoid_6months || "N / A";
     document.getElementById("mental_health_2weeks").textContent = state.mental_health_2weeks?.replaceAll("_", " ") || "N / A";
     document.getElementById("additional_notes").textContent = state.additional_notes || "N / A";
+    document.getElementById("tel_no").textContent = state.tel_no || "N / A";
 };
 
 const confirmationUpdateVendor = (state) => {
@@ -57,16 +58,201 @@ const inputHandler = (event) => {
     //Handles checkbox inputs.
     if (event.target.type === "checkbox") {
         //Finds checkboxes with the same name.
-        const checkBoxes = event.target.closest(".radio-group").querySelectorAll(`input[name="${event.target.name}"]:checked, textarea[name="${event.target.name}"], select[name="${event.target.name}"]`);
+        const checkBoxes = event.target.closest(".checkbox-group").querySelectorAll(`input[name="${event.target.name}"]:checked, textarea[name="${event.target.name}"], select[name="${event.target.name}"]`);
         //Turns the checkboxes into an array
         const symptoms = Array.from(checkBoxes).map(checkbox => checkbox.value);
         state[event.target.name] = symptoms;
+        console.log("Checkbox check: ", state);
         return;
+    } else {
+        const [isValid, errorMsg] = validateData(event);
+        console.log(event.target.value);    
+        if(isValid === false){
+            console.log("Invalid input: ", errorMsg);
+            return;
+        }else{
+            const stateKey = event.target.name;
+            state[stateKey] = event.target.value;
+            console.log("Input updated");
+            return;
+        }
     }
-    const stateKey = event.target.name;
-    state[stateKey] = event.target.value;
 };
+const validateDate = (dateValue) => {
+    const date = new Date();
+    const dayToday = date.getDate();
+    const monthToday = date.getMonth() + 1;
+    const yearToday = date.getFullYear();
 
+    const dateString = yearToday + "-" + monthToday + "-" + dayToday;
+    
+    console.log("Date String: ", dateString);
+
+    const today = new Date(dateString);
+    const inputDate = new Date(dateValue);
+
+    console.log("Today: ", today);
+    console.log("Input Date: ", inputDate);
+
+    if(inputDate > today){
+        return false;
+    }else{
+        return true;
+    }
+}
+const validateData = (event) => {
+    if(event.target.type === "date"){
+        const isDateValid = validateDate(event.target.value);
+        if(isDateValid){
+            enableNextButton();
+            event.target.nextElementSibling.textContent = "";
+            event.target.style.borderColor = "#d1d5db";
+            return [true, ""];
+        }else{
+            disableNextButton();
+            event.target.nextElementSibling.textContent = "Invalid Date. Must not go beyond current date.";
+            event.target.style.borderColor = "red";
+            return [false, "Invalid Date."];
+        }
+    }else if(event.target.type === "tel"){
+        const telnum = /^\d{11}$/g;
+        if(!telnum.test(event.target.value)){
+            disableNextButton();
+            event.target.nextElementSibling.textContent = "Invalid telephone number.";
+            event.target.style.borderColor = "red";
+            return [false, "Invalid telephone number."];
+        }else{
+            enableNextButton();
+            event.target.nextElementSibling.textContent = "";
+            event.target.style.borderColor = "#d1d5db";
+            return [true, ""];
+        }
+    }else if(event.target.type === "number"){
+        const num = parseInt(event.target.value);
+        if(isNaN(num)){
+            disableNextButton();
+            event.target.nextElementSibling.textContent = "Input must be a number.";
+            event.target.style.borderColor = "red";
+            return [false, "Invalid number."];
+        }else if(num < 0){
+            disableNextButton();
+            event.target.nextElementSibling.textContent = "Input must not be a negative number.";
+            event.target.style.borderColor = "red";
+            return [false, "Invalid number."];
+        }else{
+            enableNextButton();
+            event.target.nextElementSibling.textContent = "";
+            event.target.style.borderColor = "#d1d5db";
+            return [true, ""];
+        }
+    }else if(event.target.name === "age"){
+        const age = parseInt(event.target.value);
+        if(isNaN(age)){
+            disableNextButton();
+            event.target.nextElementSibling.textContent = "Age must be a number.";
+            event.target.style.borderColor = "red";
+            return [false, "Age must be a number."];
+        }else if(age < 0){
+            disableNextButton();
+            event.target.nextElementSibling.textContent = "Age cannot be negative.";
+            event.target.style.borderColor = "red";
+            return [false, "Age cannot be negative."];
+        }else if(age < 18){
+            disableNextButton();
+            event.target.nextElementSibling.textContent = "Age must be at least 18.";
+            event.target.style.borderColor = "red";
+            return [false, "Age must be at least 18."];
+        }else if(age > 120){
+            disableNextButton();
+            event.target.nextElementSibling.textContent = "Age must be less than or equal to 120.";
+            event.target.style.borderColor = "red";
+            return [false, "Age must be less than or equal to 120."];
+        }else{
+            enableNextButton();
+            event.target.nextElementSibling.textContent = "";
+            event.target.style.borderColor = "#d1d5db";
+            return [true, ""];
+        }
+    }else if(event.target.type === "radio"){
+        if(!(event.target.value === null)){
+            enableNextButton();
+            event.target.closest(".radio-group").nextElementSibling.textContent = "";
+            event.target.closest(".radio-group").style.border = "none";
+            return [true, ""];
+        }
+    }else{
+        enableNextButton();
+        console.log("Input valid.");
+        event.target.closest(".input-box").querySelector(".error-message").textContent = "";
+        event.target.style.borderColor = "#d1d5db";
+        return [true, ""];
+    }
+}
+const validateRequired = () => {
+    const cardsContainer = document.querySelector(".cards-container");
+    const requiredInputs = cardsContainer.querySelectorAll("input[required], textarea[required], select[required]");
+    const questionFields = document.querySelector("#section-2");
+    const questionFieldsPersonalInfo = document.querySelector("#section-1");
+    const requiredRadios = questionFields.querySelectorAll(".radio-group");
+    const requiredRadiosPersonalInfo = questionFieldsPersonalInfo.querySelectorAll(".radio-group");
+
+    let isFilled = true;
+    if(questionFields.checkValidity() === false){
+        disableNextButton();
+
+        requiredRadios.forEach(input => {
+            console.log(input);
+            if(input.querySelector("input[required]:checked") === null){
+                input.style.border = "solid red 2px";
+                input.style.borderRadius = "5px";
+                input.closest(".radio-group").nextElementSibling.textContent = "This field is required.";
+                isFilled = false;
+                // console.log("it broke here: ", input.querySelector("input[required]"));
+                console.log("input item at the time: ", input.querySelector("input"));
+                return;
+            }
+        })
+    }
+    if(questionFieldsPersonalInfo.checkValidity() === false){
+        disableNextButton();
+
+        requiredRadiosPersonalInfo.forEach(input => {
+            if(input.querySelector("input[required]:checked") === null){
+                input.style.border = "solid red 2px";
+                input.style.borderRadius = "5px";
+                input.closest(".radio-group").nextElementSibling.textContent = "This field is required.";
+                isFilled = false;
+                return;
+            }
+        })
+    }
+    requiredInputs.forEach(input => {
+        if(input.value.trim() === ""){
+            disableNextButton();
+            input.style.borderColor = "red";
+            input.nextElementSibling.textContent = "This field is required.";
+
+            isFilled = false;
+            return;
+        }
+    });
+    return isFilled;
+}
+//Enables the next button
+const enableNextButton = () => {
+    const stopBtn = document.querySelector("#nextBtn");
+    stopBtn.disabled = false;
+    stopBtn.style.backgroundColor = "white";
+    stopBtn.style.color = "#4CAF50";
+}
+
+//Disables the next button
+const disableNextButton = () => {
+    const stopBtn = document.querySelector("#nextBtn");
+    stopBtn.disabled = true;
+    stopBtn.style.backgroundColor = "#d1d5db";
+    stopBtn.style.color = "gray";
+}
 //(test) Callback function to log the state object whenever it changes.
 const logState = (mutationList, observer) => {
     for(const mutation of mutationList) {
@@ -148,15 +334,20 @@ const navigateToSection = (url, currentURL) => {
     renderContent(url, currentURL);
 };
 
-//Event listener for the next button.
+//Function for the next button.
 const navigate = (url) => {
-    //Prevents the page from refreshing
-    //window.event.preventDefault();
-    //Scrolls to the top of the page
-    window.scrollTo({ top: 0, behavior: "smooth" });
-    //Stores the current URL before navigating to the next section.
-    const currentURL = window.location.pathname;
-    navigateToSection(url, currentURL);
+    //Checks if required fields are filled before going to the next page.
+    if(validateRequired()){
+        console.log("all fields filled.")
+        //Scrolls to the top of the page
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        //Stores the current URL before navigating to the next section.
+        const currentURL = window.location.pathname;
+        navigateToSection(url, currentURL);
+    }else{
+        console.log("Please fill required fields.");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }
 };
 
 //Function for the Back button to go back to the previous page.
@@ -189,55 +380,7 @@ async function submitVendorSurvey(){
 }
 
 
-/*---------------------- NEW TEST FUNCTIONS -------------------------
-//prepares and loads the data to dashboard.
-async function loadDataToDashboard(){
-    //arrays of objects
-    const vendorData = await fetchVendorData();
-    const healthData = await fetchHealthData();
-
-    renderDashboard(healthData, "health-container");
-
-}
-
-const renderDashboard = (responseData, containerID) =>{
-    const container = document.querySelector(`#${containerID}`);
-
-    const header = Object.keys(responseData[0]);
-    const value = responseData.map(key => Object.values(key))
-    const table = document.createElement("table");
-    const headRow = document.createElement("tr");
-    const dataRow = document.createElement("tr");
-    
-    header.forEach(h => {
-        const th = document.createElement("th");
-        th.textContent = h;
-        headRow.appendChild(th);
-    });
-
-    value.forEach(v => {
-        const td = document.createElement("td");
-        td.textContent = v;
-        dataRow.appendChild(td);
-    });
-    
-    table.appendChild(headRow);
-    table.appendChild(dataRow)
-    container.appendChild(table);
-
-    console.log(table);
-
-}
-*/
-
-//----------------------------LOG IN--------------------------------
-
-
-
 //-------------------------------------------------------------------
-
-
-
 
 //"popstate" is triggered when the user clicks the back or forward button. It will render the content based on the URL.
 window.addEventListener("popstate", () => {
