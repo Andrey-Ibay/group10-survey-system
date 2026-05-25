@@ -415,7 +415,7 @@ input[type="radio"], input[type="checkbox"] { accent-color: var(--blue); transfo
     from { height: 0%; }
     to { height: 70%; }
 }
-@media (max-width: 60rem) {
+@media (max-width: 68rem) {
     .content-layout {
         margin: 1rem;
         width: calc(100% - 2rem);
